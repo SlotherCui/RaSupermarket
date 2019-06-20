@@ -24,6 +24,7 @@
 
 <script>
 export default {
+
   name: 'Login2',
   data () {
     return {
@@ -40,6 +41,7 @@ export default {
       console.log(this.form.UserName + this.form.Password + this.form.Remember)
     }
   }
+
 }
 </script>
 <style scoped>
