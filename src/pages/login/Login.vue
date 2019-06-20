@@ -1,5 +1,5 @@
 <template>
-  <div>登录界面</div>
+  <div>登录界面2</div>
 </template>
 
 <script>
