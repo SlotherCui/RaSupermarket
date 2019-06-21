@@ -11,7 +11,6 @@
         <el-col  :span="3">
           <el-dropdown trigger="hover">
             <div class="el-dropdown-link userinfo-inner">
-
               小王
               <img src="/static/Avator.jpg" />
             </div>
@@ -144,27 +143,10 @@ export default {
     background: #20A0FF;
     line-height: 60px;
   .content-container {
-    // background: #f1f2f7;
     flex:1;
-    // position: absolute;
-    // right: 0px;
-    // top: 0px;
-    // bottom: 0px;
-    // left: 230px;
     text-align left
     overflow-y: scroll;
     padding: 20px;
-    .breadcrumb-container {
-      //margin-bottom: 15px;
-      .title {
-        width: 200px;
-        float: left;
-        color: #475669;
-      }
-      .breadcrumb-inner {
-        float: right;
-      }
-    }
     .content-wrapper {
       background-color: #fff;
       box-sizing: border-box;
