@@ -1,7 +1,7 @@
 <template>
   <section>
     <!--工具条-->
-    <el-col :span="24" class="toolbar" style="padding-bottom: 0px;height:40px">
+    <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
           <el-input v-model="filters.name" placeholder="商品名"></el-input>
@@ -16,7 +16,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="users" highlight-current-row  @selection-change="selsChange" style="width: 100%;">
+    <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-form-item label="商品名称">
@@ -115,7 +115,7 @@
 <script>
 import util from '../../../common/js/util'
 // import NProgress from 'nprogress'
-import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../../api/api'
+import { getGoodListPage, removeGood, batchRemoveGood, editGood, addGood } from '../../../api/api'
 
 export default {
   data () {
@@ -133,7 +133,7 @@ export default {
       editLoading: false,
       editFormRules: {
         name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
+          { required: true, message: '请输入名字', trigger: 'blur' }
         ]
       },
       // 编辑界面数据
@@ -149,7 +149,7 @@ export default {
       addLoading: false,
       addFormRules: {
         name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
+          { required: true, message: '请输入名字', trigger: 'blur' }
         ]
       },
       // 新增界面数据
@@ -166,17 +166,17 @@ export default {
   methods: {
     handleCurrentChange (val) {
       this.page = val
-      this.getUsers()
+      this.getGoods()
     },
     // 获取用户列表
-    getUsers () {
+    getGoods () {
       let para = {
         page: this.page,
         name: this.filters.name
       }
       this.listLoading = true
       // NProgress.start();
-      getUserListPage(para).then((res) => {
+      getGoodListPage(para).then((res) => {
         this.total = res.data.total
         this.users = res.data.users
         this.listLoading = false
@@ -191,14 +191,14 @@ export default {
         this.listLoading = true
         // NProgress.start();
         let para = { id: row.id }
-        removeUser(para).then((res) => {
+        removeGood(para).then((res) => {
           this.listLoading = false
           // NProgress.done();
           this.$message({
             message: '删除成功',
             type: 'success'
           })
-          this.getUsers()
+          this.getGoods()
         })
       }).catch(() => {
 
@@ -229,7 +229,7 @@ export default {
             // NProgress.start();
             let para = Object.assign({}, this.editForm)
             para.date = (!para.date || para.date === '') ? '' : util.formatDate.format(new Date(para.date), 'yyyy-MM-dd')
-            editUser(para).then((res) => {
+            editGood(para).then((res) => {
               this.editLoading = false
               // NProgress.done();
               this.$message({
@@ -238,7 +238,7 @@ export default {
               })
               this.$refs['editForm'].resetFields()
               this.editFormVisible = false
-              this.getUsers()
+              this.getGoods()
             })
           })
         }
@@ -253,7 +253,7 @@ export default {
             // NProgress.start();
             let para = Object.assign({}, this.addForm)
             para.date = (!para.date || para.date === '') ? '' : util.formatDate.format(new Date(para.date), 'yyyy-MM-dd')
-            addUser(para).then((res) => {
+            addGood(para).then((res) => {
               this.addLoading = false
               // NProgress.done();
               this.$message({
@@ -262,7 +262,7 @@ export default {
               })
               this.$refs['addForm'].resetFields()
               this.addFormVisible = false
-              this.getUsers()
+              this.getGoods()
             })
           })
         }
@@ -280,14 +280,14 @@ export default {
         this.listLoading = true
         // NProgress.start();
         let para = { ids: ids }
-        batchRemoveUser(para).then((res) => {
+        batchRemoveGood(para).then((res) => {
           this.listLoading = false
           // NProgress.done();
           this.$message({
             message: '删除成功',
             type: 'success'
           })
-          this.getUsers()
+          this.getGoods()
         })
       }).catch(() => {
 
@@ -295,27 +295,19 @@ export default {
     }
   },
   mounted () {
-    this.getUsers()
+    this.getGoods()
   }
 }
 
 </script>
 
-<style scoped>
-  .toolbar {
+<style scoped lang="stylus">
+
+  .toolbar
     background: #f2f2f2;
-    padding: 0px;
-    border:1px solid #dfe6ec;
-    margin: 10px 0;
-  }
-  .el-submenu [class^=fa] {
-    vertical-align: baseline;
-    margin-right: 10px;
-  }
-
-  .el-menu-item [class^=fa] {
-    vertical-align: baseline;
-    margin-right: 10px;
-  }
-
+    padding: 10px;
+    margin: 10px 0px
+    height 70px
+    .el-form-item
+      margin-bottom: 10px;
 </style>
