@@ -1,10 +1,10 @@
 <template>
-  <div>查询</div>
+<div>商品改价功能</div>
 </template>
 
 <script>
 export default {
-  name: 'Find'
+  name: 'SellsManager'
 }
 </script>
 

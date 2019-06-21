@@ -1,10 +1,10 @@
 <template>
-  <div>page3</div>
+  <div>商品信息管理</div>
 </template>
 
 <script>
 export default {
-  name: 'page3'
+  name: 'page2'
 }
 </script>
 

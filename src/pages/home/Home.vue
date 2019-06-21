@@ -2,13 +2,13 @@
   <el-container direction="vertical" class="container">
     <el-header class="header">
       <el-row>
-        <el-col  :span="3">supnuevo</el-col>
-        <el-col  :span="19">
+        <el-col  :span="3" >supnuevo</el-col>
+        <el-col  :span="18">
           <div class="tools" @click.prevent="collapse">
             <i class="el-icon-menu"></i>
           </div>
         </el-col>
-        <el-col  :span="2">
+        <el-col  :span="3">
           <el-dropdown trigger="hover">
             <span class="el-dropdown-link userinfo-inner"><img src="/static/Avator.jpg" />小王</span>
             <el-dropdown-menu slot="dropdown">
@@ -34,27 +34,28 @@
           <el-submenu index="1" >
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>导航一</span>
+              <span>商品信息维护</span>
             </template>
-              <el-menu-item index="find">选项1</el-menu-item>
-              <el-menu-item index="good">选项2</el-menu-item>
-              <el-menu-item index="sell">选项3</el-menu-item>
+              <el-menu-item index="Mygoods">商家商品维护</el-menu-item>
+              <el-menu-item index="CommonGoods">公共商品浏览</el-menu-item>
+              <el-menu-item index="PriceChange">商品改价功能</el-menu-item>
+              <el-menu-item index="RelationShip">改价关系维护</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-menu"></i>
-              <span>导航二</span>
+              <span>销售记录</span>
             </template>
-            <el-menu-item index="page1">选项1</el-menu-item>
-            <el-menu-item index="page2">选项2</el-menu-item>
-            <el-menu-item index="page3">选项3</el-menu-item>
+            <el-menu-item index="sells">销售记录</el-menu-item>
+            <el-menu-item index="chart">图表统计</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-setting"></i>
-              <span>导航三</span>
+              <span>设置</span>
             </template>
-            <el-menu-item index="chart">图表</el-menu-item>
+            <el-menu-item index="information">商户信息管理</el-menu-item>
+            <el-menu-item index="setting">其他设置</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>

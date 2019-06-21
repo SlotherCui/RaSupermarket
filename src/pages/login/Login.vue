@@ -17,7 +17,7 @@
 
 <script>
 
-import {requestLogin} from '../../api'
+// import {requestLogin} from '../../api'
 
 export default {
   data () {
@@ -49,10 +49,10 @@ export default {
       if ((this.account.username.length !== 0) && (this.account.pwd.length !== 0)) {
         alert('账号：' + this.account.username + '    密码：' + this.account.pwd)
         this.logining = true
-        var loginParams = {
-          username: this.account.username,
-          userpwd: this.account.pwd
-        }
+        // var loginParams = {
+        //   username: this.account.username,
+        //   userpwd: this.account.pwd
+        // }
       } else {
         alert('请输入有效账号和密码！')
         this.account.username = ''
