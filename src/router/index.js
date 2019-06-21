@@ -11,7 +11,7 @@ import SellsManager from '@/pages/home/nav1/PriceChange'
 import RelationShip from '@/pages/home/nav1/RelationShip'
 
 import chart from '@/pages/home/nav2/chart'
-import page1 from '@/pages/home/nav2/priceChange'
+import page1 from '@/pages/home/nav2/sells'
 
 import page2 from '@/pages/home/nav3/information'
 import page3 from '@/pages/home/nav3/setting'
