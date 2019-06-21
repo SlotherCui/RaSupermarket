@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { requestTest } from '../../api/api'
+import { requestLogin } from '../../api/api'
 export default {
 
   name: 'Login2',
@@ -68,12 +68,13 @@ export default {
     Todologin () {
       console.log(this.form.UserName + this.form.Password + this.form.Remember)
       // 测试接口
+
       this.loading = true
-      this.$router.push({ path: '/Mygoods' })
-      // var Params = {page: 1}
-      // requestTest(Params).then(data => {
-      //   console.log(data)
-      // })
+      var Params = {username: this.username, password: this.password}
+      requestLogin(Params).then(data => {
+        console.log(data)
+        this.$router.push({ path: '/Mygoods' })
+      })
     }
   }
 

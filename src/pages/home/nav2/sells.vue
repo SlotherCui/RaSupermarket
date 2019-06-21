@@ -162,7 +162,6 @@ export default {
   background: #f2f2f2;
   padding: 10px;
   margin: 10px 0px
-  height 70px
   .el-form-item
     margin-bottom: 10px;
 </style>
