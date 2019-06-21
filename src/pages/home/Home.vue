@@ -151,6 +151,7 @@ export default {
     // top: 0px;
     // bottom: 0px;
     // left: 230px;
+    text-align left
     overflow-y: scroll;
     padding: 20px;
     .breadcrumb-container {
