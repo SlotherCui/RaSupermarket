@@ -10,7 +10,11 @@
         </el-col>
         <el-col  :span="3">
           <el-dropdown trigger="hover">
-            <span class="el-dropdown-link userinfo-inner"><img src="/static/Avator.jpg" />小王</span>
+            <div class="el-dropdown-link userinfo-inner">
+
+              小王
+              <img src="/static/Avator.jpg" />
+            </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>我的消息</el-dropdown-item>
               <el-dropdown-item>设置</el-dropdown-item>
@@ -59,11 +63,23 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-      </el-main>
+      <!--<el-main  class="content-wrapper">-->
+        <!--<transition name="fade" mode="out-in">-->
+          <!--<router-view></router-view>-->
+        <!--</transition>-->
+      <!--</el-main>-->
+      <section class="content-container">
+        <div class="grid-content bg-purple-light">
+          <el-col :span="24" class="breadcrumb-container">
+            <strong class="title">{{$route.name}}</strong>
+          </el-col>
+          <el-col :span="24" class="content-wrapper">
+            <transition name="fade" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          </el-col>
+        </div>
+      </section>
     </el-container>
     <!--<el-footer class="footer">@copyright 山东大学软件学院</el-footer>-->
   </el-container>
@@ -121,12 +137,38 @@ export default {
     background-color: #E9EEF3;
     .meau
       background-color: #E9EEF3
-      margin-left  -100px
+      text-align left
   .footer
     color:  white
     text-align: center;
     background: #20A0FF;
     line-height: 60px;
+  .content-container {
+    // background: #f1f2f7;
+    flex:1;
+    // position: absolute;
+    // right: 0px;
+    // top: 0px;
+    // bottom: 0px;
+    // left: 230px;
+    overflow-y: scroll;
+    padding: 20px;
+    .breadcrumb-container {
+      //margin-bottom: 15px;
+      .title {
+        width: 200px;
+        float: left;
+        color: #475669;
+      }
+      .breadcrumb-inner {
+        float: right;
+      }
+    }
+    .content-wrapper {
+      background-color: #fff;
+      box-sizing: border-box;
+    }
+  }
 .el-main
   /*background-color: #E9EEF3;*/
   color: #333;
@@ -134,5 +176,6 @@ export default {
   line-height: 160px;
   height: 100%
 .el-menu-item
-  background-color: #d1dbe5 !important;
+  background-color: #e4e8f1 !important;
+  text-align left
 </style>

@@ -19,7 +19,7 @@
           <el-checkbox label="记住密码" v-model="form.Remember"></el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" plain @click="Logincheck" class="LonginButton">登录</el-button>
+          <el-button type="primary" plain @click="Logincheck" class="LonginButton" :loading="loading">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -50,13 +50,15 @@ export default {
           trigger: 'blur'
         } ]
       },
-      show: false
+      show: false,
+      loading: false
     }
   },
   methods: {
     Logincheck () {
       if ((this.form.Password.length !== 0) && (this.form.UserName.length !== 0)) {
         console.log(this.form.UserName + this.form.Password + this.form.Remember)
+        this.Todologin ()
       } else {
         alert('请输入有效账号和密码！')
         this.form.UserName = ''
@@ -66,10 +68,12 @@ export default {
     Todologin () {
       console.log(this.form.UserName + this.form.Password + this.form.Remember)
       // 测试接口
-      var Params = {page: 1}
-      requestTest(Params).then(data => {
-        console.log(data)
-      })
+      this.loading = true
+      this.$router.push({ path: '/Mygoods' })
+      // var Params = {page: 1}
+      // requestTest(Params).then(data => {
+      //   console.log(data)
+      // })
     }
   }
 
@@ -78,8 +82,8 @@ export default {
 <style scoped>
   .backgroundimage{
     position: absolute;
-    margin-top: -7px;
-    margin-left: -8px;
+    margin-top: -10px;
+    margin-left: -10px;
     width: 100%;
     height: 100%;
     /*-ms-transform: translate(-50px, -100px);*/
