@@ -49,10 +49,13 @@
             <el-menu-item index="page2">选项2</el-menu-item>
             <el-menu-item index="page3">选项3</el-menu-item>
           </el-submenu>
-          <el-menu-item index="chart">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-setting"></i>
+              <span>导航三</span>
+            </template>
+            <el-menu-item index="chart">图表</el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>
@@ -89,6 +92,7 @@ export default {
   top: 0px;
   bottom: 0px;
   width: 100%;
+  margin-left :-10px
   .header
     background: #20A0FF;
     color white

@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { requestTest } from '../../api/api'
 export default {
 
   name: 'Login2',
@@ -39,6 +40,11 @@ export default {
   methods: {
     todologin () {
       console.log(this.form.UserName + this.form.Password + this.form.Remember)
+      // 测试接口
+      var Params = {page: 1}
+      requestTest(Params).then(data => {
+        console.log(data)
+      })
     }
   }
 
@@ -51,7 +57,7 @@ export default {
     margin-left: -10px;
     width: 100%;
     height: 100%;
-    background: url(../../../static/timg.jpg);
+    background: url(/static/timg.jpg);
 
   }
   .touming{
@@ -59,7 +65,7 @@ export default {
     position: absolute;
     height: 100%;
     width: 100%;
-    background: url(../../../static/timg.jpg);
+    background: url(/static/timg.jpg);
     -webkit-filter: blur(10px)
   }
   .input{
@@ -91,5 +97,4 @@ export default {
     width: 400px;
     height: 240px;
   }
-
   </style>

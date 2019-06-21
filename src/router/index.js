@@ -14,15 +14,21 @@ import page2 from '@/pages/home/nav2/page2'
 import page3 from '@/pages/home/nav2/page3'
 
 import chart from '@/pages/home/nav3/chart'
-
+import NotFound from '@/pages/home/NotFound'
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/404',
+      component: NotFound,
+      name: '404',
+      hidden: true
     },
     {
       path: '/',
@@ -56,9 +62,14 @@ export default new Router({
       ]
     },
     {
-      path: '/2',
+      path: '/login2',
       name: 'Login2',
       component: Login2
+    },
+    {
+      path: '*',
+      hidden: true,
+      redirect: { path: '/404' }
     }
   ]
 })

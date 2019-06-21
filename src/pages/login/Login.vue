@@ -58,11 +58,11 @@ export default {
         this.account.username = ''
         this.account.pwd = ''
       }
-      requestLogin(loginParams).then(data => {
-        debugger
-        // this.logining = false;
-        alert(data)
-      })
+      // requestLogin(loginParams).then(data => {
+      //   debugger
+      //   // this.logining = false;
+      //   alert(data)
+      // })
     }
   }
 }

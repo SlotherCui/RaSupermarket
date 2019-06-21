@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'http://localhost:8080/'
+axios.defaults.withCredentials = true
 // post请求
 // axios.post('/user', {
 //   firstName: 'Fred',
@@ -32,6 +33,11 @@ axios.defaults.baseURL = '/api'
 //     })
 
 export const requestLogin = params => {
-  return axios.get('Login/login', { params }).then(res => res.data)
+  return axios.get('/login', { params }).then(res => res.data)
+}
+
+// 测试接口
+export const requestTest = params => {
+  return axios.get('/say2', { params }).then(res => res.data)
 }
 // export const requestLogin = params => { return axios.get('getthread.aspx', { params }).then(res => res.data) }
