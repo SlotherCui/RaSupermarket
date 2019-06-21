@@ -1,10 +1,10 @@
 <template>
-<div>销售管理</div>
+<div>销售记录</div>
 </template>
 
 <script>
 export default {
-  name: 'SellsManager'
+  name: 'page1'
 }
 </script>
 

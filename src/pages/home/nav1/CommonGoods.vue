@@ -1,10 +1,10 @@
 <template>
-<div>page1</div>
+  <div>公共商品浏览</div>
 </template>
 
 <script>
 export default {
-  name: 'page1'
+  name: 'GoodsManager'
 }
 </script>
 

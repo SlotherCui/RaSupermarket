@@ -5,15 +5,17 @@ import Home from '@/pages/home/Home'
 import Login from '@/pages/login/Login'
 import Login2 from '@/pages/login/Login2'
 
-import Find from '@/pages/home/nav1/Find'
-import GoodsManager from '@/pages/home/nav1/GoodsManager'
-import SellsManager from '@/pages/home/nav1/SellsManager'
+import Find from '@/pages/home/nav1/MyGoods'
+import GoodsManager from '@/pages/home/nav1/CommonGoods'
+import SellsManager from '@/pages/home/nav1/PriceChange'
+import RelationShip from '@/pages/home/nav1/RelationShip'
 
-import page1 from '@/pages/home/nav2/page1'
-import page2 from '@/pages/home/nav2/page2'
-import page3 from '@/pages/home/nav2/page3'
+import chart from '@/pages/home/nav2/chart'
+import page1 from '@/pages/home/nav2/priceChange'
 
-import chart from '@/pages/home/nav3/chart'
+import page2 from '@/pages/home/nav3/information'
+import page3 from '@/pages/home/nav3/setting'
+
 import NotFound from '@/pages/home/NotFound'
 Vue.use(Router)
 
@@ -36,9 +38,10 @@ export default new Router({
       component: Home,
       children: [
         // { path: '/main', component: Main, name: '主页', hidden: true },
-        {path: '/find', component: Find, name: 'find'},
-        {path: '/good', component: GoodsManager, name: 'good'},
-        {path: '/sell', component: SellsManager, name: 'sell'}
+        {path: '/Mygoods', component: Find, name: 'find'},
+        {path: '/CommonGoods', component: GoodsManager, name: 'good'},
+        {path: '/PriceChange', component: SellsManager, name: 'sell'},
+        {path: '/RelationShip', component: RelationShip, name: 'relationShip'}
       ]
     },
     {
@@ -47,9 +50,8 @@ export default new Router({
       component: Home,
       children: [
         // { path: '/main', component: Main, name: '主页', hidden: true },
-        {path: '/page1', component: page1, name: 'page1'},
-        {path: '/page2', component: page2, name: 'page2'},
-        {path: '/page3', component: page3, name: 'page3'}
+        {path: '/sells', component: page1, name: 'page1'},
+        {path: '/chart', component: chart, name: 'chart'}
       ]
     },
     {
@@ -58,7 +60,8 @@ export default new Router({
       component: Home,
       children: [
         // { path: '/main', component: Main, name: '主页', hidden: true },
-        {path: '/chart', component: chart, name: 'chart'}
+        {path: '/information', component: page2, name: 'information'},
+        {path: '/setting', component: page3, name: 'setting'}
       ]
     },
     {

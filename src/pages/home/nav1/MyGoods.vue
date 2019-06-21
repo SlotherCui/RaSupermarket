@@ -1,10 +1,10 @@
 <template>
-  <div>page2</div>
+  <div>商家商品维护</div>
 </template>
 
 <script>
 export default {
-  name: 'page2'
+  name: 'Find'
 }
 </script>
 

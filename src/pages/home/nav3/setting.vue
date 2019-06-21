@@ -1,10 +1,10 @@
 <template>
-  <div>商品管理</div>
+  <div>其他设置</div>
 </template>
 
 <script>
 export default {
-  name: 'GoodsManager'
+  name: 'page3'
 }
 </script>
 
