@@ -1,10 +1,10 @@
 <template>
   <div >
     <div class="backgroundimage" v-show="!show">
-      <img src="/static/Login1.png" style="width: 100%;height: 100%"/>
+      <img src="/static/Login1.png" style="width: 100%;height: 100%" class="img"/>
     </div>
     <div class="touming" v-show="show">
-      <img src="/static/Login1.png" style="width: 100%;height: 100%"/>
+      <img src="/static/Login1.png" style="width: 100%;height: 100%" class="img"/>
     </div>
     <div class="Loginbox" @mouseenter="show=!show" @mouseleave="show=!show">
       <el-form ref="form" :model="form" :rules="rules"  class="demo-ruleForm login-container">
@@ -78,7 +78,7 @@ export default {
 <style scoped>
   .backgroundimage{
     position: absolute;
-    margin-top: -9px;
+    margin-top: -7px;
     margin-left: -8px;
     width: 100%;
     height: 100%;
@@ -90,18 +90,17 @@ export default {
   .touming{
     z-index: 0;
     position: absolute;
-    margin-top: -9px;
+    margin-top: -7px;
     margin-left: -8px;
     height: 100%;
     width: 100%;
-
-    -webkit-filter: blur(10px);
+    -webkit-filter: blur(5px);
   }
-  .touming img{
+  div img{
     cursor: pointer;
-    transition: all 0.6s;
+    transition: all 5s;
   }
-  .touming img:hover{
+  div img:hover{
     transform: scale(1.3,1.3);
   }
 
