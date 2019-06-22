@@ -17,50 +17,47 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="goodslist" highlight-current-row  @selection-change="selsChange" style="width: 100%;">
-      <el-table-column type="expand" width="55">
+    <el-table :data="goodslist"  style="width: 100%;">
+      <el-table-column type="expand" width="200">
         <template slot-scope="props">
-          <el-form-item label="商品名称">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="" >
+              <template slot-scope="scope">
+                <img src="/static/good.jpg" width="200px"/>
+              </template>
+            </el-form-item>
+            <el-form-item label="商品名称:" >
             <span>{{ props.row.name }}</span>
           </el-form-item>
-          <el-form-item label="商品价格">
+          <el-form-item label="商品价格:" >
             <span>{{ props.row.price }}</span>
           </el-form-item>
-          <el-form-item label="商品 ID">
+          <el-form-item label="条形码:" >
             <span>{{ props.row.barcode }}</span>
           </el-form-item>
-          <el-form-item label="修改日期">
+          <el-form-item label="修改日期:" >
             <span>{{ props.row.date }}</span>
           </el-form-item>
-          <el-form-item label="商品描述">
+          <el-form-item label="商品描述:" >
             <span>{{ props.row.desc }}</span>
           </el-form-item>
+          </el-form>
         </template>
-      </el-table-column>
-      <el-table-column type="index" width="60">
       </el-table-column>
       <el-table-column prop="barcode" label="条形码" width="120" sortable>
       </el-table-column>
       <el-table-column prop="name" label="商品名" width="200"  sortable>
       </el-table-column>
-      <el-table-column prop="price" label="价格" width="180" sortable>
+      <el-table-column prop="price" label="价格(/元)" width="180" sortable>
       </el-table-column>
       <el-table-column prop="desc" label="描述" width="250" sortable>
       </el-table-column>
       <el-table-column label="操作" width="150">
-        <template scope="scope">
+        <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
-
-    <!--工具条-->
-    <el-col :span="24" class="toolbar">
-      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
-      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
-      </el-pagination>
-    </el-col>
-
     <!--编辑界面-->
     <el-dialog title="编辑" v-show="editFormVisible" v-model="editFormVisible" :close-on-click-modal="false">
       <el-form :model="editForm"  :rules="editFormRules" ref="editForm" label>
@@ -105,18 +102,31 @@
           <el-input type="textarea" v-model="addForm.desc"></el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot-scope="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
       </div>
     </el-dialog>
   </section>
 </template>
-
+<style>
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+</style>
 <script>
 import util from '../../../common/js/util'
 // import NProgress from 'nprogress'
-import { getGoodListPage, removeGood, batchRemoveGood, editGood, addGood } from '../../../api/api'
+import { getGoodListPage, editGood, addGood } from '../../../api/api'
 
 export default {
   data () {
@@ -129,7 +139,21 @@ export default {
       page: 1,
       listLoading: false,
       sels: [], // 列表选中列
-
+      goodslist: [{
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻'
+      },
+      {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻'
+      }
+      ],
       editFormVisible: false, // 编辑界面是否显示
       editLoading: false,
       editFormRules: {
@@ -194,27 +218,6 @@ export default {
         this.users = res.data.users
         this.listLoading = false
         // NProgress.done();
-      })
-    },
-    // 删除
-    handleDel: function (index, row) {
-      this.$confirm('确认删除该记录吗?', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        // NProgress.start();
-        let para = { barcode: row.barcode }
-        removeGood(para).then((res) => {
-          this.listLoading = false
-          // NProgress.done();
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.getGoods()
-        })
-      }).catch(() => {
-
       })
     },
     // 显示编辑界面
@@ -283,28 +286,6 @@ export default {
     },
     selsChange: function (sels) {
       this.sels = sels
-    },
-    // 批量删除
-    batchRemove: function () {
-      var ids = this.sels.map(item => item.id).toString()
-      this.$confirm('确认删除选中记录吗？', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        // NProgress.start();
-        let para = { ids: ids }
-        batchRemoveGood(para).then((res) => {
-          this.listLoading = false
-          // NProgress.done();
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.getGoods()
-        })
-      }).catch(() => {
-
-      })
     }
   },
   mounted () {

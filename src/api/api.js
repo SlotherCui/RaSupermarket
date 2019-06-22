@@ -3,17 +3,12 @@ import qs from 'qs'
 axios.defaults.baseURL = '/api'
 
 axios.defaults.withCredentials = true
-
+// 公共商品浏览接口
 export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }) }
-
-export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { params: params }) }
-
-export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchremove`, { params: params }) }
-
 export const editGood = params => { return axios.get(`/CommonGoods/edit`, { params: params }) }
-
 export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }) }
-export const getInfo = params => { return axios.get(`//information`, { params: params }) }
+// 商家信息接口
+export const getInfo = params => { return axios.get(`/information`, { params: params }) }
 export const requestLogin = params => {
   return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
   ).then(res => res.data)
