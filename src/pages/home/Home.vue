@@ -92,14 +92,24 @@ export default {
       collapsed: false,
       open_list: ['1', '2'], // 初始打开导航条
       // 用户名 用户头像ID
-      UserName: '',
-      UserAvatar: ''
+      UserName: '测试人员',
+      UserAvatar: '/static/Avator.jpg'
     }
   },
   methods: {
     // 折叠导航栏
     collapse: function () {
       this.collapsed = !this.collapsed
+    },
+    logout () {
+      var _this = this
+      this.$confirm('确认退出吗?', '提示', {
+        // type: 'warning'
+      }).then(() => {
+        sessionStorage.removeItem('user')
+        _this.$router.push('/login2')
+      }).catch(() => {
+      })
     }
   },
   mounted () {

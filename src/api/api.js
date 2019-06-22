@@ -4,16 +4,10 @@ axios.defaults.baseURL = '/api'
 
 axios.defaults.withCredentials = true
 
-export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }).then(res => res.data) }
+export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { params: params }) }
 
-export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { params: params }).then(res => res.data) }
+export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchremove`, { params: params }) }
 
-export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchremove`, { params: params }).then(res => res.data) }
-
-export const editGood = params => { return axios.get(`/CommonGoods/edit`, { params: params }).then(res => res.data) }
-
-export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }).then(res => res.data) }
-export const getInfo = params => { return axios.get(`//information`, { params: params }).then(res => res.data) }
 // MyGoods请求
 export const getMyGoodListPage = params => { return axios.get(`/MyGoods/listpage`, { params: params }).then(res => res.data) }
 
@@ -24,6 +18,13 @@ export const editGoods = params => { return axios.get(`/MyGoods/edit`, { params:
 export const removeMyGoods = params => { return axios.get(`/MyGoods/remove`, { params: params }).then(res => res.data) }
 
 export const batchRemoveMyGoods = params => { return axios.get(`/MyGoods/batchremove`, { params: params }).then(res => res.data) }
+
+// 公共商品浏览接口
+export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }) }
+export const editGood = params => { return axios.get(`/CommonGoods/edit`, { params: params }) }
+export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }) }
+// 商家信息接口
+export const getInfo = params => { return axios.get(`/information`, { params: params }) }
 
 export const requestLogin = params => {
   return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}

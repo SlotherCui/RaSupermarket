@@ -85,7 +85,7 @@ export default {
     },
     Save (ev) {
       alert('保存成功')
-      this.getGoods()
+      this.getInfo()
     }
 
   }
