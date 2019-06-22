@@ -39,7 +39,7 @@ export default new Router({
       children: [
         // { path: '/main', component: Main, name: '主页', hidden: true },
         {path: '/Mygoods', component: Find, name: '商家商品维护'},
-        {path: 'c', component: GoodsManager, name: '公共商品浏览'},
+        {path: '/CommonGoods', component: GoodsManager, name: '公共商品浏览'},
         {path: '/PriceChange', component: SellsManager, name: '商品改价功能'},
         {path: '/RelationShip', component: RelationShip, name: '改价关系维护'}
       ]

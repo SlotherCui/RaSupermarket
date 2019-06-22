@@ -5,7 +5,7 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.id" placeholder="条码"></el-input>
+          <el-input v-model="filters.barcode" placeholder="条码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="getGoods">查询</el-button>
@@ -17,7 +17,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="goodslist" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+    <el-table :data="goodslist" highlight-current-row  @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-form-item label="商品名称">
@@ -27,7 +27,7 @@
             <span>{{ props.row.price }}</span>
           </el-form-item>
           <el-form-item label="商品 ID">
-            <span>{{ props.row.id }}</span>
+            <span>{{ props.row.barcode }}</span>
           </el-form-item>
           <el-form-item label="修改日期">
             <span>{{ props.row.date }}</span>
@@ -65,7 +65,7 @@
     <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
       <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm" label>
         <el-form-item label="商品码" prop="barcode">
-          <el-input v-model="editForm.id" auto-complete="off"></el-input>
+          <el-input v-model="editForm.barcode" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="商品名">
           <el-input v-model="editForm.name" auto-complete="off"></el-input>
@@ -87,27 +87,27 @@
     </el-dialog>
 
     <!--新增界面-->
-    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
-      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
+    <el-dialog title="编辑" v-show="addFormVisible" v-model="addFormVisible" :close-on-click-modal="false">
+      <el-form :model="addForm"  :rules="addFormRules" ref="addForm">
         <el-form-item label="条形码" prop="barcode">
-          <el-input v-model="editForm.id" auto-complete="off"></el-input>
+          <el-input v-model="addForm.barcode" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="商品名">
-          <el-input v-model="editForm.name" auto-complete="off"></el-input>
+          <el-input v-model="addForm.name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="价格">
-          <el-input-number v-model="editForm.price" :min="0" :max="200"></el-input-number>
+          <el-input-number v-model="addForm.price" :min="0" :max="200"></el-input-number>
         </el-form-item>
         <el-form-item label="日期">
-          <el-date-picker type="date" placeholder="选择日期" v-model="editForm.date"></el-date-picker>
+          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.date"></el-date-picker>
         </el-form-item>
         <el-form-item label="商品描述">
-          <el-input type="textarea" v-model="editForm.desc"></el-input>
+          <el-input type="textarea" v-model="addForm.desc"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="editFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+        <el-button @click.native="addFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
       </div>
     </el-dialog>
   </section>
@@ -122,7 +122,7 @@ export default {
   data () {
     return {
       filters: {
-        id: ''
+        baocode: ''
       },
       users: [],
       total: 0,
@@ -133,13 +133,13 @@ export default {
       editFormVisible: false, // 编辑界面是否显示
       editLoading: false,
       editFormRules: {
-        id: [
+        barcode: [
           { required: true, message: '条形码', trigger: 'blur' }
         ]
       },
       // 编辑界面数据
       editForm: {
-        id: 0,
+        barcode: 0,
         name: '',
         price: 0,
         date: '',
@@ -149,13 +149,19 @@ export default {
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
       addFormRules: {
+        name: [
+          { required: true, message: '输入商品名称', trigger: 'blur' }
+        ],
+        price: [
+          { required: true, message: '输入价格', trigger: 'blur' }
+        ],
         barcode: [
           { required: true, message: '条形码', trigger: 'blur' }
         ]
       },
       // 新增界面数据
       addForm: {
-        id: 0,
+        barcode: 0,
         name: '',
         price: 0,
         date: '',
@@ -169,11 +175,11 @@ export default {
       this.page = val
       this.getGoods()
     },
-    // 获取用户列表
+    // 获取商品列表
     getGoods () {
       let para = {
         page: this.page,
-        id: this.filters.id
+        barcode: this.filters.barcode
       }
       this.listLoading = true
       // NProgress.start();
@@ -191,7 +197,7 @@ export default {
       }).then(() => {
         this.listLoading = true
         // NProgress.start();
-        let para = { id: row.id }
+        let para = { barcode: row.barcode }
         removeGood(para).then((res) => {
           this.listLoading = false
           // NProgress.done();
@@ -214,7 +220,7 @@ export default {
     handleAdd: function () {
       this.addFormVisible = true
       this.addForm = {
-        id: 0,
+        barcode: 0,
         name: '',
         price: 0,
         date: '',
