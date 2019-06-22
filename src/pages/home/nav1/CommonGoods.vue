@@ -22,8 +22,8 @@
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="" >
-              <template slot-scope="scope">
-                <img src="/static/good.jpg" width="200px"/>
+              <template slot-scope="scope" >
+                <img src="/static/good.jpg" width="150px"/>
               </template>
             </el-form-item>
             <el-form-item label="商品名称:" >
@@ -31,6 +31,7 @@
           </el-form-item>
           <el-form-item label="商品价格:" >
             <span>{{ props.row.price }}</span>
+            <span>元</span>
           </el-form-item>
           <el-form-item label="条形码:" >
             <span>{{ props.row.barcode }}</span>
