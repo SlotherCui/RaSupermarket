@@ -4,15 +4,15 @@ axios.defaults.baseURL = '/api'
 
 axios.defaults.withCredentials = true
 
-export const getGoodListPage = params => { return axios.get(`${base}/good/listpage`, { params: params }) }
+export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }) }
 
-export const removeGood = params => { return axios.get(`${base}/good/remove`, { params: params }) }
+export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { params: params }) }
 
-export const batchRemoveGood = params => { return axios.get(`${base}/good/batchremove`, { params: params }) }
+export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchremove`, { params: params }) }
 
-export const editGood = params => { return axios.get(`${base}/good/edit`, { params: params }) }
+export const editGood = params => { return axios.get(`/CommonGoods/edit`, { params: params }) }
 
-export const addGood = params => { return axios.get(`${base}/good/add`, { params: params }) }
+export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }) }
 export const requestLogin = params => {
   return axios.post('/login', { params }).then(res => res.data)
 }
