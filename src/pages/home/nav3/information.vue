@@ -22,9 +22,6 @@
         <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
       </el-col>
     </el-form-item>
-    <el-form-item label="接受外送">
-      <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
-    </el-form-item>
     <el-form-item label="商品类型">
       <el-checkbox-group v-model="form.gtype">
         <el-checkbox label="食品粮油" name="gtype"></el-checkbox>
@@ -46,8 +43,6 @@
       <el-button type="danger" @click="PasswdChangeForm">修改密码</el-button>
     </el-form-item>
   </el-form>
-  </section>
-</template>
 <!--修改密码界面-->
 <el-dialog title="修改密码" v-show="changepasswdFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="changepasswdFormVisible">
   <el-form :model="changepasswdForm"  label-position="left" :rules="changepasswdFormRules" ref="changepasswdForm" :visible.sync="changepasswdFormVisible" >
@@ -66,6 +61,8 @@
     <el-button type="primary" @click.native="PasswdChange" :loading="changepasswdLoading">提交</el-button>
   </div>
 </el-dialog>
+  </section>
+</template>
 <script>
 import { getInfo } from '../../../api/api'
 export default {
