@@ -1,11 +1,5 @@
 <template>
   <el-form :inline="true" :model="formInline" class="settingform">
-    <el-form-item label="语言" >
-      <el-select v-model="formInline.region">
-        <el-option label="中文" value="chinese"></el-option>
-        <el-option label="English" value="english"></el-option>
-      </el-select>
-    </el-form-item>
     <!--属性进行言语替换必须加冒号  如：label-->
     <el-form-item :label="$t('message.lang')">
       <el-select v-model="formInline.lang">
@@ -24,10 +18,9 @@
 <script>
 export default {
   name: 'page3',
-  data: function () {
+  data () {
     return {
       formInline: {
-        region: '中文',
         lang: '中文'
       }
     }
