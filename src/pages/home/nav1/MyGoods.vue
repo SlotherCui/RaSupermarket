@@ -28,7 +28,7 @@
       </el-table-column>
       <el-table-column prop="price" label="价格" width="200" sortable>
       </el-table-column>
-      <el-table-column label="操作" width="180">
+      <el-table-column label="操作" width="270">
         <template scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -102,7 +102,7 @@ export default {
       listLoading: false,
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
-      goodslist: [],
+      goodslist: ['asxas', 'asxax', 'wefewf', 'wefwefw', 'wefwefwef'],
       editFormVisible: false,
       addForm: {
         barcode: '',
