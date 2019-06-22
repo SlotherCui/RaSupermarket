@@ -18,6 +18,38 @@
 
     <!--列表-->
     <el-table :data="goodslist" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+      <el-table-column type="expand" width="55">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="图片">
+              <div>
+                <img src="/static/good.jpg" width="200px"/>
+              </div>
+            </el-form-item>
+            <el-form-item label="详情">
+              <span>{{ props.row.information}}</span>
+            </el-form-item>
+            <el-form-item label="进价">
+              <span>{{ props.row.inprice }}</span>
+            </el-form-item>
+<!--            <el-form-item label="商品 ID">-->
+<!--              <span>{{ props.row.information }}</span>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="店铺 ID">-->
+<!--              <span>{{ props.row.information}}</span>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="商品分类">-->
+<!--              <span>{{ props.row.information }}</span>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="店铺地址">-->
+<!--              <span>{{ props.row.information }}</span>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="商品描述">-->
+<!--              <span>{{ props.row.information }}</span>-->
+<!--            </el-form-item>-->
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column type="selection" width="55">
       </el-table-column>
       <el-table-column type="index" width="60">
@@ -82,8 +114,6 @@
 </template>
 
 <script>
-import util from '../../../common/js/util'
-// import NProgress from 'nprogress'
 import {getMyGoodListPage, addMyGoods, editGoods, removeMyGoods, batchRemoveMyGoods} from '../../../api/api'
 export default {
   name: 'Find',
@@ -102,12 +132,16 @@ export default {
       goodslist: [{
         barcode: 12454789,
         goods: '垃圾',
-        price: -1
+        price: '1',
+        information: '新鲜垃圾好吃不贵',
+        inprice: '0'
       },
       {
         barcode: 12454780,
         goods: '垃圾',
-        price: -1
+        price: '10000$',
+        information: '陈年垃圾有点贵',
+        inprice: '0'
       }
       ],
       editFormVisible: false,
@@ -281,6 +315,26 @@ export default {
 </script>
 
 <style scoped>
+  /*div img{*/
+  /*  z-index: 100;*/
+  /*  cursor: pointer;*/
+  /*  transition: all 1s;*/
+  /*}*/
+  /*div img:hover{*/
+  /*  transform: scale(2,2);*/
+  /*}*/
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
   .toolbar {
     text-align: left;
     background: #f2f2f2;
