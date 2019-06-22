@@ -21,5 +21,9 @@ export const requestLogin = params => {
 export const requestTest = params => {
   return axios.get('/say2', { params }).then(res => res.data)
 }
+// 测试cookie
+export const requestCookie = params => {
+  return axios.get('/cookie', { params }).then(res => res.data)
+}
 
 // export const requestLogin = params => { return axios.get('getthread.aspx', { params }).then(res => res.data) }

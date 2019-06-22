@@ -105,6 +105,7 @@
 </template>
 
 <script>
+import { requestCookie } from '../../../api/api'
 export default {
   name: 'page1',
   data () {
@@ -151,6 +152,13 @@ export default {
         addr: ''
       }
 
+    }
+  },
+  methods: {
+    handleAdd () {
+      requestCookie({}).then(data => {
+        console.log(data)
+      })
     }
   }
 }
