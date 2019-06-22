@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import qs from 'qs'
 axios.defaults.baseURL = '/api'
 
 axios.defaults.withCredentials = true
@@ -15,8 +15,10 @@ export const editGood = params => { return axios.get(`/CommonGoods/edit`, { para
 export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }) }
 export const getInfo = params => { return axios.get(`//information`, { params: params }) }
 export const requestLogin = params => {
-  return axios.post('/login', { params }).then(res => res.data)
+  return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+  ).then(res => res.data)
 }
+// qs.stringify({params})
 
 // 测试接口
 export const requestTest = params => {
