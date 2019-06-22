@@ -66,11 +66,12 @@ export default {
       }
     },
     Todologin () {
-      console.log(this.form.UserName + this.form.Password + this.form.Remember)
+      // console.log(this.form.UserName + this.form.Password + this.form.Remember)
       // 测试接口
 
       this.loading = true
-      var Params = {username: this.username, password: this.password}
+      var Params = {username: this.form.UserName, password: this.form.Password}
+      // var Params = {username: 'admin', password: '123'}
       requestLogin(Params).then(data => {
         console.log(data)
         this.$router.push({ path: '/Mygoods' })

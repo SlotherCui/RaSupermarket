@@ -14,7 +14,7 @@ export const editGood = params => { return axios.get(`/CommonGoods/edit`, { para
 
 export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }) }
 export const requestLogin = params => {
-  return axios.post('/login', {params}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+  return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
   ).then(res => res.data)
 }
 // qs.stringify({params})
