@@ -61,7 +61,7 @@
 
     <!--新增界面-->
     <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="addFormVisible">
-      <el-form :model="addForm"   label-width="80px" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible">
+      <el-form :model="addForm"  label-position="left" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" >
         <el-form-item label="商品名称" prop="goods">
           <el-input v-model="addForm.goods" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
