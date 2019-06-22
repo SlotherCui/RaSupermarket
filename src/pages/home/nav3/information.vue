@@ -1,4 +1,5 @@
 <template>
+  <section>
   <el-form ref="form" :model="form" label-width="80px"  style="margin:20px;width:60%;min-width:600px;">
     <el-form-item label="超市名称">
       <el-input v-model="form.name"></el-input>
@@ -42,10 +43,29 @@
     <el-form-item>
       <el-button type="primary" @click="Save">保存</el-button>
       <el-button @click.native.prevent>取消</el-button>
+      <el-button type="danger" @click="PasswdChangeForm">修改密码</el-button>
     </el-form-item>
   </el-form>
+  </section>
 </template>
-
+<!--修改密码界面-->
+<el-dialog title="修改密码" v-show="changepasswdFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="changepasswdFormVisible">
+  <el-form :model="changepasswdForm"  label-position="left" :rules="changepasswdFormRules" ref="changepasswdForm" :visible.sync="changepasswdFormVisible" >
+    <el-form-item label="原密码" prop="oldpasswd">
+      <el-input v-model="changepasswdForm.oldpasswd" autocomplete="off" class="changeinput"></el-input>
+    </el-form-item>
+    <el-form-item label="新密码" prop="newpasswd1">
+      <el-input v-model="changepasswdForm.newpasswd1" autocomplete="off" class="changeinput"></el-input>
+    </el-form-item>
+    <el-form-item label="再次输入新密码" prop="newpasswd2">
+      <el-input v-model="changepasswdForm.newpasswd2" autocomplete="off" class="changeinput"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click.native="changepasswdFormVisible = false">取消</el-button>
+    <el-button type="primary" @click.native="PasswdChange" :loading="changepasswdLoading">提交</el-button>
+  </div>
+</el-dialog>
 <script>
 import { getInfo } from '../../../api/api'
 export default {
@@ -61,6 +81,25 @@ export default {
         delivery: false,
         gtype: [],
         addr: ''
+      },
+      changepasswdFormVisible: false, // 修改密码界面是否显示
+      changepasswdLoading: false,
+      changepasswdFormRules: {
+        oldpasswd: [
+          {required: true, message: '输入旧密码', trigger: 'blur'}
+        ],
+        newpasswd1: [
+          {required: true, message: '输入新密码', trigger: 'blur'}
+        ],
+        newpasswd2: [
+          {required: true, message: '请再次输入新密码', trigger: 'blur'}
+        ]
+      },
+      // 新增界面数据
+      changepasswdForm: {
+        oldpasswd: '',
+        newpasswd1: '',
+        newpasswd2: ''
       }
     }
   },
@@ -86,8 +125,17 @@ export default {
     Save (ev) {
       alert('保存成功')
       this.getInfo()
+    },
+    PasswdChangeForm: function () {
+      this.changepasswdFormVisible = true
+      this.changepasswdForm = {
+        oldpasswd: '123',
+        newpasswd1: '123',
+        newpasswd2: '123'
+      }
+    },
+    PasswdChange (ev) {
     }
-
   }
 }
 

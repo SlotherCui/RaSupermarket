@@ -23,7 +23,7 @@
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="" >
               <template slot-scope="scope" >
-                <img src="/static/good.jpg" width="150px"/>
+                <img src="/static/good.jpg" width="100px"/>
               </template>
             </el-form-item>
             <el-form-item label="商品名称:" >
@@ -60,22 +60,22 @@
       </el-table-column>
     </el-table>
     <!--编辑界面-->
-    <el-dialog title="编辑" v-show="editFormVisible" v-model="editFormVisible" :close-on-click-modal="false">
+    <el-dialog title="编辑" v-show="editFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="editFormVisible">
       <el-form :model="editForm"  :rules="editFormRules" ref="editForm" label>
         <el-form-item label="商品码" prop="barcode">
-          <el-input v-model="editForm.barcode" auto-complete="off"></el-input>
+          <el-input v-model="editForm.barcode" autocomplete="off" class="editinput"></el-input>
         </el-form-item>
-        <el-form-item label="商品名">
-          <el-input v-model="editForm.name" auto-complete="off"></el-input>
+        <el-form-item label="商品名" prop="name">
+          <el-input v-model="editForm.name" auto-complete="off" class="editinput"></el-input>
         </el-form-item>
-        <el-form-item label="价格">
-          <el-input-number v-model="editForm.price" :min="0" ></el-input-number>
+        <el-form-item label="价格" prop="price">
+          <el-input-number v-model="editForm.price" :min="0" autocomplete="off" class="editinput"></el-input-number>
         </el-form-item>
-        <el-form-item label="日期">
-          <el-date-picker type="date" placeholder="选择日期" v-model="editForm.date"></el-date-picker>
+        <el-form-item label="日期" prop="date">
+          <el-date-picker type="date" placeholder="选择日期" v-model="editForm.date" autocomplete="off" class="editinput"></el-date-picker>
         </el-form-item>
-        <el-form-item label="商品描述">
-          <el-input type="textarea" v-model="editForm.desc"></el-input>
+        <el-form-item label="商品描述" prop="desc">
+          <el-input type="textarea" v-model="editForm.desc" autocomplete="off" class="editinput"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -83,27 +83,26 @@
         <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
       </div>
     </el-dialog>
-
     <!--新增界面-->
-    <el-dialog title="编辑" v-show="addFormVisible" v-model="addFormVisible" :close-on-click-modal="false">
-      <el-form :model="addForm"  :rules="addFormRules" ref="addForm">
+    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="addFormVisible">
+      <el-form :model="addForm"  label-position="left" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" >
+        <el-form-item label="商品名称" prop="goods">
+          <el-input v-model="addForm.goods" autocomplete="off" class="addinput"></el-input>
+        </el-form-item>
         <el-form-item label="条形码" prop="barcode">
-          <el-input v-model="addForm.barcode" auto-complete="off"></el-input>
+          <el-input v-model="addForm.barcode" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
-        <el-form-item label="商品名">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
+        <el-form-item label="价格" prop="price">
+          <el-input v-model="addForm.price" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
-        <el-form-item label="价格">
-          <el-input-number v-model="addForm.price" :min="0"></el-input-number>
+        <el-form-item label="修改日期" prop="date">
+          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.date" autocomplete="off" class="addinput"></el-date-picker>
         </el-form-item>
-        <el-form-item label="日期">
-          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.date"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="商品描述">
-          <el-input type="textarea" v-model="addForm.desc"></el-input>
+        <el-form-item label="商品描述" prop="desc">
+          <el-input type="textarea" v-model="addForm.desc" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
       </el-form>
-      <div slot-scope="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
       </div>
