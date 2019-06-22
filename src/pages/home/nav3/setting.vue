@@ -2,7 +2,7 @@
   <el-form :inline="true" :model="formInline" class="settingform">
 
     <el-form-item label="语言" >
-      <el-select v-model="formInline.region" placeholder="活动区域">
+      <el-select v-model="formInline.region">
         <el-option label="中文" value="chinese"></el-option>
         <el-option label="English" value="english"></el-option>
       </el-select>
@@ -19,8 +19,7 @@ export default {
   data () {
     return {
       formInline: {
-        user: '',
-        region: ''
+        region: '中文'
       }
     }
   },
