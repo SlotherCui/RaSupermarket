@@ -11,8 +11,8 @@
         <el-col  :span="3">
           <el-dropdown trigger="hover">
             <div class="el-dropdown-link userinfo-inner">
-              小王
-              <img src="/static/Avator.jpg" />
+              {{UserName}}
+              <img :src="UserAvatar" />
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>我的消息</el-dropdown-item>
@@ -90,13 +90,24 @@ export default {
   data () {
     return {
       collapsed: false,
-      open_list: ['1', '2']
+      open_list: ['1', '2'], // 初始打开导航条
+      // 用户名 用户头像ID
+      UserName: '',
+      UserAvatar: ''
     }
   },
   methods: {
     // 折叠导航栏
     collapse: function () {
       this.collapsed = !this.collapsed
+    }
+  },
+  mounted () {
+    var user = sessionStorage.getItem('user')
+    if (user) {
+      user = JSON.parse(user)
+      this.UserName = user.name
+      this.UserAvatar = user.headpic
     }
   }
 }

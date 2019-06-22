@@ -58,7 +58,7 @@ export default {
     Logincheck () {
       if ((this.form.Password.length !== 0) && (this.form.UserName.length !== 0)) {
         console.log(this.form.UserName + this.form.Password + this.form.Remember)
-        this.Todologin ()
+        this.Todologin()
       } else {
         alert('请输入有效账号和密码！')
         this.form.UserName = ''
@@ -73,8 +73,20 @@ export default {
       var Params = {username: this.form.UserName, password: this.form.Password}
       // var Params = {username: 'admin', password: '123'}
       requestLogin(Params).then(data => {
+        this.logining = false
         console.log(data)
-        this.$router.push({ path: '/Mygoods' })
+
+        if (data.code === 0) {
+          var user = data.data
+          sessionStorage.setItem('user', JSON.stringify(user))
+          this.$router.push({ path: '/Mygoods' })
+        } else {
+          this.$message({
+            message: '登录失败',
+            center: true,
+            type: 'error'
+          })
+        }
       })
     }
   }

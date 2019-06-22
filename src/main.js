@@ -18,3 +18,16 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+// router.beforeEach((to, from, next) => {
+//   //NProgress.start();
+//   if (to.path == '/login2') {
+//     sessionStorage.removeItem('user');
+//   }
+//   let user = JSON.parse(sessionStorage.getItem('user'));
+//   if (!user && to.path != '/login2') {
+//     next({ path: '/login2' })
+//   } else {
+//     next()
+//   }
+// })

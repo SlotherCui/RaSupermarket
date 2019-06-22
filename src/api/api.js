@@ -13,6 +13,7 @@ export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchr
 export const editGood = params => { return axios.get(`/CommonGoods/edit`, { params: params }) }
 
 export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }) }
+export const getInfo = params => { return axios.get(`//information`, { params: params }) }
 export const requestLogin = params => {
   return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
   ).then(res => res.data)
