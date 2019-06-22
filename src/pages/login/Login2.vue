@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <div class="backgroundimage" v-show="!show">
       <img src="/static/Login1.png" style="width: 100%;height: 100%" class="img"/>
     </div>

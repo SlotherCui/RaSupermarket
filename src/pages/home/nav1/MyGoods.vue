@@ -41,7 +41,7 @@
       </el-pagination>
     </el-col>
     <!--编辑界面-->
-<!--    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">-->
+<!--    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">-->
 <!--      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">-->
 <!--        <el-form-item label="商品名称" prop="goods">-->
 <!--          <el-input v-model="editForm.goods" autocomplete="off" class="addinput"></el-input>-->
@@ -60,8 +60,8 @@
 <!--    </el-dialog>-->
 
     <!--新增界面-->
-    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">
-      <el-form :model="addForm"  label-width="80px" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible">
+    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="addFormVisible">
+      <el-form :model="addForm"   label-width="80px" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible">
         <el-form-item label="商品名称" prop="goods">
           <el-input v-model="addForm.goods" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
@@ -109,9 +109,20 @@ export default {
       addForm: {
         barcode: '',
         goods: '',
-        price: 0
+        price: ''
       },
       addFormRules: {
+        goods: [
+          { required: true, message: '输入商品名称', trigger: 'blur' }
+        ],
+        price: [
+          { required: true, message: '输入价格', trigger: 'blur' }
+        ],
+        barcode: [
+          { required: true, message: '输入条码', trigger: 'blur' }
+        ]
+      },
+      editFormRules: {
         goods: [
           { required: true, message: '输入商品名称', trigger: 'blur' }
         ],
@@ -138,6 +149,10 @@ export default {
       //   this.listLoading = false
       //   // NProgress.done();
       // })
+    },
+    handleEdit (index, row) {
+      this.editFormVisible = true
+      this.editForm = Object.assign({}, row)
     },
     addGoods () {
       this.addFormVisible = true
@@ -233,7 +248,7 @@ export default {
     margin: 10px 0px;
   }
   .addinput{
-    width: 300px;
+    min-width: 0px;
   }
   .el-form-item {
     margin-bottom: 10px;
