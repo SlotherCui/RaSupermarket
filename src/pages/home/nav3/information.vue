@@ -1,4 +1,5 @@
 <template>
+  <section>
   <el-form ref="form" :model="form" label-width="80px"  style="margin:20px;width:60%;min-width:600px;">
     <el-form-item label="超市名称">
       <el-input v-model="form.name"></el-input>
@@ -21,9 +22,6 @@
         <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
       </el-col>
     </el-form-item>
-    <el-form-item label="接受外送">
-      <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
-    </el-form-item>
     <el-form-item label="商品类型">
       <el-checkbox-group v-model="form.gtype">
         <el-checkbox label="食品粮油" name="gtype"></el-checkbox>
@@ -42,10 +40,35 @@
     <el-form-item>
       <el-button type="primary" @click="Save">保存</el-button>
       <el-button @click.native.prevent>取消</el-button>
+      <el-button type="danger" @click="PasswdChangeForm">修改密码</el-button>
     </el-form-item>
   </el-form>
+<!--修改密码界面-->
+<el-dialog title="修改密码" v-show="changepasswdFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="changepasswdFormVisible">
+  <el-form :model="changepasswdForm" labelWidth="80px" label-position="left">
+    <el-form-item label="旧密码">
+      <el-input type="password" v-model="changepasswdForm.oldpasswd" placeholder="请输入旧密码"></el-input>
+    </el-form-item>
+    <el-form-item v-if="visible" label="新密码">
+      <el-input type="password" v-model="changepasswdForm.newpasswd" placeholder="请输入新密码">
+        <i slot="suffix" title="显示密码" @click="changePass('show')" style="cursor:pointer;"
+           class="el-input__icon iconfont icon-xianshi"></i>
+      </el-input>
+    </el-form-item>
+    <el-form-item v-else label="新密码">
+      <el-input type="text" v-model="changepasswdForm.newpasswd" placeholder="请输入新密码">
+        <i slot="suffix" title="隐藏密码" @click="changePass('hide')" style="cursor:pointer;"
+           class="el-input__icon iconfont icon-yincang"></i>
+      </el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click.native="changepasswdFormVisible = false">取消</el-button>
+    <el-button type="primary" @click.native="PasswdChange" :loading="changepasswdLoading">提交</el-button>
+  </div>
+</el-dialog>
+  </section>
 </template>
-
 <script>
 import { getInfo } from '../../../api/api'
 export default {
@@ -61,6 +84,23 @@ export default {
         delivery: false,
         gtype: [],
         addr: ''
+      },
+      changepasswdFormVisible: false, // 修改密码界面是否显示
+      changepasswdLoading: false,
+      changepasswdFormRules: {
+        oldpasswd: [
+          {required: true, message: '输入旧密码', trigger: 'blur'}
+        ],
+        newpasswd: [
+          {required: true, message: '输入新密码', trigger: 'blur'}
+        ]
+      },
+      // 密码显示
+      visible: true,
+      // 新增界面数据
+      changepasswdForm: {
+        oldpasswd: '',
+        newpasswd: ''
       }
     }
   },
@@ -86,8 +126,20 @@ export default {
     Save (ev) {
       alert('保存成功')
       this.getInfo()
+    },
+    PasswdChangeForm: function () {
+      this.changepasswdFormVisible = true
+      this.changepasswdForm = {
+        oldpasswd: '',
+        newpasswd: ''
+      }
+    },
+    PasswdChange (ev) {
+    },
+    // 判断渲染，true:暗文显示，false:明文显示
+    changePass (value) {
+      this.visible = !(value === 'show')
     }
-
   }
 }
 
