@@ -38,10 +38,10 @@ export default new Router({
       component: Home,
       children: [
         // { path: '/main', component: Main, name: '主页', hidden: true },
-        {path: '/Mygoods', component: Find, name: 'find'},
-        {path: '/CommonGoods', component: GoodsManager, name: 'good'},
-        {path: '/PriceChange', component: SellsManager, name: 'sell'},
-        {path: '/RelationShip', component: RelationShip, name: 'relationShip'}
+        {path: '/Mygoods', component: Find, name: '商家商品维护'},
+        {path: '/CommonGoods', component: GoodsManager, name: '公共商品浏览'},
+        {path: '/PriceChange', component: SellsManager, name: '商品改价功能'},
+        {path: '/RelationShip', component: RelationShip, name: '改价关系维护'}
       ]
     },
     {
@@ -50,8 +50,8 @@ export default new Router({
       component: Home,
       children: [
         // { path: '/main', component: Main, name: '主页', hidden: true },
-        {path: '/sells', component: page1, name: 'page1'},
-        {path: '/chart', component: chart, name: 'chart'}
+        {path: '/sells', component: page1, name: '销售记录'},
+        {path: '/chart', component: chart, name: '图表统计'}
       ]
     },
     {

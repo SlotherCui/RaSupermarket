@@ -68,6 +68,7 @@ export default {
     Todologin () {
       console.log(this.form.UserName + this.form.Password + this.form.Remember)
       // 测试接口
+
       this.loading = true
       var Params = {username: this.username, password: this.password}
       requestLogin(Params).then(data => {
