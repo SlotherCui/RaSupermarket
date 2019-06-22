@@ -62,8 +62,8 @@
     </el-col>
 
     <!--编辑界面-->
-    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
-      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm" label>
+    <el-dialog title="编辑" v-show="editFormVisible" v-model="editFormVisible" :close-on-click-modal="false">
+      <el-form :model="editForm"  :rules="editFormRules" ref="editForm" label>
         <el-form-item label="商品码" prop="barcode">
           <el-input v-model="editForm.barcode" auto-complete="off"></el-input>
         </el-form-item>
@@ -71,7 +71,7 @@
           <el-input v-model="editForm.name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="价格">
-          <el-input-number v-model="editForm.price" :min="0" :max="200"></el-input-number>
+          <el-input-number v-model="editForm.price" :min="0" ></el-input-number>
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker type="date" placeholder="选择日期" v-model="editForm.date"></el-date-picker>
@@ -96,7 +96,7 @@
           <el-input v-model="addForm.name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="价格">
-          <el-input-number v-model="addForm.price" :min="0" :max="200"></el-input-number>
+          <el-input-number v-model="addForm.price" :min="0"></el-input-number>
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker type="date" placeholder="选择日期" v-model="addForm.date"></el-date-picker>
@@ -125,7 +125,7 @@ export default {
         baocode: ''
       },
       users: [],
-      total: 0,
+      total: 20,
       page: 1,
       listLoading: false,
       sels: [], // 列表选中列
@@ -133,6 +133,12 @@ export default {
       editFormVisible: false, // 编辑界面是否显示
       editLoading: false,
       editFormRules: {
+        name: [
+          { required: true, message: '输入商品名称', trigger: 'blur' }
+        ],
+        price: [
+          { required: true, message: '输入价格', trigger: 'blur' }
+        ],
         barcode: [
           { required: true, message: '条形码', trigger: 'blur' }
         ]
