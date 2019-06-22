@@ -45,15 +45,21 @@
   </el-form>
 <!--修改密码界面-->
 <el-dialog title="修改密码" v-show="changepasswdFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="changepasswdFormVisible">
-  <el-form :model="changepasswdForm"  label-position="left" :rules="changepasswdFormRules" ref="changepasswdForm" :visible.sync="changepasswdFormVisible" >
-    <el-form-item label="原密码" prop="oldpasswd">
-      <el-input v-model="changepasswdForm.oldpasswd" autocomplete="off" class="changeinput"></el-input>
+  <el-form :model="changepasswdForm" labelWidth="80px" label-position="left">
+    <el-form-item label="旧密码">
+      <el-input type="password" v-model="changepasswdForm.oldpasswd" placeholder="请输入旧密码"></el-input>
     </el-form-item>
-    <el-form-item label="新密码" prop="newpasswd1">
-      <el-input v-model="changepasswdForm.newpasswd1" autocomplete="off" class="changeinput"></el-input>
+    <el-form-item v-if="visible" label="新密码">
+      <el-input type="password" v-model="changepasswdForm.newpasswd" placeholder="请输入新密码">
+        <i slot="suffix" title="显示密码" @click="changePass('show')" style="cursor:pointer;"
+           class="el-input__icon iconfont icon-xianshi"></i>
+      </el-input>
     </el-form-item>
-    <el-form-item label="再次输入新密码" prop="newpasswd2">
-      <el-input v-model="changepasswdForm.newpasswd2" autocomplete="off" class="changeinput"></el-input>
+    <el-form-item v-else label="新密码">
+      <el-input type="text" v-model="changepasswdForm.newpasswd" placeholder="请输入新密码">
+        <i slot="suffix" title="隐藏密码" @click="changePass('hide')" style="cursor:pointer;"
+           class="el-input__icon iconfont icon-yincang"></i>
+      </el-input>
     </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
@@ -85,18 +91,16 @@ export default {
         oldpasswd: [
           {required: true, message: '输入旧密码', trigger: 'blur'}
         ],
-        newpasswd1: [
+        newpasswd: [
           {required: true, message: '输入新密码', trigger: 'blur'}
-        ],
-        newpasswd2: [
-          {required: true, message: '请再次输入新密码', trigger: 'blur'}
         ]
       },
+      // 密码显示
+      visible: true,
       // 新增界面数据
       changepasswdForm: {
         oldpasswd: '',
-        newpasswd1: '',
-        newpasswd2: ''
+        newpasswd: ''
       }
     }
   },
@@ -126,12 +130,15 @@ export default {
     PasswdChangeForm: function () {
       this.changepasswdFormVisible = true
       this.changepasswdForm = {
-        oldpasswd: '123',
-        newpasswd1: '123',
-        newpasswd2: '123'
+        oldpasswd: '',
+        newpasswd: ''
       }
     },
     PasswdChange (ev) {
+    },
+    // 判断渲染，true:暗文显示，false:明文显示
+    changePass (value) {
+      this.visible = !(value === 'show')
     }
   }
 }
