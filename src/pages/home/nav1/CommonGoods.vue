@@ -1,13 +1,14 @@
 <template>
   <section>
+    <!--公共商品信息-->
     <!--工具条-->
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.name" placeholder="商品名"></el-input>
+          <el-input v-model="filters.id" placeholder="条码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsers">查询</el-button>
+          <el-button type="primary" v-on:click="getGoods">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -16,7 +17,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+    <el-table :data="goodslist" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-form-item label="商品名称">
@@ -38,13 +39,13 @@
       </el-table-column>
       <el-table-column type="index" width="60">
       </el-table-column>
-      <el-table-column prop="id" label="商品码" width="120" sortable>
+      <el-table-column prop="barcode" label="条形码" width="120" sortable>
       </el-table-column>
       <el-table-column prop="name" label="商品名" width="200"  sortable>
       </el-table-column>
       <el-table-column prop="price" label="价格" width="180" sortable>
       </el-table-column>
-      <el-table-column prop="price" label="描述" width="250" sortable>
+      <el-table-column prop="desc" label="描述" width="250" sortable>
       </el-table-column>
       <el-table-column label="操作" width="150">
         <template scope="scope">
@@ -63,7 +64,7 @@
     <!--编辑界面-->
     <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
       <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm" label>
-        <el-form-item label="商品码" prop="id">
+        <el-form-item label="商品码" prop="barcode">
           <el-input v-model="editForm.id" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="商品名">
@@ -88,7 +89,7 @@
     <!--新增界面-->
     <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
       <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-        <el-form-item label="商品码" prop="id">
+        <el-form-item label="条形码" prop="barcode">
           <el-input v-model="editForm.id" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="商品名">
@@ -121,7 +122,7 @@ export default {
   data () {
     return {
       filters: {
-        name: ''
+        id: ''
       },
       users: [],
       total: 0,
@@ -132,8 +133,8 @@ export default {
       editFormVisible: false, // 编辑界面是否显示
       editLoading: false,
       editFormRules: {
-        name: [
-          { required: true, message: '请输入名字', trigger: 'blur' }
+        id: [
+          { required: true, message: '条形码', trigger: 'blur' }
         ]
       },
       // 编辑界面数据
@@ -148,8 +149,8 @@ export default {
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
       addFormRules: {
-        name: [
-          { required: true, message: '请输入名字', trigger: 'blur' }
+        barcode: [
+          { required: true, message: '条形码', trigger: 'blur' }
         ]
       },
       // 新增界面数据
@@ -172,7 +173,7 @@ export default {
     getGoods () {
       let para = {
         page: this.page,
-        name: this.filters.name
+        id: this.filters.id
       }
       this.listLoading = true
       // NProgress.start();
