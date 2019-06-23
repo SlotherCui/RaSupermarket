@@ -14,12 +14,11 @@
         </el-form-item>
       </el-form>
     </el-col>
-
     <!--列表-->
     <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand" v-for="infor in props.row.infors">
+          <el-form label-position="left" inline="true" class="demo-table-expand" v-for="infor in props.row.infors" :key="infor.barcode" size="small">
             <el-form-item label="条码">
               <span>{{ infor.barcode}}</span>
             </el-form-item>
@@ -55,7 +54,6 @@
         </template>
       </el-table-column>
     </el-table>
-
     <!--工具条-->
     <el-col :span="24" class="toolbar">
       <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
@@ -205,10 +203,11 @@ export default {
     margin-bottom: 0;
     width: 25%;
   }
-.toolbar
-  background: #f2f2f2;
-  padding: 10px;
-  margin: 10px 0px
+  .toolbar {
+    background: #f2f2f2;
+    padding: 10px;
+    margin: 10px 0px
+  }
   .el-form-item
     margin-bottom: 10px;
 </style>
