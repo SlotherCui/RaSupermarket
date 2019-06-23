@@ -49,7 +49,7 @@ export default {
       filters: {
         barcode: ''
       },
-      new_price: 0
+      new_price: ''
     }
   }
 }

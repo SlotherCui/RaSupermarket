@@ -17,6 +17,7 @@ const cn = {
     'goods_model': '规格型号',
     'goods_price': '价格',
     'goods_describe': '商品描述',
+    'goods_supplier_id': '商品供应商',
     // 商品详情,依然需要带上以上商品表头信息
     'goods_brand': '商品商标',
     'goods_producer': '商品厂家',

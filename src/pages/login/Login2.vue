@@ -6,9 +6,10 @@
     <div class="touming" v-show="show">
       <img src="/static/Login1.png" style="width: 100%;height: 100%" class="img"/>
     </div>
+    <!--<i style="margin-left: 57px" class="el-icon-setting"></i>-->
     <div class="Loginbox" @mouseenter="show=!show" @mouseleave="show=!show">
       <el-form ref="form" :model="form" :rules="rules"  class="demo-ruleForm login-container">
-        <h2>用户登录</h2>
+        <h2>用户登录  </h2>
         <el-form-item prop="UserName">
           <el-input class="input" auto-complete="off" placeholder="用户名" prefix-icon="el-icon-user" v-model="form.UserName" clearable></el-input>
         </el-form-item>

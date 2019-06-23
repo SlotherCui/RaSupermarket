@@ -7,7 +7,7 @@
         <el-option label="English" value="en"></el-option>
       </el-select>
       <!--实例 $t必须有-->
-      <p>{{$t('message.lang')}}</p>
+      <!--<p>{{$t('message.lang')}}</p>-->
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">应用</el-button>
