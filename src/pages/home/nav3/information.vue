@@ -1,41 +1,33 @@
-'supermarket_name': '超市名称',
-'supermarket_manager_name': '超市负责人名称',
-'supermarket_piclink': '超市头像链接',
-'supermarket_address': '超市地址',
-'supermarket_tel': '超市电话',
-'supermarket_tax': '超市税号',
-'supermarket_email': '超市邮箱',
-'supermarket_decription': '超市描述',
 <template>
   <section>
   <el-form ref="form" :model="form"  label-width="80px"  style="margin:20px;width:60%;min-width:600px;">
-    <el-form-item :label="$t('message.supermarket_name')">
+    <el-form-item :label="$t('message.supermarket_name')" label-width="150px">
       <el-input v-model="form.name" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item :label="$t('message.supermarket_manager_name')">
+    <el-form-item :label="$t('message.supermarket_manager_name')" label-width="150px">
       <el-input v-model="form.mnama" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item :label="$t('message.supermarket_piclink')">
+    <el-form-item :label="$t('message.supermarket_piclink')" label-width="150px">
       <el-input v-model="form.piclink" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item :label="$t('message.supermarket_address')">
+    <el-form-item :label="$t('message.supermarket_address')" label-width="150px">
       <el-input v-model="form.addr" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item :label="$t('message.supermarket_tel')">
+    <el-form-item :label="$t('message.supermarket_tel')" label-width="150px">
       <el-input v-model="form.tel" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item :label="$t('message.supermarket_tax')">
+    <el-form-item :label="$t('message.supermarket_tax')" label-width="150px">
       <el-input v-model="form.tax" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item :label="$t('message.supermarket_email')">
+    <el-form-item :label="$t('message.supermarket_email')" label-width="150px">
       <el-input v-model="form.email" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item :label="$t('message.supermarket_decription')">
-      <el-input v-model="form.desc" :disabled="inputDisabled"></el-input>
+    <el-form-item :label="$t('message.supermarket_decription')" label-width="150px">
+      <el-input type="textarea" v-model="form.desc" :disabled="inputDisabled"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button @click.native.prevent type="primary" v-show="editVisible" :visible.sync="editVisible" @click="edit">编辑</el-button>
-      <el-button @click.native.prevent type="success" v-show="setvisible" :visible.sync="setvisible" @click="Save">保存</el-button>
+      <el-button @click.native.prevent type="primary" v-show="editVisible" :visible.sync="editVisible" @click="edit">{{$t('message.edit')}}</el-button>
+      <el-button @click.native.prevent type="success" v-show="setvisible" :visible.sync="setvisible" @click="Save">{{$t('message.confirm')}}</el-button>
       <el-button @click.native.prevent v-show="setvisible" :visible.sync="setvisible" @click="quit">取消</el-button>
       <el-button type="danger" @click="PasswdChangeForm">修改密码</el-button>
     </el-form-item>
@@ -94,7 +86,7 @@ export default {
       // 密码显示
       visible: true,
       // 输入框可写
-      inputDisabled: false,
+      inputDisabled: true,
       // 保存按钮显示
       setvisible: false,
       // 修改按钮显示
