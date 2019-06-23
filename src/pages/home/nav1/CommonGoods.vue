@@ -59,6 +59,10 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-col :span="24" class="toolbar2">
+      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+      </el-pagination>
+    </el-col>
     <!--编辑界面-->
     <el-dialog title="编辑" v-show="editFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="editFormVisible">
       <el-form :model="editForm"  :rules="editFormRules" ref="editForm" label>
