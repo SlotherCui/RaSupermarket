@@ -37,28 +37,28 @@
           <el-submenu index="1" >
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>商品信息维护</span>
+              <span>{{$t('message.My_goods')}}</span>
             </template>
-              <el-menu-item index="Mygoods">商家商品维护</el-menu-item>
-              <el-menu-item index="CommonGoods">公共商品浏览</el-menu-item>
-              <el-menu-item index="PriceChange">商品改价功能</el-menu-item>
-              <el-menu-item index="RelationShip">改价关系维护</el-menu-item>
+              <el-menu-item index="Mygoods">{{$t('message.My_goods')}}</el-menu-item>
+              <el-menu-item index="CommonGoods">{{$t('message.common_goods')}}</el-menu-item>
+              <el-menu-item index="PriceChange">{{$t('message.shop_change_price')}}</el-menu-item>
+              <el-menu-item index="RelationShip">{{$t('message.shop_change_relation')}}</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-menu"></i>
-              <span>销售记录</span>
+              <span>{{$t('message.sells')}}</span>
             </template>
-            <el-menu-item index="sells">销售记录</el-menu-item>
-            <el-menu-item index="chart">图表统计</el-menu-item>
+            <el-menu-item index="sells">{{$t('message.sells')}}</el-menu-item>
+            <el-menu-item index="chart">{{$t('message.chart')}}</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-setting"></i>
-              <span>设置</span>
+              <span>{{$t('message.other_setting')}}</span>
             </template>
-            <el-menu-item index="information">商户信息管理</el-menu-item>
-            <el-menu-item index="setting">其他设置</el-menu-item>
+            <el-menu-item index="information">{{$t('message.shop_information')}}</el-menu-item>
+            <el-menu-item index="setting">{{$t('message.other_setting')}}</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -70,7 +70,7 @@
       <section class="content-container">
         <div class="grid-content bg-purple-light">
           <el-col :span="24" class="breadcrumb-container">
-            <strong class="title">{{$route.name}}</strong>
+            <strong class="title" >{{ $t('message["'+ $route.name+'"]') }}</strong>
           </el-col>
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
