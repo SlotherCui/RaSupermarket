@@ -17,6 +17,18 @@
 
     <!--列表-->
     <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+      <el-table-column type="expand" width="55">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="详情">
+              <span>{{ props.row.information}}</span>
+            </el-form-item>
+            <el-form-item label="进价">
+              <span>{{ props.row.inprice }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column type="selection" width="55">
       </el-table-column>
       <el-table-column type="index" width="60">
@@ -31,9 +43,8 @@
       </el-table-column>
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->
-      <el-table-column label="操作" width="150">
+      <el-table-column label="操作" width="90">
         <template scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
