@@ -17,7 +17,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="goodslist"  style="width: 100%;">
+    <el-table :data="goodslist"  style="width: 100%;" >
       <el-table-column type="expand" width="50">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -36,6 +36,9 @@
             </el-form-item>
             <el-form-item :label="$t('message.goods_brand')" >
               <span>{{ props.row.brand }}</span>
+            </el-form-item>
+            <el-form-item label="供应商" >
+              <span>{{ props.row.gys }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_model')">
               <span>{{ props.row.model }}</span>
@@ -56,11 +59,13 @@
       </el-table-column>
       <el-table-column prop="barcode" :label="$t('message.goods_barcode')" width="120" sortable>
       </el-table-column>
-      <el-table-column prop="name" :label="$t('message.goods_name')" width="200"  sortable>
+      <el-table-column prop="name" :label="$t('message.goods_name')" width="150"  sortable>
       </el-table-column>
-      <el-table-column prop="model" :label="$t('message.goods_model')" width="200"  sortable>
+      <el-table-column prop="model" :label="$t('message.goods_model')" width="100"  sortable>
       </el-table-column>
-      <el-table-column prop="price" :label="$t('message.goods_price')" width="180" sortable>
+      <el-table-column prop="price" :label="$t('message.goods_price')" width="100" sortable>
+      </el-table-column>
+      <el-table-column prop="供应商" label="供应商" width="180" sortable>
       </el-table-column>
       <el-table-column prop="desc" :label="$t('message.goods_describe')" min_width="250" sortable>
       </el-table-column>
@@ -109,6 +114,9 @@
         <el-form-item :label="$t('message.goods_price')" prop="price">
           <el-input v-model="editForm.price" autocomplete="off" class="editinput"></el-input>
         </el-form-item>
+        <el-form-item label="供应商" prop="供应商">
+          <el-input v-model="editForm.gys" autocomplete="off" class="editinput"></el-input>
+        </el-form-item>
         <el-form-item :label="$t('message.goods_producer')" prop="producer">
           <el-input v-model="editForm.producer"  class="editinput"></el-input>
         </el-form-item>
@@ -154,6 +162,9 @@
         </el-form-item>
         <el-form-item :label="$t('message.goods_price')" prop="price">
           <el-input v-model="addForm.price" autocomplete="off" class="addinput"></el-input>
+        </el-form-item>
+        <el-form-item label="供应商" prop="供应商">
+          <el-input v-model="addForm.gys" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_producer')" prop="producer">
           <el-input v-model="addForm.producer"  class="addinput"></el-input>
@@ -210,7 +221,8 @@ export default {
         desc: '荷兰优质淡奶，奶香浓而不腻',
         brand: '蟑螂恶霸',
         model: '20',
-        producer: '恶霸蟑螂'
+        producer: '恶霸蟑螂',
+        gys: '山东'
       },
       {
         barcode: 12987122,
@@ -220,7 +232,8 @@ export default {
         desc: '荷兰优质淡奶，奶香浓而不腻',
         brand: '蟑螂恶霸',
         model: '20',
-        producer: '恶霸蟑螂'
+        producer: '恶霸蟑螂',
+        gys: '山东'
       }
       ],
       editFormVisible: false, // 编辑界面是否显示
@@ -249,6 +262,9 @@ export default {
         ],
         desc: [
           { required: true, message: '商品描述', trigger: 'blur' }
+        ],
+        gys: [
+          { required: true, message: '供应商', trigger: 'blur' }
         ]
       },
       // 编辑界面数据
@@ -260,7 +276,8 @@ export default {
         desc: '',
         brand: '',
         prodecer: '',
-        img: '/static/good.jpg'
+        img: '/static/good.jpg',
+        gys :''
       },
 
       addFormVisible: false, // 新增界面是否显示
@@ -289,6 +306,9 @@ export default {
         ],
         desc: [
           { required: true, message: '商品描述', trigger: 'blur' }
+        ],
+        gys: [
+          { required: true, message: '供应商', trigger: 'blur' }
         ]
       },
       // 新增界面数据
@@ -300,7 +320,8 @@ export default {
         desc: '',
         brand: '',
         prodecer: '',
-        img: ''
+        img: '',
+        gys: ''
       }
 
     }
@@ -409,7 +430,6 @@ export default {
     this.getGoods()
   }
 }
-
 </script>
 
 <style scoped lang="stylus">
