@@ -5,7 +5,7 @@
     <el-col :span="24" class="toolbar" >
       <el-form :inline="true" :model="mygoodsfilters">
         <el-form-item>
-          <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.bar_code')"></el-input>
+          <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.goods_barcode')"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
@@ -53,11 +53,15 @@
       </el-table-column>
       <el-table-column type="index" width="60">
       </el-table-column>
-      <el-table-column prop="barcode" :label="$t('message.bar_code')" width="150" sortable>
+      <el-table-column prop="barcode" :label="$t('message.goods_barcode')" width="150" sortable>
       </el-table-column>
-      <el-table-column prop="goods" :label="$t('message.goods')" width="150"  sortable>
+      <el-table-column prop="goods" :label="$t('message.goods_name')" width="150"  sortable>
       </el-table-column>
-      <el-table-column prop="price" :label="$t('message.price')" min-width=" 180" sortable>
+      <el-table-column prop="specification_model" :label="$t('message.goods_model')" width=" 180" sortable>
+      </el-table-column>
+      <el-table-column prop="price" :label="$t('message.goods_price')" width=" 180" sortable>
+      </el-table-column>
+      <el-table-column prop="goods_describe" :label="$t('message.goods_describe')" min-width=" 180" sortable>
       </el-table-column>
       <el-table-column :label="$t('message.operation')"  width=" 150" >
         <template scope="scope">
