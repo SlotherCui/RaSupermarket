@@ -18,7 +18,7 @@
 
     <!--列表-->
     <el-table :data="goodslist"  style="width: 100%;">
-      <el-table-column type="expand" width="200">
+      <el-table-column type="expand" width="50">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="" >
@@ -51,7 +51,7 @@
       </el-table-column>
       <el-table-column prop="price" label="价格(/元)" width="180" sortable>
       </el-table-column>
-      <el-table-column prop="desc" label="描述" width="250" sortable>
+      <el-table-column prop="desc" label="描述" min_width="250" sortable>
       </el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
