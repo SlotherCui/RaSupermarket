@@ -5,14 +5,14 @@
     <el-col :span="24" class="toolbar" >
       <el-form :inline="true" :model="mygoodsfilters">
         <el-form-item>
-          <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.goods_barcode')"></el-input>
+          <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="addGoods">{{$t('message.add')}}</el-button>
-        </el-form-item>
+        <!--<el-form-item>-->
+          <!--<el-button type="primary" @click="addGoods">{{$t('message.add')}}</el-button>-->
+        <!--</el-form-item>-->
       </el-form>
     </el-col>
 
@@ -54,7 +54,7 @@
       </el-table-column>
       <el-table-column prop="goods_price" :label="$t('message.goods_price')" width=" 100" sortable>
       </el-table-column>
-      <el-table-column prop="goods_ID" label="供应商ID" width=" 130" sortable>
+      <el-table-column prop="goods_ID" :label="$t('message.goods_supplier_id')" width=" 130" sortable>
       </el-table-column>
       <el-table-column prop="goods_inprice" label="进价" width=" 100" sortable>
       </el-table-column>

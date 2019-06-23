@@ -3,23 +3,33 @@
   <el-form ref="form" :model="form"  label-width="80px"  style="margin:20px;width:60%;min-width:600px;">
     <el-form-item :label="$t('message.supermarket_img')" label-width="150px" prop="img">
       <el-form-item label="" prop="name">
-        <template slot-scope="scope" >
-          <img src="/static/good.jpg" width="100px"/>
-        </template>
+        <!--<template slot-scope="scope" >-->
+          <!--<img src="/static/good.jpg" width="100px"/>-->
+        <!--</template>-->
+        <el-upload
+          class="avatar-uploader"
+          :show-file-list="false"
+          :on-success="uploadSuccess"
+          :before-upload="onBeforeUpload">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
-      <el-upload
-        :action="uploadActionUrl"
-        accept="image/jpeg,image/gif,image/png"
-        multiple
-        :limit="3"
-        :on-exceed="handleExceed"
-        :on-error="uploadError"
-        :on-success="uploadSuccess"
-        :on-remove="onRemoveTxt"
-        :before-upload="onBeforeUpload"
-        :file-list="files">
-        <el-button size="small" type="primary">点击修改</el-button>
-      </el-upload>
+      <!--<el-upload-->
+        <!--:action="uploadActionUrl"-->
+        <!--accept="image/jpeg,image/gif,image/png"-->
+        <!--multiple-->
+        <!--:limit="3"-->
+        <!--:on-exceed="handleExceed"-->
+        <!--:on-error="uploadError"-->
+        <!--:on-success="uploadSuccess"-->
+        <!--:on-remove="onRemoveTxt"-->
+        <!--:before-upload="onBeforeUpload"-->
+        <!--:file-list="files">-->
+        <!--<el-button size="small" type="primary">点击修改</el-button>-->
+      <!--</el-upload>-->
+      <!--action="https://jsonplaceholder.typicode.com/posts/"-->
+
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_name')" label-width="150px">
       <el-input v-model="form.name" :disabled="inputDisabled"></el-input>
@@ -27,9 +37,9 @@
     <el-form-item :label="$t('message.supermarket_manager_name')" label-width="150px">
       <el-input v-model="form.mnama" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item :label="$t('message.supermarket_piclink')" label-width="150px">
-      <el-input v-model="form.piclink" :disabled="inputDisabled"></el-input>
-    </el-form-item>
+    <!--<el-form-item :label="$t('message.supermarket_piclink')" label-width="150px">-->
+      <!--<el-input v-model="form.piclink" :disabled="inputDisabled"></el-input>-->
+    <!--</el-form-item>-->
     <el-form-item :label="$t('message.supermarket_address')" label-width="150px">
       <el-input v-model="form.addr" :disabled="inputDisabled"></el-input>
     </el-form-item>
@@ -78,11 +88,37 @@
 </el-dialog>
   </section>
 </template>
+<style scoped>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 128px;
+    height: 128px;
+    display: block;
+  }
+</style>
 <script>
 import { getInfo } from '../../../api/api'
 export default {
   data () {
     return {
+      imageUrl: '/static/Avator.jpg',
       form: {
         name: '德玛西亚超市',
         tax: '110',

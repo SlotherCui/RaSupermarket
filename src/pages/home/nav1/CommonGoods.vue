@@ -5,7 +5,7 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.barcode" placeholder="条码"></el-input>
+          <el-input v-model="filters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
@@ -37,7 +37,7 @@
             <el-form-item :label="$t('message.goods_brand')" >
               <span>{{ props.row.brand }}</span>
             </el-form-item>
-            <el-form-item label="供应商" >
+            <el-form-item :label="$t('message.goods_supplier_id')" >
               <span>{{ props.row.gys }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_model')">
@@ -55,23 +55,22 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column type="selection">
-      </el-table-column>
       <el-table-column prop="barcode" :label="$t('message.goods_barcode')" width="120" sortable>
+      </el-table-column>
+      <el-table-column prop="gys" :label="$t('message.goods_supplier_id')" width="130" sortable>
       </el-table-column>
       <el-table-column prop="name" :label="$t('message.goods_name')" width="150"  sortable>
       </el-table-column>
-      <el-table-column prop="model" :label="$t('message.goods_model')" width="100"  sortable>
+      <el-table-column prop="model" :label="$t('message.goods_model')" width="130"  sortable>
       </el-table-column>
-      <el-table-column prop="price" :label="$t('message.goods_price')" width="100" sortable>
+      <el-table-column prop="price" :label="$t('message.goods_price')" width="120" sortable>
       </el-table-column>
-      <el-table-column prop="供应商" label="供应商" width="180" sortable>
+      <el-table-column prop="desc" :label="$t('message.goods_describe')" min_width="200" sortable>
       </el-table-column>
-      <el-table-column prop="desc" :label="$t('message.goods_describe')" min_width="250" sortable>
-      </el-table-column>
-      <el-table-column :label="$t('message.operation')" width="150">
+      <el-table-column :label="$t('message.operation')" width="250">
         <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.edit')}}</el-button>
+          <el-button size="small" type="success">{{$t('message.put_in')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -114,7 +113,7 @@
         <el-form-item :label="$t('message.goods_price')" prop="price">
           <el-input v-model="editForm.price" autocomplete="off" class="editinput"></el-input>
         </el-form-item>
-        <el-form-item label="供应商" prop="供应商">
+        <el-form-item :label="$t('message.goods_supplier_id')" prop="gys">
           <el-input v-model="editForm.gys" autocomplete="off" class="editinput"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_producer')" prop="producer">
@@ -163,7 +162,7 @@
         <el-form-item :label="$t('message.goods_price')" prop="price">
           <el-input v-model="addForm.price" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
-        <el-form-item label="供应商" prop="供应商">
+        <el-form-item :label="$t('message.goods_supplier_id')" prop="gys">
           <el-input v-model="addForm.gys" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_producer')" prop="producer">
@@ -222,7 +221,7 @@ export default {
         brand: '蟑螂恶霸',
         model: '20',
         producer: '恶霸蟑螂',
-        gys: '山东'
+        gys: '2178268741'
       },
       {
         barcode: 12987122,
@@ -233,7 +232,7 @@ export default {
         brand: '蟑螂恶霸',
         model: '20',
         producer: '恶霸蟑螂',
-        gys: '山东'
+        gys: '2178268741'
       }
       ],
       editFormVisible: false, // 编辑界面是否显示

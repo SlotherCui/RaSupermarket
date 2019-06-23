@@ -19,21 +19,23 @@
     <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column type="index" width="60">
-      </el-table-column>
+      <!--<el-table-column type="index" width="60">-->
+      <!--</el-table-column>-->
       <el-table-column prop="shop_id" label="商家编号" width="150" sortable>
       </el-table-column>
       <el-table-column prop="shop_name" label="商家名称" width="150" sortable>
       </el-table-column>
       <el-table-column prop="shop_phone" label="商家电话"  width="150" sortable>
       </el-table-column>
-      <el-table-column prop="shop_addr" label="商家地址" min-width="180" sortable>
+      <el-table-column prop="shop_addr" label="商家地址" min-width="150" sortable>
+      </el-table-column>
+      <el-table-column prop="shop_describe" label="商家描述" min-width="180" sortable>
       </el-table-column>
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->
       <el-table-column label="操作" width="150">
         <template scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">开启</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -117,8 +119,9 @@ export default {
       sells: [{
         shop_id: 124547,
         shop_name: '附近超市',
-        shop_addr: '房价多少了看风景卢卡斯飞机打瞌睡啦就;',
-        shop_phone: 18340018831
+        shop_addr: '山东省济南市历下区舜华路1500号',
+        shop_phone: 18340018831,
+        shop_describe: '山东大学软件学院学生生活超市'
 
       }],
       total: 0,

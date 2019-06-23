@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="backgroundimage" v-show="!show">
-      <img src="/static/Login1.png" style="width: 100%;height: 100%" class="img"/>
+      <img src="/static/login1.png" style="width: 100%;height: 100%" class="img"/>
     </div>
     <div class="touming" v-show="show">
-      <img src="/static/Login1.png" style="width: 100%;height: 100%" class="img"/>
+      <img src="/static/login1.png" style="width: 100%;height: 100%" class="img"/>
     </div>
     <!--<i style="margin-left: 57px" class="el-icon-setting"></i>-->
     <div class="Loginbox" @mouseenter="show=!show" @mouseleave="show=!show">

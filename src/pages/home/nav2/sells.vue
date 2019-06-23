@@ -19,38 +19,41 @@
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-form label-position="left" inline="true" class="demo-table-expand" v-for="infor in props.row.infors" :key="infor.barcode" size="small">
-            <el-form-item label="条码">
-              <span>{{ infor.barcode}}</span>
+            <el-form-item :label="$t('message.order_goods_barcode')">
+              <span>{{ infor.order_goods_barcode}}</span>
             </el-form-item>
-            <el-form-item label="商品">
-              <span>{{ infor.goods}}</span>
+            <el-form-item :label="$t('message.order_goods_name')">
+              <span>{{ infor.order_goods_name}}</span>
             </el-form-item>
-            <el-form-item label="数量">
-              <span>{{ infor.num }}</span>
+            <el-form-item :label="$t('message.order_goods_model')">
+              <span>{{ infor.order_goods_model }}</span>
             </el-form-item>
-            <el-form-item label="单价">
-              <span>{{ infor.price }}</span>
+            <el-form-item :label="$t('message.order_goods_num')">
+              <span>{{ infor.order_goods_num }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('message.order_goods_price')">
+              <span>{{ infor.order_goods_price }}</span>
             </el-form-item>
           </el-form>
         </template>
       </el-table-column>
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column prop="sell_id" label="销售编号" width="150" sortable>
+      <el-table-column prop="order_id" :label="$t('message.order_id')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="total_price" label="销售总价" width="150" sortable>
+      <el-table-column prop="order_num" :label="$t('message.order_num')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="sell_time" label="销售时间" width="150" sortable>
+      <el-table-column prop="order_price" :label="$t('message.order_price')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="num_of_goods" label="商品总数" min-width="180" sortable>
+      <el-table-column prop="order_time" :label="$t('message.order_time')" min-width="200" sortable>
       </el-table-column>
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->
-      <el-table-column label="操作" width="90">
-        <template scope="scope">
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
+      <!--<el-table-column label="操作" width="90">-->
+        <!--<template scope="scope">-->
+          <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">

@@ -17,7 +17,7 @@ const cn = {
     'goods_model': '规格型号',
     'goods_price': '价格',
     'goods_describe': '商品描述',
-    'goods_supplier_id': '商品供应商',
+    'goods_supplier_id': '供应商编号',
     // 商品详情,依然需要带上以上商品表头信息
     'goods_brand': '商品商标',
     'goods_producer': '商品厂家',
@@ -26,7 +26,7 @@ const cn = {
     // 销售记录
     'order_id': '销售编号',
     'order_price': '销售总价',
-    'order_num': '销售个数',
+    'order_num': '销售总数',
     'order_time': '销售时间',
     // 具体销售条目
     'order_goods_barcode': '条码号',
@@ -35,7 +35,7 @@ const cn = {
     'order_goods_num': '产品个数',
     'order_goods_price': '产品价格',
     // 商家信息
-    'supermarket_img': '超市图片',
+    'supermarket_img': '超市头像',
     'supermarket_name': '超市名称',
     'supermarket_manager_name': '超市负责人名称',
     'supermarket_piclink': '超市头像链接',
@@ -53,8 +53,10 @@ const cn = {
     'batchDelete': '批量删除',
     'confirm': '确认修改',
     'team_price_change': '组改价',
-    'relation_price_change': '联动改价'
+    'relation_price_change': '联动改价',
+    'put_in': '添加到商品库',
     // 其他占位符等...
+    'please_input_bar': '请输入条码号'
   },
   ...zhLocale
 }
