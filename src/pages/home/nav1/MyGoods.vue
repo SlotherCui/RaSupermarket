@@ -17,7 +17,8 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="goodslist" stripe highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+
+    <el-table :data="goodslist" stripe="true" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-row>
@@ -36,6 +37,8 @@
             <el-col :span="9">
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_brand')}}</span><span>{{props.row.goods_brand}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_producer')}}</span><span>{{props.row.goods_producer}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">供应商ID</span><span>{{props.row.goods_ID}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">供应价格</span><span>{{props.row.goods_inprice}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_describe')}}</span><span>{{props.row.goods_describe}}</span></div>
             </el-col>
           </el-row>
@@ -45,11 +48,15 @@
       </el-table-column>
       <el-table-column prop="goods_barcode" :label="$t('message.goods_barcode')" width="150" sortable>
       </el-table-column>
-      <el-table-column prop="goods_name" :label="$t('message.goods_name')" width="150"  sortable>
+      <el-table-column prop="goods_name" :label="$t('message.goods_name')" width="130"  sortable>
       </el-table-column>
-      <el-table-column prop="goods_model" :label="$t('message.goods_model')" width=" 180" sortable>
+      <el-table-column prop="goods_model" :label="$t('message.goods_model')" width=" 120" sortable>
       </el-table-column>
-      <el-table-column prop="goods_price" :label="$t('message.goods_price')" width=" 180" sortable>
+      <el-table-column prop="goods_price" :label="$t('message.goods_price')" width=" 100" sortable>
+      </el-table-column>
+      <el-table-column prop="goods_ID" label="供应商ID" width=" 130" sortable>
+      </el-table-column>
+      <el-table-column prop="goods_inprice" label="进价" width=" 100" sortable>
       </el-table-column>
       <el-table-column prop="goods_describe" :label="$t('message.goods_describe')" min-width=" 180" sortable>
       </el-table-column>
@@ -134,7 +141,9 @@ export default {
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
         goods_img: '/static/good.jpg',
-        goods_update_time: '2019-6-20'
+        goods_update_time: '2019-6-20',
+        goods_ID: '213421412',
+        goods_inprice: '1.5元'
       },
       {
         goods_barcode: '6954767473673',
@@ -145,7 +154,9 @@ export default {
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
         goods_img: '/static/good.jpg',
-        goods_update_time: '2019-6-20'
+        goods_update_time: '2019-6-20',
+        goods_ID: '213421412',
+        goods_inprice: '1.5元'
       },
       {
         goods_barcode: '6954767473673',
@@ -156,7 +167,9 @@ export default {
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
         goods_img: '/static/good.jpg',
-        goods_update_time: '2019-6-20'
+        goods_update_time: '2019-6-20',
+        goods_ID: '213421412',
+        goods_inprice: '1.5元'
       },
       {
         goods_barcode: '6954767473673',
@@ -167,7 +180,35 @@ export default {
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
         goods_img: '/static/good.jpg',
-        goods_update_time: '2019-6-20'
+        goods_update_time: '2019-6-20',
+        goods_ID: '213421412',
+        goods_inprice: '1.5元'
+      },
+      {
+        goods_barcode: '6954767473673',
+        goods_name: '纯悦',
+        goods_model: '550ml',
+        goods_price: '2元',
+        goods_describe: '纯悦包装饮用水',
+        goods_brand: '可口可乐',
+        goods_producer: '可口可乐青岛',
+        goods_img: '/static/good.jpg',
+        goods_update_time: '2019-6-20',
+        goods_ID: '213421412',
+        goods_inprice: '1.5元'
+      },
+      {
+        goods_barcode: '6954767473673',
+        goods_name: '纯悦',
+        goods_model: '550ml',
+        goods_price: '2元',
+        goods_describe: '纯悦包装饮用水',
+        goods_brand: '可口可乐',
+        goods_producer: '可口可乐青岛',
+        goods_img: '/static/good.jpg',
+        goods_update_time: '2019-6-20',
+        goods_ID: '213421412',
+        goods_inprice: '1.5元'
       }
       ],
       editFormVisible: false,
