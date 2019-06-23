@@ -1,16 +1,16 @@
 <template>
   <section>
     <!--工具条-->
-    <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
+    <el-col :span="24" class="toolbar">
       <el-form :inline="true" :model="filters">
         <el-form-item>
           <el-input v-model="filters.name" placeholder="请输入销售号"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsers">查询</el-button>
+          <el-button type="primary" v-on:click="getUsers">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleAdd">新增</el-button>
+          <el-button type="primary" @click="handleAdd">{{$t('message.add')}}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -35,8 +35,6 @@
         </template>
       </el-table-column>
       <el-table-column type="selection" width="55">
-      </el-table-column>
-      <el-table-column type="index" width="60">
       </el-table-column>
       <el-table-column prop="sell_id" label="销售编号" width="150" sortable>
       </el-table-column>
@@ -130,21 +128,23 @@ export default {
       },
       users: [],
       sells: [{
-        sell_id: 124547,
-        total_price: 18,
-        time: '1998-11-05',
-        num_of_goods: 12,
+        order_id: '00000001',
+        order_price: 5,
+        order_time: '2019-6-30',
+        order_num: 3,
         infors: [{
-          barcode: '12313213',
-          goods: 'sb崔',
-          num: '1',
-          price: '-1'
+          order_goods_barcode: '6954767473673',
+          order_goods_name: '纯悦',
+          order_goods_model: '550ml',
+          order_goods_num: '1',
+          order_goods_price: '2'
         },
         {
-          barcode: '12313213',
-          goods: 'sb崔',
-          num: '1',
-          price: '-1'
+          order_goods_barcode: '6954767473674',
+          order_goods_name: '纯兑',
+          order_goods_model: '550ml',
+          order_goods_num: '2',
+          order_goods_price: '1.5'
         }]
       }],
       total: 0,
@@ -204,8 +204,9 @@ export default {
     width: 25%;
   }
   .toolbar {
+    text-align: left;
     background: #f2f2f2;
-    padding: 10px;
+    padding: 10px 10px 0 10px;
     margin: 10px 0px
   }
   .el-form-item
