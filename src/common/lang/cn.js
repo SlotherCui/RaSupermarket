@@ -34,6 +34,7 @@ const cn = {
     'order_goods_num': '产品个数',
     'order_goods_price': '产品价格',
     // 商家信息
+    'supermarket_img': '超市图片',
     'supermarket_name': '超市名称',
     'supermarket_manager_name': '超市负责人名称',
     'supermarket_piclink': '超市头像链接',

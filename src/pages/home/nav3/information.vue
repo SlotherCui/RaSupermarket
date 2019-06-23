@@ -1,6 +1,26 @@
 <template>
   <section>
   <el-form ref="form" :model="form"  label-width="80px"  style="margin:20px;width:60%;min-width:600px;">
+    <el-form-item :label="$t('message.supermarket_img')" label-width="150px" prop="img">
+      <el-form-item label="" prop="name">
+        <template slot-scope="scope" >
+          <img src="/static/good.jpg" width="100px"/>
+        </template>
+      </el-form-item>
+      <el-upload
+        :action="uploadActionUrl"
+        accept="image/jpeg,image/gif,image/png"
+        multiple
+        :limit="3"
+        :on-exceed="handleExceed"
+        :on-error="uploadError"
+        :on-success="uploadSuccess"
+        :on-remove="onRemoveTxt"
+        :before-upload="onBeforeUpload"
+        :file-list="files">
+        <el-button size="small" type="primary">点击修改</el-button>
+      </el-upload>
+    </el-form-item>
     <el-form-item :label="$t('message.supermarket_name')" label-width="150px">
       <el-input v-model="form.name" :disabled="inputDisabled"></el-input>
     </el-form-item>
