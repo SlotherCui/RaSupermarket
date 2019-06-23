@@ -20,63 +20,76 @@
     <el-table :data="goodslist" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item>
-              <el-image :src="props.row.imageurl" :fit="contain" class="goodsimage">
-              </el-image>
-            </el-form-item>
-            <el-form-item label="详情">
-              <span>{{ props.row.information}}</span>
-            </el-form-item>
-            <el-form-item label="进价">
-              <span>{{ props.row.inprice }}</span>
-            </el-form-item>
-<!--            <el-form-item label="商品 ID">-->
-<!--              <span>{{ props.row.information }}</span>-->
+          <el-row>
+            <el-col :span="4">
+              <el-image :src="props.row.goods_img" fit="scale-down" class="goodsimage"></el-image>
+            </el-col>
+            <el-col :span="9">
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_barcode')}}</span><span>{{props.row.goods_barcode}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_name')}}</span><span>{{props.row.goods_name}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_model')}}</span><span>{{props.row.goods_model}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_price')}}</span><span>{{props.row.goods_price}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_update_time')}}</span><span>{{props.row.goods_update_time}}</span></div>
+            </el-col>
+            <el-col :span="9">
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_brand')}}</span><span>{{props.row.goods_brand}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_producer')}}</span><span>{{props.row.goods_producer}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_describe')}}</span><span>{{props.row.goods_describe}}</span></div>
+            </el-col>
+          </el-row>
+<!--          <el-form label-position="left" inline class="demo-table-expand">-->
+<!--            <el-form-item>-->
+<!--              <el-image :src="props.row.imageurl" :fit="contain" class="goodsimage">-->
+<!--              </el-image>-->
 <!--            </el-form-item>-->
-<!--            <el-form-item label="店铺 ID">-->
+<!--            &lt;!&ndash;            商品商标&ndash;&gt;-->
+<!--            <el-form-item :label="$t('message.goods_brand')">-->
 <!--              <span>{{ props.row.information}}</span>-->
 <!--            </el-form-item>-->
-<!--            <el-form-item label="商品分类">-->
+<!--            &lt;!&ndash;              商品厂家&ndash;&gt;-->
+<!--            <el-form-item :label="$t('message.goods_producer')">-->
+<!--              <span>{{ props.row.inprice }}</span>-->
+<!--            </el-form-item>-->
+<!--&lt;!&ndash;            商品图片goods_img&ndash;&gt;-->
+<!--            <el-form-item :label="$t('message.goods_img')">-->
 <!--              <span>{{ props.row.information }}</span>-->
 <!--            </el-form-item>-->
-<!--            <el-form-item label="店铺地址">-->
-<!--              <span>{{ props.row.information }}</span>-->
+<!--&lt;!&ndash;            修改时间&ndash;&gt;-->
+<!--            <el-form-item :label="$t('message.goods_update_time')">-->
+<!--              <span>{{ props.row.information}}</span>-->
 <!--            </el-form-item>-->
-<!--            <el-form-item label="商品描述">-->
-<!--              <span>{{ props.row.information }}</span>-->
-<!--            </el-form-item>-->
-          </el-form>
+<!--          </el-form>-->
         </template>
       </el-table-column>
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column type="index" width="60">
+      <el-table-column prop="goods_barcode" :label="$t('message.goods_barcode')" width="150" sortable>
       </el-table-column>
-      <el-table-column prop="barcode" :label="$t('message.goods_barcode')" width="150" sortable>
+      <el-table-column prop="goods_name" :label="$t('message.goods_name')" width="150"  sortable>
       </el-table-column>
-      <el-table-column prop="goods" :label="$t('message.goods_name')" width="150"  sortable>
+      <el-table-column prop="goods_model" :label="$t('message.goods_model')" width=" 180" sortable>
       </el-table-column>
-      <el-table-column prop="specification_model" :label="$t('message.goods_model')" width=" 180" sortable>
-      </el-table-column>
-      <el-table-column prop="price" :label="$t('message.goods_price')" width=" 180" sortable>
+      <el-table-column prop="goods_price" :label="$t('message.goods_price')" width=" 180" sortable>
       </el-table-column>
       <el-table-column prop="goods_describe" :label="$t('message.goods_describe')" min-width=" 180" sortable>
       </el-table-column>
       <el-table-column :label="$t('message.operation')"  width=" 150" >
         <template scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
+<!--          编辑-->
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.edit')}}</el-button>
+<!--          删除-->
+          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-col :span="24" class="toolbar2">
-      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
+<!--      批量删除-->
+      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">{{$t('message.batchDelete')}}</el-button>
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
       </el-pagination>
     </el-col>
     <!--编辑界面-->
-    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">
+    <el-dialog :title="$t('message.edit')" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">
       <el-form :model="editForm1" label-width="80px" :rules="editFormRules" ref="editForm1">
         <el-form-item label="商品名称" prop="goods">
           <el-input v-model="editForm1.goods" autocomplete="off" class="addinput"></el-input>
@@ -133,20 +146,48 @@ export default {
       addLoading: false,
       editLoading: false,
       goodslist: [{
-        barcode: 12454789,
-        goods: '垃圾',
-        price: '1',
-        information: '新鲜垃圾好吃不贵',
-        inprice: '0',
-        imageurl: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2365173552,1600985734&fm=27&gp=0.jpg'
+        goods_barcode: '6954767473673',
+        goods_name: '纯悦',
+        goods_model: '550ml',
+        goods_price: '2元',
+        goods_describe: '纯悦包装饮用水',
+        goods_brand: '可口可乐',
+        goods_producer: '可口可乐青岛',
+        goods_img: '/static/good.jpg',
+        goods_update_time: '2019-6-20'
       },
       {
-        barcode: 12454780,
-        goods: '垃圾',
-        price: '10000$',
-        information: '陈年垃圾有点贵',
-        inprice: '0',
-        imageurl: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2365173552,1600985734&fm=27&gp=0.jpg'
+        goods_barcode: '6954767473673',
+        goods_name: '纯悦',
+        goods_model: '550ml',
+        goods_price: '2元',
+        goods_describe: '纯悦包装饮用水',
+        goods_brand: '可口可乐',
+        goods_producer: '可口可乐青岛',
+        goods_img: '/static/good.jpg',
+        goods_update_time: '2019-6-20'
+      },
+      {
+        goods_barcode: '6954767473673',
+        goods_name: '纯悦',
+        goods_model: '550ml',
+        goods_price: '2元',
+        goods_describe: '纯悦包装饮用水',
+        goods_brand: '可口可乐',
+        goods_producer: '可口可乐青岛',
+        goods_img: '/static/good.jpg',
+        goods_update_time: '2019-6-20'
+      },
+      {
+        goods_barcode: '6954767473673',
+        goods_name: '纯悦',
+        goods_model: '550ml',
+        goods_price: '2元',
+        goods_describe: '纯悦包装饮用水',
+        goods_brand: '可口可乐',
+        goods_producer: '可口可乐青岛',
+        goods_img: '/static/good.jpg',
+        goods_update_time: '2019-6-20'
       }
       ],
       editFormVisible: false,
@@ -321,8 +362,8 @@ export default {
 
 <style scoped>
   .goodsimage {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
   }
   /*div img{*/
   /*  z-index: 100;*/
@@ -334,6 +375,12 @@ export default {
   /*}*/
   .demo-table-expand {
     font-size: 0;
+  }
+  .goodsItem {
+    display:-moz-inline-box;
+    display:inline-block;
+    min-width: 80px;
+    color: #99a9bf;
   }
   .demo-table-expand label {
     width: 90px;
