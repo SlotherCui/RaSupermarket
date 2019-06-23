@@ -52,6 +52,8 @@
           </el-form>
         </template>
       </el-table-column>
+      <el-table-column type="selection">
+      </el-table-column>
       <el-table-column prop="barcode" :label="$t('message.goods_barcode')" width="120" sortable>
       </el-table-column>
       <el-table-column prop="name" :label="$t('message.goods_name')" width="200"  sortable>
