@@ -8,10 +8,10 @@
           <el-input v-model="filters.barcode" placeholder="条码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getGoods">查询</el-button>
+          <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleAdd">新增</el-button>
+          <el-button type="primary" @click="handleAdd">{{$t('message.add')}}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -21,41 +21,50 @@
       <el-table-column type="expand" width="50">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="" >
-              <template slot-scope="scope" >
+            <el-form-item :label="$t('message.goods_img')" >
                 <img src="/static/good.jpg" width="100px"/>
-              </template>
             </el-form-item>
-            <el-form-item label="商品名称:" >
+            <el-form-item :label="$t('message.goods_barcode')" >
+              <span>{{ props.row.barcode }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('message.goods_name')" >
               <span>{{ props.row.name }}</span>
             </el-form-item>
-            <el-form-item label="商品价格:" >
+            <el-form-item :label="$t('message.goods_price')">
               <span>{{ props.row.price }}</span>
               <span>元</span>
             </el-form-item>
-            <el-form-item label="条形码:" >
-              <span>{{ props.row.barcode }}</span>
+            <el-form-item :label="$t('message.goods_brand')" >
+              <span>{{ props.row.brand }}</span>
             </el-form-item>
-            <el-form-item label="修改日期:" >
+            <el-form-item :label="$t('message.goods_model')">
+              <span>{{ props.row.model }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('message.goods_producer')" >
+              <span>{{ props.row.producer }}</span>
+            </el-form-item>
+            <el-form-item :label="$t('message.goods_update_time')">
               <span>{{ props.row.date }}</span>
             </el-form-item>
-            <el-form-item label="商品描述:" >
+            <el-form-item :label="$t('message.goods_describe')" >
               <span>{{ props.row.desc }}</span>
             </el-form-item>
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column prop="barcode" label="条形码" width="120" sortable>
+      <el-table-column prop="barcode" :label="$t('message.goods_barcode')" width="120" sortable>
       </el-table-column>
-      <el-table-column prop="name" label="商品名" width="200"  sortable>
+      <el-table-column prop="name" :label="$t('message.goods_name')" width="200"  sortable>
       </el-table-column>
-      <el-table-column prop="price" label="价格(/元)" width="180" sortable>
+      <el-table-column prop="model" :label="$t('message.goods_model')" width="200"  sortable>
       </el-table-column>
-      <el-table-column prop="desc" label="描述" min_width="250" sortable>
+      <el-table-column prop="price" :label="$t('message.goods_price')" width="180" sortable>
       </el-table-column>
-      <el-table-column label="操作" width="150">
+      <el-table-column prop="desc" :label="$t('message.goods_describe')" min_width="250" sortable>
+      </el-table-column>
+      <el-table-column :label="$t('message.operation')" width="150">
         <template slot-scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.edit')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -64,51 +73,99 @@
       </el-pagination>
     </el-col>
     <!--编辑界面-->
-    <el-dialog title="编辑" v-show="editFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="editFormVisible">
+    <el-dialog :title="$t('message.edit')" v-show="editFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="editFormVisible">
       <el-form :model="editForm"  :rules="editFormRules" ref="editForm" label>
-        <el-form-item label="商品码" prop="barcode">
-          <el-input v-model="editForm.barcode" autocomplete="off" class="editinput"></el-input>
+        <el-form-item :label="$t('message.goods_img')" prop="img">
+          <el-form-item label="" prop="name">
+            <template slot-scope="scope" >
+              <img src="/static/good.jpg" width="100px"/>
+            </template>
+          </el-form-item>
+          <el-upload
+            :action="uploadActionUrl"
+            accept="image/jpeg,image/gif,image/png"
+            multiple
+            :limit="3"
+            :on-exceed="handleExceed"
+            :on-error="uploadError"
+            :on-success="uploadSuccess"
+            :on-remove="onRemoveTxt"
+            :before-upload="onBeforeUpload"
+            :file-list="files">
+            <el-button size="small" type="primary">点击修改</el-button>
+          </el-upload>
         </el-form-item>
-        <el-form-item label="商品名" prop="name">
-          <el-input v-model="editForm.name" auto-complete="off" class="editinput"></el-input>
+        <el-form-item :label="$t('message.goods_name')" prop="name">
+          <el-input v-model="editForm.name"  class="editinput"></el-input>
         </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input-number v-model="editForm.price" :min="0" autocomplete="off" class="editinput"></el-input-number>
+        <el-form-item :label="$t('message.goods_barcode')" prop="barcode">
+          <el-input v-model="editForm.barcode"  class="editinput"></el-input>
         </el-form-item>
-        <el-form-item label="日期" prop="date">
-          <el-date-picker type="date" placeholder="选择日期" v-model="editForm.date" autocomplete="off" class="editinput"></el-date-picker>
+        <el-form-item :label="$t('message.goods_brand')" prop="brand">
+          <el-input v-model="editForm.brand"  class="editinput"></el-input>
         </el-form-item>
-        <el-form-item label="商品描述" prop="desc">
+        <el-form-item :label="$t('message.goods_price')" prop="price">
+          <el-input v-model="editForm.price" autocomplete="off" class="editinput"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.goods_producer')" prop="producer">
+          <el-input v-model="editForm.producer"  class="editinput"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.goods_describe')" prop="desc">
           <el-input type="textarea" v-model="editForm.desc" autocomplete="off" class="editinput"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.goods_update_time')" prop="date">
+          <el-date-picker type="date" placeholder="选择日期" v-model="editForm.date" autocomplete="off" class="editinput"></el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="editFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
     <!--新增界面-->
-    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="addFormVisible">
+    <el-dialog :title="$t('message.add')" v-show="addFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="addFormVisible">
       <el-form :model="addForm"  label-position="left" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" >
-        <el-form-item label="商品名称" prop="goods">
-          <el-input v-model="addForm.goods" autocomplete="off" class="addinput"></el-input>
+        <el-form-item :label="$t('message.goods_img')" prop="img">
+          <el-upload
+            :action="uploadActionUrl"
+            accept="image/jpeg,image/gif,image/png"
+            multiple
+            :limit="3"
+            :on-exceed="handleExceed"
+            :on-error="uploadError"
+            :on-success="uploadSuccess"
+            :on-remove="onRemoveTxt"
+            :before-upload="onBeforeUpload"
+            :file-list="files">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
+          </el-upload>
         </el-form-item>
-        <el-form-item label="条形码" prop="barcode">
+        <el-form-item :label="$t('message.goods_name')" prop="name">
+          <el-input v-model="addForm.name"  class="addinput"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.goods_barcode')" prop="barcode">
           <el-input v-model="addForm.barcode" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
-        <el-form-item label="价格" prop="price">
+        <el-form-item :label="$t('message.goods_brand')" prop="brand">
+          <el-input v-model="addForm.brand"  class="addinput"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.goods_price')" prop="price">
           <el-input v-model="addForm.price" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
-        <el-form-item label="修改日期" prop="date">
-          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.date" autocomplete="off" class="addinput"></el-date-picker>
+        <el-form-item :label="$t('message.goods_producer')" prop="producer">
+          <el-input v-model="addForm.producer"  class="addinput"></el-input>
         </el-form-item>
-        <el-form-item label="商品描述" prop="desc">
+        <el-form-item :label="$t('message.goods_describe')" prop="desc">
           <el-input type="textarea" v-model="addForm.desc" autocomplete="off" class="addinput"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.goods_update_time')" prop="date">
+          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.date" autocomplete="off" class="addinput"></el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
   </section>
@@ -148,14 +205,20 @@ export default {
         name: '好滋好味鸡蛋仔',
         price: 5,
         date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻'
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂'
       },
       {
         barcode: 12987122,
         name: '好滋好味鸡蛋仔',
         price: 5,
         date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻'
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂'
       }
       ],
       editFormVisible: false, // 编辑界面是否显示
@@ -168,7 +231,22 @@ export default {
           { required: true, message: '输入价格', trigger: 'blur' }
         ],
         barcode: [
-          { required: true, message: '条形码', trigger: 'blur' }
+          { required: true, message: '输入条形码', trigger: 'blur' }
+        ],
+        img: [
+          { required: true, message: '上传图片', trigger: 'blur' }
+        ],
+        brand: [
+          { required: true, message: '输入商标', trigger: 'blur' }
+        ],
+        producer: [
+          { required: true, message: '输入生产厂家', trigger: 'blur' }
+        ],
+        date: [
+          { required: true, message: '修改时间', trigger: 'blur' }
+        ],
+        desc: [
+          { required: true, message: '商品描述', trigger: 'blur' }
         ]
       },
       // 编辑界面数据
@@ -177,7 +255,10 @@ export default {
         name: '',
         price: 0,
         date: '',
-        desc: ''
+        desc: '',
+        brand: '',
+        prodecer: '',
+        img: '/static/good.jpg'
       },
 
       addFormVisible: false, // 新增界面是否显示
@@ -190,16 +271,34 @@ export default {
           { required: true, message: '输入价格', trigger: 'blur' }
         ],
         barcode: [
-          { required: true, message: '条形码', trigger: 'blur' }
+          { required: true, message: '输入条形码', trigger: 'blur' }
+        ],
+        img: [
+          { required: true, message: '上传图片', trigger: 'blur' }
+        ],
+        brand: [
+          { required: true, message: '输入商标', trigger: 'blur' }
+        ],
+        producer: [
+          { required: true, message: '输入生产厂家', trigger: 'blur' }
+        ],
+        date: [
+          { required: true, message: '修改时间', trigger: 'blur' }
+        ],
+        desc: [
+          { required: true, message: '商品描述', trigger: 'blur' }
         ]
       },
       // 新增界面数据
       addForm: {
-        barcode: 0,
+        barcode: '',
         name: '',
-        price: 0,
+        price: '',
         date: '',
-        desc: ''
+        desc: '',
+        brand: '',
+        prodecer: '',
+        img: ''
       }
 
     }
@@ -233,9 +332,9 @@ export default {
     handleAdd: function () {
       this.addFormVisible = true
       this.addForm = {
-        barcode: 0,
+        barcode: '',
         name: '',
-        price: 0,
+        price: '',
         date: '',
         desc: ''
       }
@@ -290,6 +389,18 @@ export default {
     },
     selsChange: function (sels) {
       this.sels = sels
+    },
+    onBeforeUpload (file) {
+      const isIMAGE = file.type === 'image/jpeg' || 'image/gif' || 'image/png'
+      const isLt1M = file.size / 1024 / 1024 < 1
+
+      if (!isIMAGE) {
+        this.$message.error('上传文件只能是图片格式!')
+      }
+      if (!isLt1M) {
+        this.$message.error('上传文件大小不能超过 1MB!')
+      }
+      return isIMAGE && isLt1M
     }
   },
   mounted () {

@@ -1,45 +1,42 @@
+'supermarket_name': '超市名称',
+'supermarket_manager_name': '超市负责人名称',
+'supermarket_piclink': '超市头像链接',
+'supermarket_address': '超市地址',
+'supermarket_tel': '超市电话',
+'supermarket_tax': '超市税号',
+'supermarket_email': '超市邮箱',
+'supermarket_decription': '超市描述',
 <template>
   <section>
-  <el-form ref="form" :model="form" label-width="80px"  style="margin:20px;width:60%;min-width:600px;">
-    <el-form-item label="超市名称">
-      <el-input v-model="form.name"></el-input>
+  <el-form ref="form" :model="form"  label-width="80px"  style="margin:20px;width:60%;min-width:600px;">
+    <el-form-item :label="$t('message.supermarket_name')">
+      <el-input v-model="form.name" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item label="税号" >
-      <el-input v-model="form.tax" style="width: 400px"></el-input>
+    <el-form-item :label="$t('message.supermarket_manager_name')">
+      <el-input v-model="form.mnama" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item label="超市类型">
-      <el-select v-model="form.stype" placeholder="请选择超市类型">
-        <el-option label="直销" value="直销"></el-option>
-        <el-option label="连锁" value="连锁"></el-option>
-      </el-select>
+    <el-form-item :label="$t('message.supermarket_piclink')">
+      <el-input v-model="form.piclink" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item label="营业时间">
-      <el-col :span="11">
-        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date1" style="width: 100%;"></el-time-picker>
-      </el-col>
-      <el-col class="line" :span="1">至</el-col>
-      <el-col :span="11">
-        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-      </el-col>
+    <el-form-item :label="$t('message.supermarket_address')">
+      <el-input v-model="form.addr" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item label="商品类型">
-      <el-checkbox-group v-model="form.gtype">
-        <el-checkbox label="食品粮油" name="gtype"></el-checkbox>
-        <el-checkbox label="烟酒" name="gtype"></el-checkbox>
-        <el-checkbox label="日用百货" name="gtype"></el-checkbox>
-        <el-checkbox label="进口商品" name="gtype"></el-checkbox>
-        <el-checkbox label="其他" name="gtype"></el-checkbox>
-      </el-checkbox-group>
+    <el-form-item :label="$t('message.supermarket_tel')">
+      <el-input v-model="form.tel" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item label="电话">
-      <el-input v-model="form.phone" style="width: 400px"></el-input>
+    <el-form-item :label="$t('message.supermarket_tax')">
+      <el-input v-model="form.tax" :disabled="inputDisabled"></el-input>
     </el-form-item>
-    <el-form-item label="超市位置">
-      <el-input type="textarea" v-model="form.addr"></el-input>
+    <el-form-item :label="$t('message.supermarket_email')">
+      <el-input v-model="form.email" :disabled="inputDisabled"></el-input>
+    </el-form-item>
+    <el-form-item :label="$t('message.supermarket_decription')">
+      <el-input v-model="form.desc" :disabled="inputDisabled"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="Save">保存</el-button>
-      <el-button @click.native.prevent>取消</el-button>
+      <el-button @click.native.prevent type="primary" v-show="editVisible" :visible.sync="editVisible" @click="edit">编辑</el-button>
+      <el-button @click.native.prevent type="success" v-show="setvisible" :visible.sync="setvisible" @click="Save">保存</el-button>
+      <el-button @click.native.prevent v-show="setvisible" :visible.sync="setvisible" @click="quit">取消</el-button>
       <el-button type="danger" @click="PasswdChangeForm">修改密码</el-button>
     </el-form-item>
   </el-form>
@@ -75,15 +72,14 @@ export default {
   data () {
     return {
       form: {
-        name: '',
-        tax: '',
-        phone: '',
-        stype: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        gtype: [],
-        addr: ''
+        name: '德玛西亚超市',
+        tax: '110',
+        tel: '110',
+        mnama: '盖伦',
+        piclink: '/static/',
+        addr: '召唤师峡谷301号',
+        email: '110@163.com',
+        desc: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
       },
       changepasswdFormVisible: false, // 修改密码界面是否显示
       changepasswdLoading: false,
@@ -97,6 +93,12 @@ export default {
       },
       // 密码显示
       visible: true,
+      // 输入框可写
+      inputDisabled: false,
+      // 保存按钮显示
+      setvisible: false,
+      // 修改按钮显示
+      editVisible: true,
       // 新增界面数据
       changepasswdForm: {
         oldpasswd: '',
@@ -126,6 +128,9 @@ export default {
     Save (ev) {
       alert('保存成功')
       this.getInfo()
+      this.editVisible = true
+      this.inputDisabled = true
+      this.setvisible = false
     },
     PasswdChangeForm: function () {
       this.changepasswdFormVisible = true
@@ -139,6 +144,16 @@ export default {
     // 判断渲染，true:暗文显示，false:明文显示
     changePass (value) {
       this.visible = !(value === 'show')
+    },
+    edit: function () {
+      this.editVisible = false
+      this.inputDisabled = false
+      this.setvisible = true
+    },
+    quit: function () {
+      this.editVisible = true
+      this.inputDisabled = true
+      this.setvisible = false
     }
   }
 }
