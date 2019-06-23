@@ -26,7 +26,8 @@
       <div style="margin-top: 15px">
         <el-tag class="my_tag" type="suss">原价格 14元</el-tag>
         <el-tag class="my_tag" type="info">建议价 17元</el-tag>
-        <el-tag class="my_tag" type="info">最低价 19元</el-tag>
+        <el-tag class="my_tag" type="info">参考价 19元</el-tag>
+        <el-input style="margin-top: 15px" v-model="new_price" placeholder="请输入新价格"></el-input>
       </div>
       <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
       <!--<div style="line-height: 25px"><span class="goodsItem">建议价</span><span>14元</span></div>-->
@@ -47,7 +48,8 @@ export default {
     return {
       filters: {
         barcode: ''
-      }
+      },
+      new_price: 0
     }
   }
 }
@@ -70,10 +72,7 @@ export default {
     min-width: 80px
     color: #99a9bf
   .my_tag
-    display: -webkit-box;
-    -webkit-box-pack:center;
-    -webkit-box-align:center;
-    -webkit-box-orient: vertical;
+    width 100%
     text-align: center
     font-size 13px
 </style>
