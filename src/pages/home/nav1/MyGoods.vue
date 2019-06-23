@@ -5,13 +5,13 @@
     <el-col :span="24" class="toolbar" >
       <el-form :inline="true" :model="mygoodsfilters">
         <el-form-item>
-          <el-input v-model="mygoodsfilters.barcode" placeholder="条码"></el-input>
+          <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.bar_code')"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getGoods">查询</el-button>
+          <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="addGoods">新增</el-button>
+          <el-button type="primary" @click="addGoods">{{$t('message.add')}}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -21,10 +21,9 @@
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="图片">
-              <div>
-                <img src="/static/good.jpg" width="200px"/>
-              </div>
+            <el-form-item>
+              <el-image :src="props.row.imageurl" :fit="contain" class="goodsimage">
+              </el-image>
             </el-form-item>
             <el-form-item label="详情">
               <span>{{ props.row.information}}</span>
@@ -54,13 +53,13 @@
       </el-table-column>
       <el-table-column type="index" width="60">
       </el-table-column>
-      <el-table-column prop="barcode" label="条形码" width="150" sortable>
+      <el-table-column prop="barcode" :label="$t('message.bar_code')" width="150" sortable>
       </el-table-column>
-      <el-table-column prop="goods" label="商品" width="150"  sortable>
+      <el-table-column prop="goods" :label="$t('message.goods')" width="150"  sortable>
       </el-table-column>
-      <el-table-column prop="price" label="价格" min-width=" 180" sortable>
+      <el-table-column prop="price" :label="$t('message.price')" min-width=" 180" sortable>
       </el-table-column>
-      <el-table-column label="操作"  width=" 150" >
+      <el-table-column :label="$t('message.operation')"  width=" 150" >
         <template scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -134,14 +133,16 @@ export default {
         goods: '垃圾',
         price: '1',
         information: '新鲜垃圾好吃不贵',
-        inprice: '0'
+        inprice: '0',
+        imageurl: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2365173552,1600985734&fm=27&gp=0.jpg'
       },
       {
         barcode: 12454780,
         goods: '垃圾',
         price: '10000$',
         information: '陈年垃圾有点贵',
-        inprice: '0'
+        inprice: '0',
+        imageurl: 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2365173552,1600985734&fm=27&gp=0.jpg'
       }
       ],
       editFormVisible: false,
@@ -315,6 +316,10 @@ export default {
 </script>
 
 <style scoped>
+  .goodsimage {
+    width: 100px;
+    height: 100px;
+  }
   /*div img{*/
   /*  z-index: 100;*/
   /*  cursor: pointer;*/
