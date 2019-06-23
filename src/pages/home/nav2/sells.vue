@@ -18,26 +18,24 @@
     <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
-          <el-form label-position="left" inline="true" class="demo-table-expand" v-for="infor in props.row.infors" :key="infor.barcode" size="small">
-            <el-form-item :label="$t('message.order_goods_barcode')">
-              <span>{{ infor.order_goods_barcode}}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.order_goods_name')">
-              <span>{{ infor.order_goods_name}}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.order_goods_model')">
-              <span>{{ infor.order_goods_model }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.order_goods_num')">
-              <span>{{ infor.order_goods_num }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.order_goods_price')">
-              <span>{{ infor.order_goods_price }}</span>
-            </el-form-item>
-          </el-form>
+          <el-row v-for="infor in props.row.infors" :key="infor.barcode" style="margin-left: 1%">
+            <el-col :span="6" >
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_barcode')}}</span><span>{{infor.order_goods_barcode}}</span></div>
+            </el-col>
+            <el-col :span="4">
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_name')}}</span><span>{{infor.order_goods_name}}</span></div>
+            </el-col>
+            <el-col :span="4">
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_model')}}</span><span>{{infor.order_goods_model}}</span></div>
+            </el-col>
+            <el-col :span="4">
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_num')}}</span><span>{{infor.order_goods_num }}</span></div>
+            </el-col>
+            <el-col :span="3">
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_price')}}</span><span>{{infor.order_goods_price }}</span></div>
+            </el-col>
+          </el-row>
         </template>
-      </el-table-column>
-      <el-table-column type="selection" width="55">
       </el-table-column>
       <el-table-column prop="order_id" :label="$t('message.order_id')" width="200" sortable>
       </el-table-column>
@@ -57,7 +55,6 @@
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
-      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
       </el-pagination>
     </el-col>
@@ -149,6 +146,106 @@ export default {
           order_goods_num: '2',
           order_goods_price: '1.5'
         }]
+      },
+      {
+        order_id: '00000001',
+        order_price: 5,
+        order_time: '2019-6-30',
+        order_num: 3,
+        infors: [{
+          order_goods_barcode: '6954767473673',
+          order_goods_name: '纯悦',
+          order_goods_model: '550ml',
+          order_goods_num: '1',
+          order_goods_price: '2'
+        },
+        {
+          order_goods_barcode: '6954767473674',
+          order_goods_name: '纯兑',
+          order_goods_model: '550ml',
+          order_goods_num: '2',
+          order_goods_price: '1.5'
+        }]
+      },
+      {
+        order_id: '00000001',
+        order_price: 5,
+        order_time: '2019-6-30',
+        order_num: 3,
+        infors: [{
+          order_goods_barcode: '6954767473673',
+          order_goods_name: '纯悦',
+          order_goods_model: '550ml',
+          order_goods_num: '1',
+          order_goods_price: '2'
+        },
+        {
+          order_goods_barcode: '6954767473674',
+          order_goods_name: '纯兑',
+          order_goods_model: '550ml',
+          order_goods_num: '2',
+          order_goods_price: '1.5'
+        }]
+      },
+      {
+        order_id: '00000001',
+        order_price: 5,
+        order_time: '2019-6-30',
+        order_num: 3,
+        infors: [{
+          order_goods_barcode: '6954767473673',
+          order_goods_name: '纯悦',
+          order_goods_model: '550ml',
+          order_goods_num: '1',
+          order_goods_price: '2'
+        },
+        {
+          order_goods_barcode: '6954767473674',
+          order_goods_name: '纯兑',
+          order_goods_model: '550ml',
+          order_goods_num: '2',
+          order_goods_price: '1.5'
+        }]
+      },
+      {
+        order_id: '00000001',
+        order_price: 5,
+        order_time: '2019-6-30',
+        order_num: 3,
+        infors: [{
+          order_goods_barcode: '6954767473673',
+          order_goods_name: '纯悦',
+          order_goods_model: '550ml',
+          order_goods_num: '1',
+          order_goods_price: '2'
+        },
+        {
+          order_goods_barcode: '6954767473674',
+          order_goods_name: '纯兑',
+          order_goods_model: '550ml',
+          order_goods_num: '2',
+          order_goods_price: '1.5'
+        }]
+      },
+      {
+        order_id: '00000001',
+        order_price: 5,
+        order_time: '2019-6-30',
+        order_num: 3,
+        infors: [{
+          order_goods_barcode: '6954767473673',
+          order_goods_name: '纯悦',
+          order_goods_model: '550ml',
+          order_goods_num: '1',
+          order_goods_price: '2'
+        },
+        {
+          order_goods_barcode: '6954767473674',
+          order_goods_name: '纯兑',
+          order_goods_model: '550ml',
+          order_goods_num: '2',
+          order_goods_price: '1.5'
+        }]
       }],
       total: 0,
       page: 1,
@@ -204,7 +301,13 @@ export default {
   .demo-table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
-    width: 25%;
+    width: 20%;
+  }
+  .goodsItem {
+    display:-moz-inline-box;
+    display:inline-block;
+    min-width: 80px;
+    color: #99a9bf;
   }
   .toolbar {
     text-align: left;
