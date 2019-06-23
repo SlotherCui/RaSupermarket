@@ -21,8 +21,10 @@
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-row>
-            <el-col :span="4">
-              <el-image :src="props.row.goods_img" fit="scale-down" class="goodsimage"></el-image>
+            <el-col :span="4" style="margin-left: 6%">
+              <el-card  :body-style="{ padding: '0px' }">
+                <el-image :src="props.row.goods_img" fit="contain" class="goodsimage"></el-image>
+              </el-card>
             </el-col>
             <el-col :span="9">
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_barcode')}}</span><span>{{props.row.goods_barcode}}</span></div>
@@ -37,28 +39,6 @@
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_describe')}}</span><span>{{props.row.goods_describe}}</span></div>
             </el-col>
           </el-row>
-<!--          <el-form label-position="left" inline class="demo-table-expand">-->
-<!--            <el-form-item>-->
-<!--              <el-image :src="props.row.imageurl" :fit="contain" class="goodsimage">-->
-<!--              </el-image>-->
-<!--            </el-form-item>-->
-<!--            &lt;!&ndash;            商品商标&ndash;&gt;-->
-<!--            <el-form-item :label="$t('message.goods_brand')">-->
-<!--              <span>{{ props.row.information}}</span>-->
-<!--            </el-form-item>-->
-<!--            &lt;!&ndash;              商品厂家&ndash;&gt;-->
-<!--            <el-form-item :label="$t('message.goods_producer')">-->
-<!--              <span>{{ props.row.inprice }}</span>-->
-<!--            </el-form-item>-->
-<!--&lt;!&ndash;            商品图片goods_img&ndash;&gt;-->
-<!--            <el-form-item :label="$t('message.goods_img')">-->
-<!--              <span>{{ props.row.information }}</span>-->
-<!--            </el-form-item>-->
-<!--&lt;!&ndash;            修改时间&ndash;&gt;-->
-<!--            <el-form-item :label="$t('message.goods_update_time')">-->
-<!--              <span>{{ props.row.information}}</span>-->
-<!--            </el-form-item>-->
-<!--          </el-form>-->
         </template>
       </el-table-column>
       <el-table-column type="selection" width="55">
@@ -362,6 +342,8 @@ export default {
 
 <style scoped>
   .goodsimage {
+    /*margin-left: -20px;*/
+    /*margin-top: -20px;*/
     width: 130px;
     height: 130px;
   }
@@ -375,6 +357,10 @@ export default {
   /*}*/
   .demo-table-expand {
     font-size: 0;
+  }
+  .el-card {
+    width: 130px;
+    height: 130px;
   }
   .goodsItem {
     display:-moz-inline-box;
