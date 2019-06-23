@@ -19,12 +19,18 @@
     <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="详情">
-              <span>{{ props.row.information}}</span>
+          <el-form label-position="left" inline class="demo-table-expand" v-for="infor in props.row.infors">
+            <el-form-item label="条码">
+              <span>{{ infor.barcode}}</span>
             </el-form-item>
-            <el-form-item label="进价">
-              <span>{{ props.row.inprice }}</span>
+            <el-form-item label="商品">
+              <span>{{ infor.goods}}</span>
+            </el-form-item>
+            <el-form-item label="数量">
+              <span>{{ infor.num }}</span>
+            </el-form-item>
+            <el-form-item label="单价">
+              <span>{{ infor.price }}</span>
             </el-form-item>
           </el-form>
         </template>
@@ -126,11 +132,22 @@ export default {
       },
       users: [],
       sells: [{
-        sell_id : 124547,
+        sell_id: 124547,
         total_price: 18,
-        time: "1998-11-05",
-        num_of_goods: 12
-
+        time: '1998-11-05',
+        num_of_goods: 12,
+        infors: [{
+          barcode: '12313213',
+          goods: 'sb崔',
+          num: '1',
+          price: '-1'
+        },
+        {
+          barcode: '12313213',
+          goods: 'sb崔',
+          num: '1',
+          price: '-1'
+        }]
       }],
       total: 0,
       page: 1,
@@ -183,7 +200,11 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 25%;
+  }
 .toolbar
   background: #f2f2f2;
   padding: 10px;
