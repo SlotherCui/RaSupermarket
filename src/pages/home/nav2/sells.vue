@@ -14,9 +14,26 @@
         </el-form-item>
       </el-form>
     </el-col>
-
     <!--列表-->
     <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+      <el-table-column type="expand" width="55">
+        <template slot-scope="props">
+          <el-form label-position="left" inline="true" class="demo-table-expand" v-for="infor in props.row.infors" :key="infor.barcode" size="small">
+            <el-form-item label="条码">
+              <span>{{ infor.barcode}}</span>
+            </el-form-item>
+            <el-form-item label="商品">
+              <span>{{ infor.goods}}</span>
+            </el-form-item>
+            <el-form-item label="数量">
+              <span>{{ infor.num }}</span>
+            </el-form-item>
+            <el-form-item label="单价">
+              <span>{{ infor.price }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column type="selection" width="55">
       </el-table-column>
       <el-table-column type="index" width="60">
@@ -31,14 +48,12 @@
       </el-table-column>
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->
-      <el-table-column label="操作" width="150">
+      <el-table-column label="操作" width="90">
         <template scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-
     <!--工具条-->
     <el-col :span="24" class="toolbar">
       <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
@@ -115,11 +130,22 @@ export default {
       },
       users: [],
       sells: [{
-        sell_id : 124547,
+        sell_id: 124547,
         total_price: 18,
-        time: "1998-11-05",
-        num_of_goods: 12
-
+        time: '1998-11-05',
+        num_of_goods: 12,
+        infors: [{
+          barcode: '12313213',
+          goods: 'sb崔',
+          num: '1',
+          price: '-1'
+        },
+        {
+          barcode: '12313213',
+          goods: 'sb崔',
+          num: '1',
+          price: '-1'
+        }]
       }],
       total: 0,
       page: 1,
@@ -172,11 +198,16 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-
-.toolbar
-  background: #f2f2f2;
-  padding: 10px;
-  margin: 10px 0px
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 25%;
+  }
+  .toolbar {
+    background: #f2f2f2;
+    padding: 10px;
+    margin: 10px 0px
+  }
   .el-form-item
     margin-bottom: 10px;
 </style>
