@@ -62,9 +62,9 @@
       </el-table-column>
       <el-table-column prop="name" :label="$t('message.goods_name')" width="150"  sortable>
       </el-table-column>
-      <el-table-column prop="model" :label="$t('message.goods_model')" width="130"  sortable>
+      <el-table-column prop="model" :label="$t('message.goods_model')" width="100"  sortable>
       </el-table-column>
-      <el-table-column prop="price" :label="$t('message.goods_price')" width="120" sortable>
+      <el-table-column prop="price" :label="$t('message.goods_price')" width="80" sortable>
       </el-table-column>
       <el-table-column prop="desc" :label="$t('message.goods_describe')" min_width="200" sortable>
       </el-table-column>
