@@ -10,34 +10,38 @@
         </el-form-item>
       </el-form>
     </el-col>
-    <el-card :span="24" class="card">
-      <!--商品基本信息-->
-      <el-row>
-        <el-col :span="6">
-          <img src="/static/good.jpg" width="100px"/>
-        </el-col>
-        <el-col :span="18">
-          <div style="line-height: 25px"><span class="goodsItem">商品条码</span><span>18764871568751</span></div>
-          <div style="line-height: 25px"><span class="goodsItem">商品名称</span><span>好滋味鸡蛋仔</span></div>
-          <div style="line-height: 25px"><span class="goodsItem">商品规格</span><span>14ml</span></div>
-          <div style="line-height: 25px"><span class="goodsItem">商品描述</span><span>荷兰优质淡荷兰优质淡</span></div>
-        </el-col>
-      </el-row>
-      <div style="margin-top: 15px">
-        <el-tag class="my_tag" type="suss">原价格 14元</el-tag>
-        <el-tag class="my_tag" type="info">建议价 17元</el-tag>
-        <el-tag class="my_tag" type="info">参考价 19元</el-tag>
-        <el-input style="margin-top: 15px" v-model="new_price" placeholder="请输入新价格"></el-input>
-      </div>
-      <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
-      <!--<div style="line-height: 25px"><span class="goodsItem">建议价</span><span>14元</span></div>-->
-      <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
-      <el-row style="margin-top: 20px; text-align: right">
-        <el-button type="primary" size="small"> 确认修改</el-button>
-        <el-button type="primary" size="small">组改价</el-button>
-        <el-button type="primary" size="small">联动改价</el-button>
-      </el-row>
-    </el-card>
+    <el-row :gutter="15" v-for="item of 1">
+      <el-col :span="8" v-for="item of 3">
+      <el-card :span="24" class="card">
+        <!--商品基本信息-->
+          <el-row>
+            <el-col :span="6">
+            <img src="/static/good.jpg" width="90px"/>
+          </el-col>
+          <el-col :span="18">
+            <div style="line-height: 25px"><span class="goodsItem">商品条码</span><span>18764871568751</span></div>
+            <div style="line-height: 25px"><span class="goodsItem">商品名称</span><span>好滋味鸡蛋仔</span></div>
+            <div style="line-height: 25px"><span class="goodsItem">商品规格</span><span>14ml</span></div>
+            <div style="line-height: 25px"><span class="goodsItem">商品描述</span><span>荷兰优质淡荷兰优质淡</span></div>
+          </el-col>
+        </el-row>
+        <div style="margin-top: 15px">
+          <el-tag class="my_tag" type="suss">原价格 14元</el-tag>
+          <el-tag class="my_tag" type="info">建议价 17元</el-tag>
+          <el-tag class="my_tag" type="info">参考价 19元</el-tag>
+          <el-input style="margin-top: 15px" v-model="new_price" placeholder="请输入新价格"></el-input>
+        </div>
+        <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
+        <!--<div style="line-height: 25px"><span class="goodsItem">建议价</span><span>14元</span></div>-->
+        <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
+        <el-row style="margin-top: 20px; text-align: right">
+          <el-button type="primary" size="small"> 确认修改</el-button>
+          <el-button type="primary" size="small">组改价</el-button>
+          <el-button type="primary" size="small">联动改价</el-button>
+        </el-row>
+      </el-card>
+      </el-col>
+    </el-row>
   </section>
 </template>
 
@@ -65,7 +69,7 @@ export default {
 .card
   margin-top: 20px
   margin-bottom: 20px
-  width 480px
+  width 440px
   .goodsItem
     display:-moz-inline-box
     display:inline-block
