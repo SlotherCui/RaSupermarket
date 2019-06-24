@@ -3,7 +3,7 @@
     <el-col :span="24" class="toolbar" >
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.number" placeholder="请输入商品条码"></el-input>
+          <el-input v-model="filters.commodity_barcode" placeholder="请输入商品条码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="getGoods">查询</el-button>
@@ -19,25 +19,27 @@
             <img src="/static/good.jpg" width="90px"/>
           </el-col>
           <el-col :span="18">
-            <div style="line-height: 25px"><span class="goodsItem">商品条码</span><span>18764871568751</span></div>
-            <div style="line-height: 25px"><span class="goodsItem">商品名称</span><span>好滋味鸡蛋仔</span></div>
-            <div style="line-height: 25px"><span class="goodsItem">商品规格</span><span>14ml</span></div>
-            <div style="line-height: 25px"><span class="goodsItem">商品描述</span><span>荷兰优质淡荷兰优质淡</span></div>
+            <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_barcode')}}</span><span>{{GoodsList.commodity_barcode}}</span></div>
+            <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_name')}}</span><span>{{GoodsList.commodity_name}}</span></div>
+            <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_specification')}}</span><span>{{GoodsList.commodity_specification}}</span></div>
+            <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_description')}}</span><span>{{GoodsList.commodity_description}}</span></div>
           </el-col>
         </el-row>
+        <!--商品四种价格-->
         <div style="margin-top: 15px">
-          <el-tag class="my_tag" type="suss">原价格 14元</el-tag>
-          <el-tag class="my_tag" type="info">建议价 17元</el-tag>
-          <el-tag class="my_tag" type="info">参考价 19元</el-tag>
+          <el-tag class="my_tag" type="suss">{{$t('message.commodity_price_before')}} {{GoodsList.commodity_price}}</el-tag>
+          <el-tag class="my_tag" type="info">{{$t('message.suggest_price')}} {{GoodsList.suggest_price}}</el-tag>
+          <el-tag class="my_tag" type="info">{{$t('message.supplier_min_price')}} {{GoodsList.supplier_min_price}}</el-tag>
           <el-input style="margin-top: 15px" v-model="new_price" placeholder="请输入新价格"></el-input>
         </div>
         <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
         <!--<div style="line-height: 25px"><span class="goodsItem">建议价</span><span>14元</span></div>-->
         <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
+        <!--三种改价操作-->
         <el-row style="margin-top: 20px; text-align: right">
-          <el-button type="primary" size="small"> 确认修改</el-button>
-          <el-button type="primary" size="small">组改价</el-button>
-          <el-button type="primary" size="small">联动改价</el-button>
+          <el-button type="primary" size="small" v-on:click="SingleChange"> 确认修改</el-button>
+          <el-button type="primary" size="small" v-on:click="GroupChange">组改价</el-button>
+          <el-button type="primary" size="small" v-on:click="RelationChange">联动改价</el-button>
         </el-row>
       </el-card>
       </el-col>
@@ -51,9 +53,38 @@ export default {
   data () {
     return {
       filters: {
-        barcode: ''
+        commodity_barcode: ''
       },
+      GoodsList: {
+        commodity_barcode: '18764871568751',
+        commodity_name: '纯悦',
+        commodity_specification: '14ml',
+        commodity_description: '荷兰优质淡荷兰优质淡',
+        commodity_price: 17,
+        supplier_min_price: 14,
+        suggest_price: 15
+
+      },
+      // 输入的新价格
       new_price: ''
+    }
+  },
+  methods: {
+    // 查询商品
+    getGoods () {
+
+    },
+    // 单个修改
+    SingleChange () {
+
+    },
+    // 组修改
+    GroupChange () {
+
+    },
+    // 关联改价
+    RelationChange () {
+
     }
   }
 }

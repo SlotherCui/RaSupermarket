@@ -32,28 +32,28 @@
 
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_name')" label-width="150px">
-      <el-input v-model="form.name" :disabled="inputDisabled"></el-input>
+      <el-input v-model="form.name" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_manager_name')" label-width="150px">
-      <el-input v-model="form.mnama" :disabled="inputDisabled"></el-input>
+      <el-input v-model="form.mnama" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <!--<el-form-item :label="$t('message.supermarket_piclink')" label-width="150px">-->
       <!--<el-input v-model="form.piclink" :disabled="inputDisabled"></el-input>-->
     <!--</el-form-item>-->
     <el-form-item :label="$t('message.supermarket_address')" label-width="150px">
-      <el-input v-model="form.addr" :disabled="inputDisabled"></el-input>
+      <el-input v-model="form.addr" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_tel')" label-width="150px">
-      <el-input v-model="form.tel" :disabled="inputDisabled"></el-input>
+      <el-input v-model="form.tel" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_tax')" label-width="150px">
-      <el-input v-model="form.tax" :disabled="inputDisabled"></el-input>
+      <el-input v-model="form.tax" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_email')" label-width="150px">
-      <el-input v-model="form.email" :disabled="inputDisabled"></el-input>
+      <el-input v-model="form.email" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_decription')" label-width="150px">
-      <el-input type="textarea" v-model="form.desc" :disabled="inputDisabled"></el-input>
+      <el-input type="textarea" v-model="form.desc" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button @click.native.prevent type="primary" v-show="editVisible" :visible.sync="editVisible" @click="edit">{{$t('message.edit')}}</el-button>

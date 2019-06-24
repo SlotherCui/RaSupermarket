@@ -34,6 +34,9 @@ const cn = {
     'commodity_producer': '商品厂家',
     'commodity_piclink': '商品图片',
     'create_time': '修改时间',
+    'supplier_min_price': '参考价',
+    'suggest_price': '建议价',
+    'commodity_price_before': '原价格',
     // 销售记录
     // 'order_id': '销售编号',
     // 'order_price': '销售总价',

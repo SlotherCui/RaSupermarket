@@ -26,12 +26,12 @@ export const addGood = params => { return axios.get(`/CommonGoods/add`, { params
 // 商家信息接口
 export const getInfo = params => { return axios.get(`/information`, { params: params }) }
 
+// 登录接口
 export const requestLogin = params => {
   return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
   ).then(res => res.data)
 }
 // qs.stringify({params})
-
 // 测试接口
 export const requestTest = params => {
   return axios.get('/say2', { params }).then(res => res.data)

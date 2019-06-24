@@ -4,10 +4,10 @@
     <el-col :span="24" class="toolbar">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.name" placeholder="请输入销售号"></el-input>
+          <el-input v-model="filters.order_id" placeholder="请输入销售号"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsers">{{$t('message.query')}}</el-button>
+          <el-button type="primary" v-on:click="handleSearch">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleAdd">{{$t('message.add')}}</el-button>
@@ -16,34 +16,36 @@
     </el-col>
     <!--列表-->
     <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+      <!--销售项-->
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-row v-for="infor in props.row.infors" :key="infor.barcode" style="margin-left: 1%">
             <el-col :span="6" >
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_barcode')}}</span><span>{{infor.order_goods_barcode}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_barcode')}}</span><span>{{infor.commodity_barcode}}</span></div>
             </el-col>
             <el-col :span="4">
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_name')}}</span><span>{{infor.order_goods_name}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_name')}}</span><span>{{infor.commodity_name}}</span></div>
             </el-col>
             <el-col :span="4">
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_specification')}}</span><span>{{infor.order_goods_model}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_specification')}}</span><span>{{infor.commodity_specification}}</span></div>
             </el-col>
             <el-col :span="4">
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_current_price')}}</span><span>{{infor.order_goods_num }}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_current_price')}}</span><span>{{infor.commodity_current_price }}</span></div>
             </el-col>
             <el-col :span="3">
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_each_count')}}</span><span>{{infor.order_goods_price }}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_each_count')}}</span><span>{{infor.commodity_each_count }}</span></div>
             </el-col>
           </el-row>
         </template>
+        <!--销售记录-->
       </el-table-column>
       <el-table-column prop="order_id" :label="$t('message.order_id')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="order_num" :label="$t('message.order_commodity_sum')" width="200" sortable>
+      <el-table-column prop="order_commodity_sum" :label="$t('message.order_commodity_sum')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="order_price" :label="$t('message.order_all_price')" width="200" sortable>
+      <el-table-column prop="order_all_price" :label="$t('message.order_all_price')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="order_time" :label="$t('message.order_create_time')" min-width="200" sortable>
+      <el-table-column prop="order_create_time" :label="$t('message.order_create_time')" min-width="200" sortable>
       </el-table-column>
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->
@@ -55,58 +57,25 @@
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
-      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+      <el-pagination
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+        :page-size="20"
+        :total="total"
+        :current-page="page"
+        style="float:right;">
       </el-pagination>
     </el-col>
-
-    <!--编辑界面-->
-    <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
-      <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="editForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="editForm.sex">
-            <el-radio class="radio" :label="1">男</el-radio>
-            <el-radio class="radio" :label="0">女</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input-number v-model="editForm.age" :min="0" :max="200"></el-input-number>
-        </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker type="date" placeholder="选择日期" v-model="editForm.birth"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input type="textarea" v-model="editForm.addr"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click.native="editFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
-      </div>
-    </el-dialog>
-
     <!--新增界面-->
-    <el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
-      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
+    <el-dialog title="新增" v-model="addFormVisible" v-show="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
+      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible">
+        <!--输入商品条码-->
+        <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode" >
+          <el-input v-model="addForm.commodity_barcode" auto-complete="off" style="width: 180px"></el-input>
         </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="addForm.sex">
-            <el-radio class="radio" :label="1">男</el-radio>
-            <el-radio class="radio" :label="0">女</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input-number v-model="addForm.age" :min="0" :max="200"></el-input-number>
-        </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.birth"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input type="textarea" v-model="addForm.addr"></el-input>
+        <!--输入商品个数-->
+        <el-form-item :label="$t('message.commodity_each_count')" >
+          <el-input-number v-model="addForm.commodity_each_count" :min="1" :max="200"></el-input-number>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -118,180 +87,67 @@
 </template>
 
 <script>
-import { requestCookie } from '../../../api/api'
+// import { requestCookie } from '../../../api/api'
 export default {
   name: 'page1',
   data () {
     return {
+      // 查询变量
       filters: {
-        name: ''
+        order_id: ''
       },
-      users: [],
       sells: [{
         order_id: '00000001',
-        order_price: 5,
-        order_time: '2019-6-30',
-        order_num: 3,
+        order_all_price: 5,
+        order_create_time: '2019-6-30',
+        order_commodity_sum: 3,
         infors: [{
-          order_goods_barcode: '6954767473673',
-          order_goods_name: '纯悦',
-          order_goods_model: '550ml',
-          order_goods_num: '1',
-          order_goods_price: '2'
+          commodity_barcode: '6954767473673',
+          commodity_name: '纯悦',
+          commodity_specification: '550ml',
+          commodity_each_count: '1',
+          commodity_current_price: '2'
         },
         {
-          order_goods_barcode: '6954767473674',
-          order_goods_name: '纯兑',
-          order_goods_model: '550ml',
-          order_goods_num: '2',
-          order_goods_price: '1.5'
-        }]
-      },
-      {
-        order_id: '00000001',
-        order_price: 5,
-        order_time: '2019-6-30',
-        order_num: 3,
-        infors: [{
-          order_goods_barcode: '6954767473673',
-          order_goods_name: '纯悦',
-          order_goods_model: '550ml',
-          order_goods_num: '1',
-          order_goods_price: '2'
-        },
-        {
-          order_goods_barcode: '6954767473674',
-          order_goods_name: '纯兑',
-          order_goods_model: '550ml',
-          order_goods_num: '2',
-          order_goods_price: '1.5'
-        }]
-      },
-      {
-        order_id: '00000001',
-        order_price: 5,
-        order_time: '2019-6-30',
-        order_num: 3,
-        infors: [{
-          order_goods_barcode: '6954767473673',
-          order_goods_name: '纯悦',
-          order_goods_model: '550ml',
-          order_goods_num: '1',
-          order_goods_price: '2'
-        },
-        {
-          order_goods_barcode: '6954767473674',
-          order_goods_name: '纯兑',
-          order_goods_model: '550ml',
-          order_goods_num: '2',
-          order_goods_price: '1.5'
-        }]
-      },
-      {
-        order_id: '00000001',
-        order_price: 5,
-        order_time: '2019-6-30',
-        order_num: 3,
-        infors: [{
-          order_goods_barcode: '6954767473673',
-          order_goods_name: '纯悦',
-          order_goods_model: '550ml',
-          order_goods_num: '1',
-          order_goods_price: '2'
-        },
-        {
-          order_goods_barcode: '6954767473674',
-          order_goods_name: '纯兑',
-          order_goods_model: '550ml',
-          order_goods_num: '2',
-          order_goods_price: '1.5'
-        }]
-      },
-      {
-        order_id: '00000001',
-        order_price: 5,
-        order_time: '2019-6-30',
-        order_num: 3,
-        infors: [{
-          order_goods_barcode: '6954767473673',
-          order_goods_name: '纯悦',
-          order_goods_model: '550ml',
-          order_goods_num: '1',
-          order_goods_price: '2'
-        },
-        {
-          order_goods_barcode: '6954767473674',
-          order_goods_name: '纯兑',
-          order_goods_model: '550ml',
-          order_goods_num: '2',
-          order_goods_price: '1.5'
-        }]
-      },
-      {
-        order_id: '00000001',
-        order_price: 5,
-        order_time: '2019-6-30',
-        order_num: 3,
-        infors: [{
-          order_goods_barcode: '6954767473673',
-          order_goods_name: '纯悦',
-          order_goods_model: '550ml',
-          order_goods_num: '1',
-          order_goods_price: '2'
-        },
-        {
-          order_goods_barcode: '6954767473674',
-          order_goods_name: '纯兑',
-          order_goods_model: '550ml',
-          order_goods_num: '2',
-          order_goods_price: '1.5'
+          commodity_barcode: '6954767473674',
+          commodity_name: '纯兑',
+          commodity_specification: '550ml',
+          commodity_each_count: '2',
+          commodity_current_price: '1.5'
         }]
       }],
+      // 页表项
       total: 0,
       page: 1,
       listLoading: false,
-      sels: [], // 列表选中列
-
-      editFormVisible: false, // 编辑界面是否显示
-      editLoading: false,
-      editFormRules: {
-        name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
-        ]
-      },
-      // 编辑界面数据
-      editForm: {
-        id: 0,
-        name: '',
-        sex: -1,
-        age: 0,
-        birth: '',
-        addr: ''
-      },
-
-      addFormVisible: false, // 新增界面是否显示
+      // 新增界面相关变量
+      addFormVisible: false,
       addLoading: false,
       addFormRules: {
-        name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
+        commodity_barcode: [
+          { required: true, message: '请输入商品条码', trigger: 'blur' }
         ]
       },
       // 新增界面数据
       addForm: {
-        name: '',
-        sex: -1,
-        age: 0,
-        birth: '',
-        addr: ''
+        commodity_barcode: '',
+        commodity_each_count: 1
       }
 
     }
   },
   methods: {
+    // 新增方法
     handleAdd () {
-      requestCookie({}).then(data => {
-        console.log(data)
-      })
+      this.addFormVisible = true
+    },
+    // 查询方法
+    handleSearch () {
+      var order_id = this.filters.order_id
+      this.addFormVisible = true
+    },
+    // 翻页方法
+    handleCurrentChange (val) {
     }
   }
 }
