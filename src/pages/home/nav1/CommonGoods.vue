@@ -22,16 +22,16 @@
       <el-table-column type="expand" width="50">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item :label="$t('message.goods_img')" >
+            <el-form-item :label="$t('message.commodity_piclink')" >
                 <img src="/static/good.jpg" width="100px"/>
             </el-form-item>
-            <el-form-item :label="$t('message.goods_barcode')" >
+            <el-form-item :label="$t('message.commodity_barcode')" >
               <span>{{ props.row.barcode }}</span>
             </el-form-item>
-            <el-form-item :label="$t('message.goods_name')" >
+            <el-form-item :label="$t('message.commodity_name')" >
               <span>{{ props.row.name }}</span>
             </el-form-item>
-            <el-form-item :label="$t('message.goods_price')">
+            <el-form-item :label="$t('message.commodity_price')">
               <span>{{ props.row.price }}</span>
               <span>元</span>
             </el-form-item>
@@ -80,94 +80,94 @@
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
       </el-pagination>
     </el-col>
-    <!--编辑界面-->
-    <el-dialog :title="$t('message.edit')" v-show="editFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="editFormVisible">
-      <el-form :model="editForm"  :rules="editFormRules" ref="editForm" label-position="left">
-        <el-form-item :label="$t('message.goods_img')" prop="img">
-          <el-form-item label="" prop="name">
-            <el-upload
-              class="avatar-uploader"
-              :show-file-list="false"
-              :on-success="uploadSuccess"
-              :before-upload="onBeforeUpload">
-              <img v-if="imageUrl" :src="imageUrl" class="avatar" width="100px">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_name')" prop="name">
-          <el-input v-model="editForm.name"  class="editinput"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_barcode')" prop="barcode">
-          <el-input v-model="editForm.barcode"  class="editinput"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_brand')" prop="brand">
-          <el-input v-model="editForm.brand"  class="editinput"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_price')" prop="price">
-          <el-input v-model="editForm.price" autocomplete="off" class="editinput"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_supplier_id')" prop="supplier">
-          <el-input v-model="editForm.supplier" autocomplete="off" class="editinput"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_producer')" prop="producer">
-          <el-input v-model="editForm.producer"  class="editinput"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_describe')" prop="desc">
-          <el-input type="textarea" v-model="editForm.desc" autocomplete="off" class="editinput"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click.native="editFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">{{$t('message.confirm')}}</el-button>
-      </div>
-    </el-dialog>
-    <!--新增界面-->
-    <el-dialog :title="$t('message.add')" v-show="addFormVisible" :close-on-click-modal="false"   :visible.sync="addFormVisible">
-      <el-form :model="addForm"   :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" >
-        <el-form-item :label="$t('message.goods_img')" prop="img">
-          <el-upload
-            :action="uploadActionUrl"
-            accept="image/jpeg,image/gif,image/png"
-            multiple
-            :limit="3"
-            :on-exceed="handleExceed"
-            :on-error="uploadError"
-            :on-success="uploadSuccess"
-            :on-remove="onRemoveTxt"
-            :before-upload="onBeforeUpload"
-            :file-list="files">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_name')" prop="name">
-          <el-input v-model="addForm.name"  class="addinput" size="small" style="width:250px"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_barcode')" prop="barcode">
-          <el-input v-model="addForm.barcode" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_brand')" prop="brand">
-          <el-input v-model="addForm.brand"  class="addinput" size="small" style="width:250px"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_price')" prop="price">
-          <el-input v-model="addForm.price" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_supplier_id')" prop="supplier">
-          <el-input v-model="addForm.supplier" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_producer')" prop="producer">
-          <el-input v-model="addForm.producer"  class="addinput" size="small" style="width:250px"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_describe')" prop="desc">
-          <el-input type="textarea" v-model="addForm.desc" autocomplete="off" class="addinput"  style="width:250px"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
-      </div>
-    </el-dialog>
+    <!--&lt;!&ndash;编辑界面&ndash;&gt;-->
+    <!--<el-dialog :title="$t('message.edit')" v-show="editFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="editFormVisible">-->
+      <!--<el-form :model="editForm"  :rules="editFormRules" ref="editForm" label-position="left">-->
+        <!--<el-form-item :label="$t('message.goods_img')" prop="img">-->
+          <!--<el-form-item label="" prop="name">-->
+            <!--<el-upload-->
+              <!--class="avatar-uploader"-->
+              <!--:show-file-list="false"-->
+              <!--:on-success="uploadSuccess"-->
+              <!--:before-upload="onBeforeUpload">-->
+              <!--<img v-if="imageUrl" :src="imageUrl" class="avatar" width="100px">-->
+              <!--<i v-else class="el-icon-plus avatar-uploader-icon"></i>-->
+            <!--</el-upload>-->
+          <!--</el-form-item>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_name')" prop="name">-->
+          <!--<el-input v-model="editForm.name"  class="editinput"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_barcode')" prop="barcode">-->
+          <!--<el-input v-model="editForm.barcode"  class="editinput"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_brand')" prop="brand">-->
+          <!--<el-input v-model="editForm.brand"  class="editinput"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_price')" prop="price">-->
+          <!--<el-input v-model="editForm.price" autocomplete="off" class="editinput"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_supplier_id')" prop="supplier">-->
+          <!--<el-input v-model="editForm.supplier" autocomplete="off" class="editinput"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_producer')" prop="producer">-->
+          <!--<el-input v-model="editForm.producer"  class="editinput"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_describe')" prop="desc">-->
+          <!--<el-input type="textarea" v-model="editForm.desc" autocomplete="off" class="editinput"></el-input>-->
+        <!--</el-form-item>-->
+      <!--</el-form>-->
+      <!--<div slot="footer" class="dialog-footer">-->
+        <!--<el-button @click.native="editFormVisible = false">取消</el-button>-->
+        <!--<el-button type="primary" @click.native="editSubmit" :loading="editLoading">{{$t('message.confirm')}}</el-button>-->
+      <!--</div>-->
+    <!--</el-dialog>-->
+    <!--&lt;!&ndash;新增界面&ndash;&gt;-->
+    <!--<el-dialog :title="$t('message.add')" v-show="addFormVisible" :close-on-click-modal="false"   :visible.sync="addFormVisible">-->
+      <!--<el-form :model="addForm"   :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" >-->
+        <!--<el-form-item :label="$t('message.goods_img')" prop="img">-->
+          <!--<el-upload-->
+            <!--:action="uploadActionUrl"-->
+            <!--accept="image/jpeg,image/gif,image/png"-->
+            <!--multiple-->
+            <!--:limit="3"-->
+            <!--:on-exceed="handleExceed"-->
+            <!--:on-error="uploadError"-->
+            <!--:on-success="uploadSuccess"-->
+            <!--:on-remove="onRemoveTxt"-->
+            <!--:before-upload="onBeforeUpload"-->
+            <!--:file-list="files">-->
+            <!--<el-button size="small" type="primary">点击上传</el-button>-->
+            <!--<div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>-->
+          <!--</el-upload>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_name')" prop="name">-->
+          <!--<el-input v-model="addForm.name"  class="addinput" size="small" style="width:250px"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_barcode')" prop="barcode">-->
+          <!--<el-input v-model="addForm.barcode" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_brand')" prop="brand">-->
+          <!--<el-input v-model="addForm.brand"  class="addinput" size="small" style="width:250px"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_price')" prop="price">-->
+          <!--<el-input v-model="addForm.price" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_supplier_id')" prop="supplier">-->
+          <!--<el-input v-model="addForm.supplier" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_producer')" prop="producer">-->
+          <!--<el-input v-model="addForm.producer"  class="addinput" size="small" style="width:250px"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item :label="$t('message.goods_describe')" prop="desc">-->
+          <!--<el-input type="textarea" v-model="addForm.desc" autocomplete="off" class="addinput"  style="width:250px"></el-input>-->
+        <!--</el-form-item>-->
+      <!--</el-form>-->
+      <!--<div slot="footer" class="dialog-footer">-->
+        <!--<el-button @click.native="addFormVisible = false">取消</el-button>-->
+        <!--<el-button type="primary" @click.native="addSubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>-->
+      <!--</div>-->
+    <!--</el-dialog>-->
   </section>
 </template>
 <style>
