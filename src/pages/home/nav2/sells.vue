@@ -20,30 +20,30 @@
         <template slot-scope="props">
           <el-row v-for="infor in props.row.infors" :key="infor.barcode" style="margin-left: 1%">
             <el-col :span="6" >
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_barcode')}}</span><span>{{infor.order_goods_barcode}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_barcode')}}</span><span>{{infor.order_goods_barcode}}</span></div>
             </el-col>
             <el-col :span="4">
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_name')}}</span><span>{{infor.order_goods_name}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_name')}}</span><span>{{infor.order_goods_name}}</span></div>
             </el-col>
             <el-col :span="4">
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_model')}}</span><span>{{infor.order_goods_model}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_specification')}}</span><span>{{infor.order_goods_model}}</span></div>
             </el-col>
             <el-col :span="4">
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_num')}}</span><span>{{infor.order_goods_num }}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_current_price')}}</span><span>{{infor.order_goods_num }}</span></div>
             </el-col>
             <el-col :span="3">
-              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.order_goods_price')}}</span><span>{{infor.order_goods_price }}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_each_count')}}</span><span>{{infor.order_goods_price }}</span></div>
             </el-col>
           </el-row>
         </template>
       </el-table-column>
       <el-table-column prop="order_id" :label="$t('message.order_id')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="order_num" :label="$t('message.order_num')" width="200" sortable>
+      <el-table-column prop="order_num" :label="$t('message.order_commodity_sum')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="order_price" :label="$t('message.order_price')" width="200" sortable>
+      <el-table-column prop="order_price" :label="$t('message.order_all_price')" width="200" sortable>
       </el-table-column>
-      <el-table-column prop="order_time" :label="$t('message.order_time')" min-width="200" sortable>
+      <el-table-column prop="order_time" :label="$t('message.order_create_time')" min-width="200" sortable>
       </el-table-column>
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->

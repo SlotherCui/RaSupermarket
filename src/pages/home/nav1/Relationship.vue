@@ -21,7 +21,7 @@
       </el-table-column>
       <!--<el-table-column type="index" width="60">-->
       <!--</el-table-column>-->
-      <el-table-column prop="user_id" :label="$t('message.user_id')" width="150" sortable>
+      <el-table-column prop="supermarket_id" :label="$t('message.supermarket_id')" width="150" sortable>
       </el-table-column>
       <el-table-column prop="supermarket_name" :label="$t('message.supermarket_name')"  width="150" sortable>
       </el-table-column>
@@ -89,7 +89,7 @@ export default {
       },
       users: [],
       sells: [{
-        user_id: 124547,
+        supermarket_id: 124547,
         supermarket_name: '附近超市',
         supermarket_address: '山东省济南市历下区舜华路1500号',
         supermarket_tel: 18340018831,
