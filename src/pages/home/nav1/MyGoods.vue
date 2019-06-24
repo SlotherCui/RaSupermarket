@@ -130,7 +130,7 @@
       </el-dialog>
 <!--      内层新建产品表单-->
       <el-dialog width="40%" title="新建" :visible.sync="createcommodity" append-to-body>
-        <el-form :model="createcommodityForm"   :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="createcommodity" >
+        <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="createcommodity" >
           <el-form-item :label="$t('message.commodity_piclink')" prop="img">
             <el-upload
               :action="uploadActionUrl"
@@ -148,25 +148,25 @@
             </el-upload>
           </el-form-item>
           <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
-            <el-input v-model="createcommodityForm.commodity_name"  class="addinput" size="small" style="width:250px"></el-input>
+            <el-input v-model="createcommodityForm.commodity_name"  class="addinput" size="small" ></el-input>
           </el-form-item>
           <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
-            <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
+            <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" ></el-input>
           </el-form-item>
           <el-form-item :label="$t('message.commodity_brand')" prop="commodity_brand">
-            <el-input v-model="createcommodityForm.commodity_brand"  class="addinput" size="small" style="width:250px"></el-input>
+            <el-input v-model="createcommodityForm.commodity_brand"  class="addinput" size="small" ></el-input>
           </el-form-item>
           <el-form-item :label="$t('message.commodity_price')" prop="commodity_price">
-            <el-input v-model="createcommodityForm.commodity_price" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
+            <el-input v-model="createcommodityForm.commodity_price" autocomplete="off" class="addinput" size="small"></el-input>
           </el-form-item>
           <el-form-item :label="$t('message.commodity_specification')" prop="commodity_specification">
-            <el-input v-model="createcommodityForm.commodity_specification" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
+            <el-input v-model="createcommodityForm.commodity_specification" autocomplete="off" class="addinput" size="small"></el-input>
           </el-form-item>
           <el-form-item :label="$t('message.commodity_producer')" prop="commodity_producer">
-            <el-input v-model="createcommodityForm.commodity_producer"  class="addinput" size="small" style="width:250px"></el-input>
+            <el-input v-model="createcommodityForm.commodity_producer"  class="addinput" size="small"></el-input>
           </el-form-item>
           <el-form-item :label="$t('message.commodity_description')" prop="commodity_description">
-            <el-input type="textarea" v-model="createcommodityForm.commodity_description" autocomplete="off" class="addinput"  style="width:250px"></el-input>
+            <el-input type="textarea" v-model="createcommodityForm.commodity_description" autocomplete="off" :autosize="{ minRows: 2, maxRows: 4}" class="addinput"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -265,7 +265,18 @@ export default {
         create_time: '2019-6-20'
       }
       ],
+      showbutton: [{showb: true}, {showb: true}, {showb: true}, {showb: true}],
       commoditytoadd: [{
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml'
+      },
+      {
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml'
+      },
+      {
         commodity_barcode: '6954767473673',
         commodity_name: '纯悦',
         commodity_specification: '550ml'
@@ -302,19 +313,19 @@ export default {
           { required: true, message: '请输入商品名称', trigger: 'blur' }
         ],
         commodity_brand: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' }
+          { required: true, message: '请输入商品商标', trigger: 'blur' }
         ],
         commodity_price: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' }
+          { required: true, message: '请输入商品价格', trigger: 'blur' }
         ],
         commodity_specification: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' }
+          { required: true, message: '请输入商品规格', trigger: 'blur' }
         ],
         commodity_producer: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' }
+          { required: true, message: '请输入商品厂家', trigger: 'blur' }
         ],
         commodity_description: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' }
+          { required: true, message: '请输入商品描述', trigger: 'blur' }
         ]
       },
       addForm1Rules: {
@@ -336,6 +347,9 @@ export default {
     }
   },
   methods: {
+    clearValidate (formName) {
+      this.$refs[formName].clearValidate()
+    },
     getGoods () {
       let para = {
         page: this.page,
@@ -369,6 +383,14 @@ export default {
     // 新增商品填写完成后提交
     createcommoditySubmit () {
       this.createcommodity = false
+      this.clearValidate('createcommodityForm')
+      this.createcommodityForm.commodity_name = ''
+      this.createcommodityForm.commodity_barcode = ''
+      this.createcommodityForm.commodity_brand = ''
+      this.createcommodityForm.commodity_price = ''
+      this.createcommodityForm.commodity_specification = ''
+      this.createcommodityForm.commodity_producer = ''
+      this.createcommodityForm.commodity_description = ''
     },
     handleEdit (index, row) {
       this.editFormVisible = true
@@ -424,7 +446,8 @@ export default {
     },
     // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示
     addCommodity () {
-      var has = false
+      this.clearValidate('addForm1')
+      var has = true
       this.hascommodity = has
       this.hasnotcommodity = !has
     },
