@@ -13,12 +13,12 @@
             <!--<p>{{$t('message.lang')}}</p>-->
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">应用</el-button>
+            <el-button type="primary" @click="onSubmit">{{$t('message.apply')}}</el-button>
           </el-form-item>
         </el-form>
       </el-row>
       <el-row>
-        <el-button type="text" @click="dialogVisible = true">关于我们</el-button>
+        <el-button type="text" @click="dialogVisible = true"></el-button>
       </el-row>
     </el-col>
 

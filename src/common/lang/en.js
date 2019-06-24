@@ -50,6 +50,7 @@ const en = {
     'delete': '删除',
     'batchDelete': '批量删除',
     'confirm': '确认修改',
+    'apply': 'apply',
     'team_price_change': '组改价',
     'relation_price_change': '联动改价'
     // 其他占位符等...
