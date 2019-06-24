@@ -24,7 +24,7 @@
           <el-row>
             <el-col :span="4" style="margin-left: 6%">
               <el-card  :body-style="{ padding: '0px' }">
-                <el-image :src="props.row.goods_img" fit="contain" class="goodsimage"></el-image>
+                <el-image :src="props.row.goods_img" fit="fill" class="goodsimage"></el-image>
               </el-card>
             </el-col>
             <el-col :span="9">
@@ -94,30 +94,30 @@
       </div>
     </el-dialog>
 
-    <!--新增界面-->
-    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">
-      <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addFormRules" :visible.sync="addFormVisible" label-width="80px" size="small">
-        <el-form-item label="商品名称" prop="goods">
-          <el-input v-model="addForm1.goods" autocomplete="off" class="addinput"></el-input>
-        </el-form-item>
-        <el-form-item label="条码" prop="barcode">
-          <el-input v-model="addForm1.barcode" autocomplete="off" class="addinput"></el-input>
-        </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input v-model="addForm1.price" autocomplete="off" class="addinput"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
-      </div>
-    </el-dialog>
+<!--    &lt;!&ndash;新增界面&ndash;&gt;-->
+<!--    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">-->
+<!--      <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addFormRules" :visible.sync="addFormVisible" label-width="80px" size="small">-->
+<!--        <el-form-item label="商品名称" prop="goods">-->
+<!--          <el-input v-model="addForm1.goods" autocomplete="off" class="addinput"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="条码" prop="barcode">-->
+<!--          <el-input v-model="addForm1.barcode" autocomplete="off" class="addinput"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="价格" prop="price">-->
+<!--          <el-input v-model="addForm1.price" autocomplete="off" class="addinput"></el-input>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+<!--      <div slot="footer" class="dialog-footer">-->
+<!--        <el-button @click.native="addFormVisible = false">取消</el-button>-->
+<!--        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
 
   </section>
 </template>
 
 <script>
-import {getMyGoodListPage, addMyGoods, editGoods, removeMyGoods, batchRemoveMyGoods} from '../../../api/api'
+import {getMyGoodListPage, editGoods, removeMyGoods, batchRemoveMyGoods} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
@@ -140,7 +140,7 @@ export default {
         goods_describe: '纯悦包装饮用水',
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
-        goods_img: '/static/good.jpg',
+        goods_img: '/static/chunyue.jpg',
         goods_update_time: '2019-6-20',
         goods_ID: '213421412',
         goods_inprice: '1.5元'
@@ -153,7 +153,7 @@ export default {
         goods_describe: '纯悦包装饮用水',
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
-        goods_img: '/static/good.jpg',
+        goods_img: '/static/chunyue.jpg',
         goods_update_time: '2019-6-20',
         goods_ID: '213421412',
         goods_inprice: '1.5元'
@@ -166,7 +166,7 @@ export default {
         goods_describe: '纯悦包装饮用水',
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
-        goods_img: '/static/good.jpg',
+        goods_img: '/static/chunyue.jpg',
         goods_update_time: '2019-6-20',
         goods_ID: '213421412',
         goods_inprice: '1.5元'
@@ -179,7 +179,7 @@ export default {
         goods_describe: '纯悦包装饮用水',
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
-        goods_img: '/static/good.jpg',
+        goods_img: '/static/chunyue.jpg',
         goods_update_time: '2019-6-20',
         goods_ID: '213421412',
         goods_inprice: '1.5元'
@@ -192,7 +192,7 @@ export default {
         goods_describe: '纯悦包装饮用水',
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
-        goods_img: '/static/good.jpg',
+        goods_img: '/static/chunyue.jpg',
         goods_update_time: '2019-6-20',
         goods_ID: '213421412',
         goods_inprice: '1.5元'
@@ -205,7 +205,7 @@ export default {
         goods_describe: '纯悦包装饮用水',
         goods_brand: '可口可乐',
         goods_producer: '可口可乐青岛',
-        goods_img: '/static/good.jpg',
+        goods_img: '/static/chunyue.jpg',
         goods_update_time: '2019-6-20',
         goods_ID: '213421412',
         goods_inprice: '1.5元'
@@ -332,28 +332,28 @@ export default {
       })
     },
     // 提交新增商品
-    addSubmit () {
-      this.$refs.addForm1.validate((valid) => {
-        if (valid) {
-          this.$confirm('确认提交吗？', '提示', {}).then(() => {
-            this.addLoading = true
-            // NProgress.start();
-            let para = Object.assign({}, this.addForm1)
-            addMyGoods(para).then((res) => {
-              this.addLoading = false
-              // NProgress.done();
-              this.$message({
-                message: '提交成功',
-                type: 'success'
-              })
-              this.$refs['addForm1'].resetFields()
-              this.addFormVisible = false
-              this.regetGoods()
-            })
-          })
-        }
-      })
-    },
+    // addSubmit () {
+    //   this.$refs.addForm1.validate((valid) => {
+    //     if (valid) {
+    //       this.$confirm('确认提交吗？', '提示', {}).then(() => {
+    //         this.addLoading = true
+    //         // NProgress.start();
+    //         let para = Object.assign({}, this.addForm1)
+    //         addMyGoods(para).then((res) => {
+    //           this.addLoading = false
+    //           // NProgress.done();
+    //           this.$message({
+    //             message: '提交成功',
+    //             type: 'success'
+    //           })
+    //           this.$refs['addForm1'].resetFields()
+    //           this.addFormVisible = false
+    //           this.regetGoods()
+    //         })
+    //       })
+    //     }
+    //   })
+    // },
     // 编辑
     editSubmit () {
       this.$refs.editForm1.validate((valid) => {
@@ -383,8 +383,6 @@ export default {
 
 <style scoped>
   .goodsimage {
-    /*margin-left: -20px;*/
-    /*margin-top: -20px;*/
     width: 130px;
     height: 130px;
   }

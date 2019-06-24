@@ -1,15 +1,28 @@
 <template>
   <div>
     <div class="backgroundimage" v-show="!show">
-      <img src="/static/login1.png" style="width: 100%;height: 100%" class="img"/>
+      <img src="/static/Login1.png" style="width: 100%;height: 100%" class="img"/>
     </div>
     <div class="touming" v-show="show">
-      <img src="/static/login1.png" style="width: 100%;height: 100%" class="img"/>
+      <img src="/static/Login1.png" style="width: 100%;height: 100%" class="img"/>
+    </div>
+    <div style="z-index: 11;width: 99%;text-align: right">
+      <el-dropdown trigger="click" @command="selectlang">
+                <span class="el-dropdown-link">
+                  <i class="el-icon-setting avatar-uploader-icon">语言</i>
+                </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="cn">中文</el-dropdown-item>
+          <el-dropdown-item command="en">English</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <!--<i style="margin-left: 57px" class="el-icon-setting"></i>-->
     <div class="Loginbox" @mouseenter="show=!show" @mouseleave="show=!show">
       <el-form ref="form" :model="form" :rules="rules"  class="demo-ruleForm login-container">
-        <h2>用户登录  </h2>
+        <el-row>
+            <h2>用户登录</h2>
+        </el-row>
         <el-form-item prop="UserName">
           <el-input class="input" auto-complete="off" placeholder="用户名" prefix-icon="el-icon-user" v-model="form.UserName" clearable></el-input>
         </el-form-item>
@@ -89,6 +102,12 @@ export default {
           })
         }
       })
+    },
+    selectlang (command) {
+      var lang = command
+      this.$i18n.locale = lang
+      this.$alert('这是一段内容', lang, {
+      })
     }
   }
 
@@ -105,6 +124,10 @@ export default {
     /*-webkit-transform: translate(-50px, -100px);*/
     /*transform: translate(-50px, -100px);*/
     /*-webkit-animation:run 6s linear 0s infinite;*/
+  }
+  .avatar-uploader-icon {
+    color: white;
+    font-size: 17px;
   }
   .touming{
     z-index: 0;
