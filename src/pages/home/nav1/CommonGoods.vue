@@ -10,9 +10,10 @@
         <el-form-item>
           <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
         </el-form-item>
-        <el-form-item>
+       <!-- <el-form-item>
           <el-button type="primary" @click="handleAdd">{{$t('message.add')}}</el-button>
         </el-form-item>
+        -->
       </el-form>
     </el-col>
 
@@ -38,7 +39,7 @@
               <span>{{ props.row.brand }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_supplier_id')" >
-              <span>{{ props.row.gys }}</span>
+              <span>{{ props.row.supplier }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_model')">
               <span>{{ props.row.model }}</span>
@@ -57,7 +58,7 @@
       </el-table-column>
       <el-table-column prop="barcode" :label="$t('message.goods_barcode')" width="120" sortable>
       </el-table-column>
-      <el-table-column prop="gys" :label="$t('message.goods_supplier_id')" width="130" sortable>
+      <el-table-column prop="supplier" :label="$t('message.goods_supplier_id')" width="130" sortable>
       </el-table-column>
       <el-table-column prop="name" :label="$t('message.goods_name')" width="150"  sortable>
       </el-table-column>
@@ -67,12 +68,13 @@
       </el-table-column>
       <el-table-column prop="desc" :label="$t('message.goods_describe')" min_width="200" sortable>
       </el-table-column>
-      <el-table-column :label="$t('message.operation')" width="250">
-        <template slot-scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.edit')}}</el-button>
-          <el-button size="small" type="success">{{$t('message.put_in')}}</el-button>
-        </template>
+      <!--  <el-table-column :label="$t('message.operation')" width="250">
+          <template slot-scope="scope">
+            <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.edit')}}</el-button>
+            <el-button size="small" type="success">{{$t('message.put_in')}}</el-button>
+          </template>
       </el-table-column>
+      -->
     </el-table>
     <el-col :span="24" class="toolbar2">
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
@@ -80,26 +82,18 @@
     </el-col>
     <!--编辑界面-->
     <el-dialog :title="$t('message.edit')" v-show="editFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="editFormVisible">
-      <el-form :model="editForm"  :rules="editFormRules" ref="editForm" label>
+      <el-form :model="editForm"  :rules="editFormRules" ref="editForm" label-position="left">
         <el-form-item :label="$t('message.goods_img')" prop="img">
           <el-form-item label="" prop="name">
-            <template slot-scope="scope" >
-              <img src="/static/good.jpg" width="100px"/>
-            </template>
+            <el-upload
+              class="avatar-uploader"
+              :show-file-list="false"
+              :on-success="uploadSuccess"
+              :before-upload="onBeforeUpload">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar" width="100px">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
           </el-form-item>
-          <el-upload
-            :action="uploadActionUrl"
-            accept="image/jpeg,image/gif,image/png"
-            multiple
-            :limit="3"
-            :on-exceed="handleExceed"
-            :on-error="uploadError"
-            :on-success="uploadSuccess"
-            :on-remove="onRemoveTxt"
-            :before-upload="onBeforeUpload"
-            :file-list="files">
-            <el-button size="small" type="primary">点击修改</el-button>
-          </el-upload>
         </el-form-item>
         <el-form-item :label="$t('message.goods_name')" prop="name">
           <el-input v-model="editForm.name"  class="editinput"></el-input>
@@ -113,17 +107,14 @@
         <el-form-item :label="$t('message.goods_price')" prop="price">
           <el-input v-model="editForm.price" autocomplete="off" class="editinput"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('message.goods_supplier_id')" prop="gys">
-          <el-input v-model="editForm.gys" autocomplete="off" class="editinput"></el-input>
+        <el-form-item :label="$t('message.goods_supplier_id')" prop="supplier">
+          <el-input v-model="editForm.supplier" autocomplete="off" class="editinput"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_producer')" prop="producer">
           <el-input v-model="editForm.producer"  class="editinput"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_describe')" prop="desc">
           <el-input type="textarea" v-model="editForm.desc" autocomplete="off" class="editinput"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_update_time')" prop="date">
-          <el-date-picker type="date" placeholder="选择日期" v-model="editForm.date" autocomplete="off" class="editinput"></el-date-picker>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -132,8 +123,8 @@
       </div>
     </el-dialog>
     <!--新增界面-->
-    <el-dialog :title="$t('message.add')" v-show="addFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="addFormVisible">
-      <el-form :model="addForm"  label-position="left" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" >
+    <el-dialog :title="$t('message.add')" v-show="addFormVisible" :close-on-click-modal="false"   :visible.sync="addFormVisible">
+      <el-form :model="addForm"   :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" >
         <el-form-item :label="$t('message.goods_img')" prop="img">
           <el-upload
             :action="uploadActionUrl"
@@ -151,28 +142,25 @@
           </el-upload>
         </el-form-item>
         <el-form-item :label="$t('message.goods_name')" prop="name">
-          <el-input v-model="addForm.name"  class="addinput"></el-input>
+          <el-input v-model="addForm.name"  class="addinput" size="small" style="width:250px"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_barcode')" prop="barcode">
-          <el-input v-model="addForm.barcode" autocomplete="off" class="addinput"></el-input>
+          <el-input v-model="addForm.barcode" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_brand')" prop="brand">
-          <el-input v-model="addForm.brand"  class="addinput"></el-input>
+          <el-input v-model="addForm.brand"  class="addinput" size="small" style="width:250px"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_price')" prop="price">
-          <el-input v-model="addForm.price" autocomplete="off" class="addinput"></el-input>
+          <el-input v-model="addForm.price" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('message.goods_supplier_id')" prop="gys">
-          <el-input v-model="addForm.gys" autocomplete="off" class="addinput"></el-input>
+        <el-form-item :label="$t('message.goods_supplier_id')" prop="supplier">
+          <el-input v-model="addForm.supplier" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_producer')" prop="producer">
-          <el-input v-model="addForm.producer"  class="addinput"></el-input>
+          <el-input v-model="addForm.producer"  class="addinput" size="small" style="width:250px"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.goods_describe')" prop="desc">
-          <el-input type="textarea" v-model="addForm.desc" autocomplete="off" class="addinput"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.goods_update_time')" prop="date">
-          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.date" autocomplete="off" class="addinput"></el-date-picker>
+          <el-input type="textarea" v-model="addForm.desc" autocomplete="off" class="addinput"  style="width:250px"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -204,11 +192,12 @@ import { getGoodListPage, editGood, addGood } from '../../../api/api'
 export default {
   data () {
     return {
+      imageUrl: '/static/good.jpg',
       filters: {
         baocode: ''
       },
-      users: [],
-      total: 20,
+      goods: [],
+      total: 0,
       page: 1,
       listLoading: false,
       sels: [], // 列表选中列
@@ -221,7 +210,147 @@ export default {
         brand: '蟑螂恶霸',
         model: '20',
         producer: '恶霸蟑螂',
-        gys: '2178268741'
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
+      }, {
+        barcode: 12987122,
+        name: '好滋好味鸡蛋仔',
+        price: 5,
+        date: '2011-11-11',
+        desc: '荷兰优质淡奶，奶香浓而不腻',
+        brand: '蟑螂恶霸',
+        model: '20',
+        producer: '恶霸蟑螂',
+        supplier: '2178268741'
       },
       {
         barcode: 12987122,
@@ -232,7 +361,7 @@ export default {
         brand: '蟑螂恶霸',
         model: '20',
         producer: '恶霸蟑螂',
-        gys: '2178268741'
+        supplier: '2178268741'
       }
       ],
       editFormVisible: false, // 编辑界面是否显示
@@ -256,13 +385,10 @@ export default {
         producer: [
           { required: true, message: '输入生产厂家', trigger: 'blur' }
         ],
-        date: [
-          { required: true, message: '修改时间', trigger: 'blur' }
-        ],
         desc: [
           { required: true, message: '商品描述', trigger: 'blur' }
         ],
-        gys: [
+        supplier: [
           { required: true, message: '供应商', trigger: 'blur' }
         ]
       },
@@ -271,12 +397,11 @@ export default {
         barcode: 0,
         name: '',
         price: 0,
-        date: '',
         desc: '',
         brand: '',
         prodecer: '',
         img: '/static/good.jpg',
-        gys :''
+        gys: ''
       },
 
       addFormVisible: false, // 新增界面是否显示
@@ -300,13 +425,10 @@ export default {
         producer: [
           { required: true, message: '输入生产厂家', trigger: 'blur' }
         ],
-        date: [
-          { required: true, message: '修改时间', trigger: 'blur' }
-        ],
         desc: [
           { required: true, message: '商品描述', trigger: 'blur' }
         ],
-        gys: [
+        supplier: [
           { required: true, message: '供应商', trigger: 'blur' }
         ]
       },
@@ -315,7 +437,6 @@ export default {
         barcode: '',
         name: '',
         price: '',
-        date: '',
         desc: '',
         brand: '',
         prodecer: '',
@@ -340,7 +461,7 @@ export default {
       // NProgress.start();
       getGoodListPage(para).then((res) => {
         this.total = res.data.total
-        this.users = res.data.users
+        this.goods = res.data.goods
         this.listLoading = false
         // NProgress.done();
       })
@@ -353,13 +474,6 @@ export default {
     // 显示新增界面
     handleAdd: function () {
       this.addFormVisible = true
-      this.addForm = {
-        barcode: '',
-        name: '',
-        price: '',
-        date: '',
-        desc: ''
-      }
     },
     // 编辑
     editSubmit: function () {
@@ -438,6 +552,4 @@ export default {
     padding: 10px;
     margin: 10px 0px
     height 70px
-    .el-form-item
-      margin-bottom: 10px;
 </style>
