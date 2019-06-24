@@ -10,9 +10,9 @@
         <el-form-item>
           <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
         </el-form-item>
-        <!--<el-form-item>-->
-          <!--<el-button type="primary" @click="addGoods">{{$t('message.add')}}</el-button>-->
-        <!--</el-form-item>-->
+        <el-form-item>
+          <el-button type="primary" @click="addGoods">{{$t('message.add')}}</el-button>
+        </el-form-item>
       </el-form>
     </el-col>
 
@@ -94,24 +94,24 @@
       </div>
     </el-dialog>
 
-<!--    &lt;!&ndash;新增界面&ndash;&gt;-->
-<!--    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">-->
-<!--      <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addFormRules" :visible.sync="addFormVisible" label-width="80px" size="small">-->
-<!--        <el-form-item label="商品名称" prop="goods">-->
-<!--          <el-input v-model="addForm1.goods" autocomplete="off" class="addinput"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="条码" prop="barcode">-->
-<!--          <el-input v-model="addForm1.barcode" autocomplete="off" class="addinput"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="价格" prop="price">-->
-<!--          <el-input v-model="addForm1.price" autocomplete="off" class="addinput"></el-input>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--      <div slot="footer" class="dialog-footer">-->
-<!--        <el-button @click.native="addFormVisible = false">取消</el-button>-->
-<!--        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>-->
-<!--      </div>-->
-<!--    </el-dialog>-->
+    <!--新增界面-->
+    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">
+      <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addFormRules" :visible.sync="addFormVisible" label-width="80px" size="small">
+        <el-form-item label="商品名称" prop="goods">
+          <el-input v-model="addForm1.goods" autocomplete="off" class="addinput"></el-input>
+        </el-form-item>
+        <el-form-item label="条码" prop="barcode">
+          <el-input v-model="addForm1.barcode" autocomplete="off" class="addinput"></el-input>
+        </el-form-item>
+        <el-form-item label="价格" prop="price">
+          <el-input v-model="addForm1.price" autocomplete="off" class="addinput"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="addFormVisible = false">取消</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+      </div>
+    </el-dialog>
 
   </section>
 </template>
