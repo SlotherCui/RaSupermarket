@@ -49,27 +49,15 @@
     </el-col>
 
     <!--新增界面-->
-    <el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
+    <el-dialog :title="$t('message.shop_change_relation')" v-model="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
       <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
         <el-form-item :label="$t('message.supermarket_id')" prop="id">
           <el-input v-model="addForm.id" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('message.supermarket_name')" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.supermarket_tel')" prop="tel">
-          <el-input v-model="addForm.tel" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.supermarket_address')" prop="addr">
-          <el-input v-model="addForm.addr" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('message.supermarket_decription')" prop="desc">
-          <el-input type="textarea" v-model="addForm.desc" auto-complete="off"></el-input>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">{{$t('message.add')}}</el-button>
       </div>
     </el-dialog>
   </section>
