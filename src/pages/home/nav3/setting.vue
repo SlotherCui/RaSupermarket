@@ -29,7 +29,7 @@
       :before-close="handleClose">
       <span>实训项目</span>
       <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确定</el-button>
   </span>
     </el-dialog>
   </section>
@@ -50,7 +50,6 @@ export default {
     onSubmit () {
       var lang = this.formInline.lang
       this.$i18n.locale = lang
-
       this.$alert('这是一段内容', lang, {
       })
     }
