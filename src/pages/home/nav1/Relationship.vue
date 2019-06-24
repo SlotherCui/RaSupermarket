@@ -43,31 +43,28 @@
 
     <!--工具条-->
     <el-col :span="24" class="toolbar">
-      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">{{$t('message.batchDelete')}}</el-button>
+      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length!==0">{{$t('message.batchDelete')}}</el-button>
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
       </el-pagination>
     </el-col>
 
     <!--新增界面-->
-    <el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
+    <el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
       <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-        <el-form-item label="姓名" prop="name">
+        <el-form-item :label="$t('message.supermarket_id')" prop="id">
+          <el-input v-model="addForm.id" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.supermarket_name')" prop="name">
           <el-input v-model="addForm.name" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="addForm.sex">
-            <el-radio class="radio" :label="1">男</el-radio>
-            <el-radio class="radio" :label="0">女</el-radio>
-          </el-radio-group>
+        <el-form-item :label="$t('message.supermarket_tel')" prop="tel">
+          <el-input v-model="addForm.tel" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="年龄">
-          <el-input-number v-model="addForm.age" :min="0" :max="200"></el-input-number>
+        <el-form-item :label="$t('message.supermarket_address')" prop="addr">
+          <el-input v-model="addForm.addr" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.birth"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input type="textarea" v-model="addForm.addr"></el-input>
+        <el-form-item :label="$t('message.supermarket_decription')" prop="desc">
+          <el-input type="textarea" v-model="addForm.desc" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -105,15 +102,27 @@ export default {
       addLoading: false,
       addFormRules: {
         name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' }
+          { required: true, message: '请输入超市名称', trigger: 'blur' }
+        ],
+        desc: [
+          { required: true, message: '请输入超市描述', trigger: 'blur' }
+        ],
+        id: [
+          { required: true, message: '请输入超市编号', trigger: 'blur' }
+        ],
+        tel: [
+          { required: true, message: '请输入超市电话', trigger: 'blur' }
+        ],
+        addr: [
+          { required: true, message: '请输入超市地址', trigger: 'blur' }
         ]
       },
       // 新增界面数据
       addForm: {
         name: '',
-        sex: -1,
-        age: 0,
-        birth: '',
+        tel: '',
+        desc: '',
+        id: '',
         addr: ''
       }
 
@@ -124,6 +133,7 @@ export default {
       // requestCookie({}).then(data => {
       //   console.log(data)
       // })
+      this.addFormVisible = true
     }
   }
 }
