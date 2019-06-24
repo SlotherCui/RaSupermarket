@@ -24,43 +24,43 @@
           <el-row>
             <el-col :span="4" style="margin-left: 6%">
               <el-card  :body-style="{ padding: '0px' }">
-                <el-image :src="props.row.goods_img" fit="fill" class="goodsimage"></el-image>
+                <el-image :src="props.row.commodity_piclink" fit="fill" class="goodsimage"></el-image>
               </el-card>
             </el-col>
             <el-col :span="9">
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_barcode')}}</span><span>{{props.row.goods_barcode}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_name')}}</span><span>{{props.row.goods_name}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_model')}}</span><span>{{props.row.goods_model}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_price')}}</span><span>{{props.row.goods_price}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_update_time')}}</span><span>{{props.row.goods_update_time}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_barcode')}}</span><span>{{props.row.commodity_barcode}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_name')}}</span><span>{{props.row.commodity_name}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_specification')}}</span><span>{{props.row.commodity_specification}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_price')}}</span><span>{{props.row.commodity_price}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.create_time')}}</span><span>{{props.row.create_time}}</span></div>
             </el-col>
             <el-col :span="9">
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_brand')}}</span><span>{{props.row.goods_brand}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_producer')}}</span><span>{{props.row.goods_producer}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">供应商ID</span><span>{{props.row.goods_ID}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">供应价格</span><span>{{props.row.goods_inprice}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_describe')}}</span><span>{{props.row.goods_describe}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_brand')}}</span><span>{{props.row.commodity_brand}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_producer')}}</span><span>{{props.row.commodity_producer}}</span></div>
+<!--              <div style="line-height: 25px"><span class="goodsItem">供应商ID</span><span>{{props.row.goods_ID}}</span></div>-->
+<!--              <div style="line-height: 25px"><span class="goodsItem">供应价格</span><span>{{props.row.goods_inprice}}</span></div>-->
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_description')}}</span><span>{{props.row.commodity_description}}</span></div>
             </el-col>
           </el-row>
         </template>
       </el-table-column>
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column prop="goods_barcode" :label="$t('message.goods_barcode')" width="150" sortable>
+      <el-table-column prop="commodity_barcode" :label="$t('message.goods_barcode')" width="150" sortable>
       </el-table-column>
-      <el-table-column prop="goods_name" :label="$t('message.goods_name')" width="130"  sortable>
+      <el-table-column prop="commodity_name" :label="$t('message.goods_name')" width="130"  sortable>
       </el-table-column>
-      <el-table-column prop="goods_model" :label="$t('message.goods_model')" width=" 120" sortable>
+      <el-table-column prop="commodity_specification" :label="$t('message.goods_model')" width=" 120" sortable>
       </el-table-column>
-      <el-table-column prop="goods_price" :label="$t('message.goods_price')" width=" 100" sortable>
+      <el-table-column prop="commodity_price" :label="$t('message.goods_price')" width=" 100" sortable>
       </el-table-column>
-      <el-table-column prop="goods_ID" :label="$t('message.goods_supplier_id')" width=" 130" sortable>
+<!--      <el-table-column prop="goods_ID" :label="$t('message.goods_supplier_id')" width=" 130" sortable>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column prop="goods_inprice" label="进价" width=" 100" sortable>-->
+<!--      </el-table-column>-->
+      <el-table-column prop="commodity_description" :label="$t('message.commodity_description')" min-width=" 180" sortable>
       </el-table-column>
-      <el-table-column prop="goods_inprice" label="进价" width=" 100" sortable>
-      </el-table-column>
-      <el-table-column prop="goods_describe" :label="$t('message.goods_describe')" min-width=" 180" sortable>
-      </el-table-column>
-      <el-table-column :label="$t('message.operation')"  width=" 150" >
+      <el-table-column :label="$t('message.operation')"  width=" 150">
         <template scope="scope">
 <!--          编辑-->
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.edit')}}</el-button>
@@ -94,23 +94,86 @@
       </div>
     </el-dialog>
 
-    <!--新增界面-->
-    <el-dialog title="添加商品" v-show="addFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">
-      <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addFormRules" :visible.sync="addFormVisible" label-width="80px" size="small">
-        <el-form-item label="商品名称" prop="goods">
-          <el-input v-model="addForm1.goods" autocomplete="off" class="addinput"></el-input>
+    <!--新增界面 外层输入条码-->
+    <el-dialog title="添加商品" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">
+      <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addForm1Rules" :visible.sync="addFormVisible" label-width="100px" size="small">
+        <el-form-item label="商品条码号" prop="commodity_barcode">
+          <el-input v-model="addForm1.commodity_barcode" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
-        <el-form-item label="条码" prop="barcode">
-          <el-input v-model="addForm1.barcode" autocomplete="off" class="addinput"></el-input>
-        </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input v-model="addForm1.price" autocomplete="off" class="addinput"></el-input>
-        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+        <el-button type="primary" @click.native="addCommodity" :loading="addLoading">确认</el-button>
       </div>
+      <!--        内层添加商品表-->
+      <el-dialog width="50%" title="选择添加商品" :visible.sync="hascommodity" append-to-body>
+        <el-table :data="commoditytoadd">
+          <el-table-column property="commodity_barcode" label="条码号" width="150"></el-table-column>
+          <el-table-column property="commodity_name" label="名称" width="200"></el-table-column>
+          <el-table-column property="commodity_specification" label="规格"></el-table-column>
+          <el-table-column :label="$t('message.operation')"  width=" 150">
+            <template scope="scope">
+              <!--          添加-->
+              <el-button size="small" @click="alert(scope.$index, scope.row)">添加</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-dialog>
+<!--   内层   提示创建商品-->
+      <el-dialog width="30%" title="提示" :visible.sync="hasnotcommodity" append-to-body>
+        <span>暂无此商品，是否新建商品？</span>
+        <span slot="footer" class="dialog-footer">
+        <el-button @click="hasnotcommodity = false">取 消</el-button>
+        <el-button type="primary" @click="hasnotcommodity = false ;createcommodity=true">确 定</el-button>
+        </span>
+      </el-dialog>
+<!--      内层新建产品表单-->
+      <el-dialog width="40%" title="新建" :visible.sync="createcommodity" append-to-body>
+        <el-form :model="createcommodityForm"   :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="createcommodity" >
+          <el-form-item :label="$t('message.commodity_piclink')" prop="img">
+            <el-upload
+              :action="uploadActionUrl"
+              accept="image/jpeg,image/gif,image/png"
+              multiple
+              :limit="3"
+              :on-exceed="handleExceed"
+              :on-error="uploadError"
+              :on-success="uploadSuccess"
+              :on-remove="onRemoveTxt"
+              :before-upload="onBeforeUpload"
+              :file-list="files">
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
+            </el-upload>
+          </el-form-item>
+          <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
+            <el-input v-model="createcommodityForm.commodity_name"  class="addinput" size="small" style="width:250px"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
+            <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('message.commodity_brand')" prop="commodity_brand">
+            <el-input v-model="createcommodityForm.commodity_brand"  class="addinput" size="small" style="width:250px"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('message.commodity_price')" prop="commodity_price">
+            <el-input v-model="createcommodityForm.commodity_price" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('message.commodity_specification')" prop="commodity_specification">
+            <el-input v-model="createcommodityForm.commodity_specification" autocomplete="off" class="addinput" size="small" style="width:250px"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('message.commodity_producer')" prop="commodity_producer">
+            <el-input v-model="createcommodityForm.commodity_producer"  class="addinput" size="small" style="width:250px"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('message.commodity_description')" prop="commodity_description">
+            <el-input type="textarea" v-model="createcommodityForm.commodity_description" autocomplete="off" class="addinput"  style="width:250px"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click.native="createcommodity = false">取消</el-button>
+          <el-button type="primary" @click.native="createcommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
+        </div>
+      </el-dialog>
     </el-dialog>
 
   </section>
@@ -130,107 +193,133 @@ export default {
       total: 5,
       listLoading: false,
       addFormVisible: false, // 新增界面是否显示
+      hascommodity: false, // 查询时，已有条目，显示的内层表
+      hasnotcommodity: false, // 查询时，没有条目，显示的内层提示添加
+      createcommodity: false, // 新建商品
       addLoading: false,
       editLoading: false,
       goodslist: [{
-        goods_barcode: '6954767473673',
-        goods_name: '纯悦',
-        goods_model: '550ml',
-        goods_price: '2元',
-        goods_describe: '纯悦包装饮用水',
-        goods_brand: '可口可乐',
-        goods_producer: '可口可乐青岛',
-        goods_img: '/static/chunyue.jpg',
-        goods_update_time: '2019-6-20',
-        goods_ID: '213421412',
-        goods_inprice: '1.5元'
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml',
+        commodity_price: '2元',
+        commodity_description: '纯悦包装饮用水',
+        commodity_brand: '可口可乐',
+        commodity_producer: '可口可乐青岛',
+        commodity_piclink: '/static/chunyue.jpg',
+        create_time: '2019-6-20'
       },
       {
-        goods_barcode: '6954767473673',
-        goods_name: '纯悦',
-        goods_model: '550ml',
-        goods_price: '2元',
-        goods_describe: '纯悦包装饮用水',
-        goods_brand: '可口可乐',
-        goods_producer: '可口可乐青岛',
-        goods_img: '/static/chunyue.jpg',
-        goods_update_time: '2019-6-20',
-        goods_ID: '213421412',
-        goods_inprice: '1.5元'
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml',
+        commodity_price: '2元',
+        commodity_description: '纯悦包装饮用水',
+        commodity_brand: '可口可乐',
+        commodity_producer: '可口可乐青岛',
+        commodity_piclink: '/static/chunyue.jpg',
+        create_time: '2019-6-20'
       },
       {
-        goods_barcode: '6954767473673',
-        goods_name: '纯悦',
-        goods_model: '550ml',
-        goods_price: '2元',
-        goods_describe: '纯悦包装饮用水',
-        goods_brand: '可口可乐',
-        goods_producer: '可口可乐青岛',
-        goods_img: '/static/chunyue.jpg',
-        goods_update_time: '2019-6-20',
-        goods_ID: '213421412',
-        goods_inprice: '1.5元'
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml',
+        commodity_price: '2元',
+        commodity_description: '纯悦包装饮用水',
+        commodity_brand: '可口可乐',
+        commodity_producer: '可口可乐青岛',
+        commodity_piclink: '/static/chunyue.jpg',
+        create_time: '2019-6-20'
       },
       {
-        goods_barcode: '6954767473673',
-        goods_name: '纯悦',
-        goods_model: '550ml',
-        goods_price: '2元',
-        goods_describe: '纯悦包装饮用水',
-        goods_brand: '可口可乐',
-        goods_producer: '可口可乐青岛',
-        goods_img: '/static/chunyue.jpg',
-        goods_update_time: '2019-6-20',
-        goods_ID: '213421412',
-        goods_inprice: '1.5元'
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml',
+        commodity_price: '2元',
+        commodity_description: '纯悦包装饮用水',
+        commodity_brand: '可口可乐',
+        commodity_producer: '可口可乐青岛',
+        commodity_piclink: '/static/chunyue.jpg',
+        create_time: '2019-6-20'
       },
       {
-        goods_barcode: '6954767473673',
-        goods_name: '纯悦',
-        goods_model: '550ml',
-        goods_price: '2元',
-        goods_describe: '纯悦包装饮用水',
-        goods_brand: '可口可乐',
-        goods_producer: '可口可乐青岛',
-        goods_img: '/static/chunyue.jpg',
-        goods_update_time: '2019-6-20',
-        goods_ID: '213421412',
-        goods_inprice: '1.5元'
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml',
+        commodity_price: '2元',
+        commodity_description: '纯悦包装饮用水',
+        commodity_brand: '可口可乐',
+        commodity_producer: '可口可乐青岛',
+        commodity_piclink: '/static/chunyue.jpg',
+        create_time: '2019-6-20'
       },
       {
-        goods_barcode: '6954767473673',
-        goods_name: '纯悦',
-        goods_model: '550ml',
-        goods_price: '2元',
-        goods_describe: '纯悦包装饮用水',
-        goods_brand: '可口可乐',
-        goods_producer: '可口可乐青岛',
-        goods_img: '/static/chunyue.jpg',
-        goods_update_time: '2019-6-20',
-        goods_ID: '213421412',
-        goods_inprice: '1.5元'
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml',
+        commodity_price: '2元',
+        commodity_description: '纯悦包装饮用水',
+        commodity_brand: '可口可乐',
+        commodity_producer: '可口可乐青岛',
+        commodity_piclink: '/static/chunyue.jpg',
+        create_time: '2019-6-20'
+      }
+      ],
+      commoditytoadd: [{
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml'
+      },
+      {
+        commodity_barcode: '6954767473673',
+        commodity_name: '纯悦',
+        commodity_specification: '550ml'
       }
       ],
       editFormVisible: false,
       addForm1: {
-        barcode: '',
-        goods: '',
-        price: ''
+        commodity_barcode: ''
+      },
+      createcommodityForm: {
+        commodity_name: '',
+        commodity_barcode: '',
+        commodity_brand: '',
+        commodity_price: '',
+        commodity_specification: '',
+        commodity_producer: '',
+        commodity_description: ''
       },
       editForm1: {
         barcode: '',
         goods: '',
         price: ''
       },
-      addFormRules: {
-        goods: [
-          { required: true, message: '输入商品名称', trigger: 'blur' }
+      createcommodityFormRules: {
+        commodity_barcode: [
+          { required: true, message: '请输入商品条码号', trigger: 'blur' }
         ],
-        price: [
-          { required: true, message: '输入价格', trigger: 'blur' }
+        commodity_name: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' }
         ],
-        barcode: [
-          { required: true, message: '输入条码', trigger: 'blur' }
+        commodity_brand: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' }
+        ],
+        commodity_price: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' }
+        ],
+        commodity_specification: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' }
+        ],
+        commodity_producer: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' }
+        ],
+        commodity_description: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' }
+        ]
+      },
+      addForm1Rules: {
+        commodity_barcode: [
+          { required: true, message: '请输入商品条码号', trigger: 'blur' }
         ]
       },
       editFormRules: {
@@ -277,6 +366,10 @@ export default {
         this.listLoading = false
       })
     },
+    // 新增商品填写完成后提交
+    createcommoditySubmit () {
+      this.createcommodity = false
+    },
     handleEdit (index, row) {
       this.editFormVisible = true
       this.editForm1 = Object.assign({}, row)
@@ -284,9 +377,7 @@ export default {
     addGoods () {
       this.addFormVisible = true
       this.addForm1 = {
-        barcode: '',
-        goods: '',
-        price: ''
+        commodity_barcode: ''
       }
     },
     // 删除
@@ -330,6 +421,12 @@ export default {
       }).catch(() => {
 
       })
+    },
+    // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示
+    addCommodity () {
+      var has = false
+      this.hascommodity = has
+      this.hasnotcommodity = !has
     },
     // 提交新增商品
     // addSubmit () {
