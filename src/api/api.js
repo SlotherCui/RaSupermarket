@@ -27,7 +27,9 @@ export const getMyGoodListPage = params => { return axios.get(`/MyGoods/listpage
 //           commodity_brand
 //           commodity_producer
 //           commodity_piclink
-
+// Relationship 請求
+// 根據超市id分頁獲取
+export const getRelationship = params => { return axios.get(`/Relationship/listpage`, { params: params }).then(res => res.data) }
 export const addMyGoods = params => { return axios.get(`/MyGoods/add`, { params: params }).then(res => res.data) }
 
 export const editGoods = params => { return axios.get(`/MyGoods/edit`, { params: params }).then(res => res.data) }
@@ -86,3 +88,8 @@ export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, 
 //             }]
 //           ],
 //          total:   5    总页数方便显示
+
+// 關係測試接口
+export const RealtionrequestMock = params => {
+  return axios.get('/relationship/list', { params }).then(res => res.data)
+}

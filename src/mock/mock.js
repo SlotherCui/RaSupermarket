@@ -2,9 +2,11 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { Commodity } from './data/Commodity'
 import { Orders } from './data/Order'
-// let _Users = Commodity
+import { Relation } from './data/Relation'
+
 let _Commodity = Commodity
 let _Orders = Orders
+let _Relation = Relation
 export default {
   /**
    * mock bootstrap
@@ -178,5 +180,22 @@ export default {
     //     }, 500)
     //   })
     // })
+    mock.onGet('/relationship/list').reply(config => {
+      let {page, supermarket_id} = config.params
+      let mockRelation = _Relation.filter(Relation => {
+        if (supermarket_id && Relation.supermarket_id.indexOf(supermarket_id) === -1) return false
+        return true
+      })
+      let total = mockRelation.length
+      mockRelation = mockRelation.filter((u, index) => index < 20 * page && index >= 20 * (page - 1))
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            total: total,
+            Relation: mockRelation
+          }])
+        }, 1000)
+      })
+    })
   }
 }
