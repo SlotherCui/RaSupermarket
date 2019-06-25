@@ -1,8 +1,10 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { Commodity } from './data/Commodity'
+import { Orders } from './data/Order'
 // let _Users = Commodity
 let _Commodity = Commodity
+let _Orders = Orders
 export default {
   /**
    * mock bootstrap
@@ -55,19 +57,52 @@ export default {
     //   })
     // })
     mock.onGet('/commodity/list').reply(config => {
+      // 获取请求体
       let {page, commodity_barcode} = config.params
+      //
       let mockCommodity = _Commodity.filter(commodity => {
         if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
         return true
       })
+      // 总长度
       let total = mockCommodity.length
+      // 商品查询结果分页
       mockCommodity = mockCommodity.filter((u, index) => index < 20 * page && index >= 20 * (page - 1))
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
-            total: total,
-            Commodity: mockCommodity
-          }])
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              total: total,
+              Commodity: mockCommodity
+            }}])
+        }, 1000)
+      })
+    })
+
+    // 获取销售记录列表
+    mock.onGet('/Sell/OrderList').reply(config => {
+      // 获取请求体
+      let {page, order_id} = config.params
+      //
+      let mockOrders = _Orders.filter(commodity => {
+        if (order_id && commodity.order_id.indexOf(order_id) === -1) return false
+        return true
+      })
+      // 总长度
+      let total = mockOrders.length
+      // 商品查询结果分页
+      mockOrders = mockOrders.filter((u, index) => index < 20 * page && index >= 20 * (page - 1))
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              total: total,
+              orders: mockOrders
+            }}])
         }, 1000)
       })
     })
