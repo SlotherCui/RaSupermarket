@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 const Commodity = []
+
 for (let i = 0; i < 86; i++) {
   Commodity.push(Mock.mock({
     commodity_barcode: Mock.Random.integer(1000000000000, 99999999999999),

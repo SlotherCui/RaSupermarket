@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import Mock from 'mockjs'
 axios.defaults.baseURL = '/api'
 
 axios.defaults.withCredentials = true
@@ -9,7 +10,23 @@ export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { 
 export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchremove`, { params: params }) }
 
 // MyGoods请求
+// 根据条码号分页获取商品
 export const getMyGoodListPage = params => { return axios.get(`/MyGoods/listpage`, { params: params }).then(res => res.data) }
+// 请求方法 get /MyCommodity/listpage
+// 请求体  page 页号
+//         commodity_barcode  商品条码号
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data
+//           commodity_barcode  ：条码号
+//           commodity_name     ：
+//           commodity_specification
+//           commodity_price
+//           commodity_description
+//           commodity_brand
+//           commodity_producer
+//           commodity_piclink
 
 export const addMyGoods = params => { return axios.get(`/MyGoods/add`, { params: params }).then(res => res.data) }
 
@@ -31,7 +48,9 @@ export const requestLogin = params => {
   return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
   ).then(res => res.data)
 }
-// qs.stringify({params})
+
+
+// 相关测试接口
 // 测试接口
 export const requestTest = params => {
   return axios.get('/say2', { params }).then(res => res.data)
@@ -44,4 +63,3 @@ export const requestCookie = params => {
 export const requestMock = params => {
   return axios.get('/commodity/list', { params }).then(res => res.data)
 }
-// export const requestLogin = params => { return axios.get('getthread.aspx', { params }).then(res => res.data) }
