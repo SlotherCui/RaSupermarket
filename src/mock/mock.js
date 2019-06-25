@@ -1,8 +1,12 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { Commodity } from './data/Commodity'
-// let _Users = Commodity
+import { Orders } from './data/Order'
+import { Relation } from './data/Relation'
+
 let _Commodity = Commodity
+let _Orders = Orders
+let _Relation = Relation
 export default {
   /**
    * mock bootstrap
@@ -55,19 +59,52 @@ export default {
     //   })
     // })
     mock.onGet('/commodity/list').reply(config => {
+      // 获取请求体
       let {page, commodity_barcode} = config.params
+      //
       let mockCommodity = _Commodity.filter(commodity => {
         if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
         return true
       })
+      // 总长度
       let total = mockCommodity.length
+      // 商品查询结果分页
       mockCommodity = mockCommodity.filter((u, index) => index < 20 * page && index >= 20 * (page - 1))
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
-            total: total,
-            Commodity: mockCommodity
-          }])
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              total: total,
+              Commodity: mockCommodity
+            }}])
+        }, 1000)
+      })
+    })
+
+    // 获取销售记录列表
+    mock.onGet('/Sell/OrderList').reply(config => {
+      // 获取请求体
+      let {page, order_id} = config.params
+      //
+      let mockOrders = _Orders.filter(commodity => {
+        if (order_id && commodity.order_id.indexOf(order_id) === -1) return false
+        return true
+      })
+      // 总长度
+      let total = mockOrders.length
+      // 商品查询结果分页
+      mockOrders = mockOrders.filter((u, index) => index < 20 * page && index >= 20 * (page - 1))
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              total: total,
+              orders: mockOrders
+            }}])
         }, 1000)
       })
     })
@@ -143,5 +180,22 @@ export default {
     //     }, 500)
     //   })
     // })
+    mock.onGet('/relationship/list').reply(config => {
+      let {page, supermarket_id} = config.params
+      let mockRelation = _Relation.filter(Relation => {
+        if (supermarket_id && Relation.supermarket_id.indexOf(supermarket_id) === -1) return false
+        return true
+      })
+      let total = mockRelation.length
+      mockRelation = mockRelation.filter((u, index) => index < 20 * page && index >= 20 * (page - 1))
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            total: total,
+            Relation: mockRelation
+          }])
+        }, 1000)
+      })
+    })
   }
 }

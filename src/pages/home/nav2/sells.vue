@@ -47,13 +47,6 @@
       </el-table-column>
       <el-table-column prop="order_create_time" :label="$t('message.order_create_time')" min-width="200" sortable>
       </el-table-column>
-      <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column label="操作" width="90">-->
-        <!--<template scope="scope">-->
-          <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
     </el-table>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
@@ -87,7 +80,7 @@
 </template>
 
 <script>
-// import { requestCookie } from '../../../api/api'
+import { requestOrderList } from '../../../api/api'
 export default {
   name: 'page1',
   data () {
@@ -96,30 +89,12 @@ export default {
       filters: {
         order_id: ''
       },
-      sells: [{
-        order_id: '00000001',
-        order_all_price: 5,
-        order_create_time: '2019-6-30',
-        order_commodity_sum: 3,
-        infors: [{
-          commodity_barcode: '6954767473673',
-          commodity_name: '纯悦',
-          commodity_specification: '550ml',
-          commodity_each_count: '1',
-          commodity_current_price: '2'
-        },
-        {
-          commodity_barcode: '6954767473674',
-          commodity_name: '纯兑',
-          commodity_specification: '550ml',
-          commodity_each_count: '2',
-          commodity_current_price: '1.5'
-        }]
-      }],
+      sells: [],
       // 页表项
-      total: 0,
-      page: 1,
-      listLoading: false,
+      total: 0, // 总页数
+      page: 1, // 当前页数
+      // 是否加载
+      listLoading: true,
       // 新增界面相关变量
       addFormVisible: false,
       addLoading: false,
@@ -143,12 +118,32 @@ export default {
     },
     // 查询方法
     handleSearch () {
-      var order_id = this.filters.order_id
-      this.addFormVisible = true
+      this.listLoading = true
+      // var order_id = this.filters.order_id
+      this.getOrderList(1)
     },
     // 翻页方法
     handleCurrentChange (val) {
+      this.listLoading = true
+      this.getOrderList(this.page)
+    },
+    // 请求消息记录
+    getOrderList (page) {
+      let para = {page: page, order_id: this.filters.order_id}
+      requestOrderList(para).then((res) => {
+        // this.editLoading = false
+        // NProgress.done(
+        if (res.code === 0) {
+          this.sells = res.data.orders
+          this.total = res.data.total
+        }
+        this.listLoading = false
+      })
     }
+  },
+  // 生命周期初始函数
+  mounted () {
+    this.getOrderList(this.page)
   }
 }
 </script>

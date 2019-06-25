@@ -47,7 +47,6 @@
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
       </el-pagination>
     </el-col>
-
     <!--新增界面-->
     <el-dialog :title="$t('message.shop_change_relation')" v-model="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
       <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
@@ -64,15 +63,19 @@
 </template>
 
 <script>
-// import { requestCookie } from '../../../api/api'
+import {RealtionrequestMock, getRelationship} from '../../../api/api'
 export default {
-  name: 'page1',
+  name: 'Find',
   data () {
     return {
       filters: {
         name: ''
       },
       users: [],
+      total: 0,
+      page: 1,
+      listLoading: false,
+      sels: [], // 列表选中列
       sells: [{
         supermarket_id: 124547,
         supermarket_name: '附近超市',
@@ -81,11 +84,6 @@ export default {
         supermarket_decription: '山东大学软件学院学生生活超市'
 
       }],
-      total: 0,
-      page: 1,
-      listLoading: false,
-      sels: [], // 列表选中列
-
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
       addFormRules: {
@@ -122,7 +120,35 @@ export default {
       //   console.log(data)
       // })
       this.addFormVisible = true
+    },
+    handleCurrentChange (val) {
+      this.page = val
+      this.regetRelation()
+    },
+    regetRelation () {
+      let para = {
+        page: this.page,
+        id: ''
+      }
+      console.log(para)
+      this.listLoading = true
+      getRelationship(para).then((res) => {
+        this.total = res.data.total
+        this.sells = res.data.sells
+        this.listLoading = false
+      })
     }
+  },
+  mounted () {
+    console.log('cyfhere')
+    let para = {page: 1, supermarket_id: 0}
+    RealtionrequestMock(para).then((res) => {
+      // this.editLoading = false
+      // NProgress.done(
+      this.sells = res.Relation
+      this.total = res.total
+      console.log(res)
+    })
   }
 }
 </script>

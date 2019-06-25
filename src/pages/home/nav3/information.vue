@@ -163,12 +163,11 @@ export default {
       getInfo(para).then((res) => {
         this.name = res.data.total
         this.tax = res.data.tax
-        this.phone = res.data.phone
-        this.stype = res.data.stype
-        this.date1 = res.data.date1
-        this.date2 = res.data.date2
-        this.delivery = res.data.delivery
-        this.gtype = res.data.gtype
+        this.tel = res.data.tel
+        this.mnama = res.data.mnama
+        this.email = res.data.email
+        this.piclink = res.data.piclink
+        this.desc = res.data.desc
         this.addr = res.data.addr
         // NProgress.done();
       })
@@ -205,5 +204,4 @@ export default {
     }
   }
 }
-
 </script>

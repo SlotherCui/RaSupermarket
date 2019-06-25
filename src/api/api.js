@@ -27,7 +27,9 @@ export const getMyGoodListPage = params => { return axios.get(`/MyGoods/listpage
 //           commodity_brand
 //           commodity_producer
 //           commodity_piclink
-
+// Relationship 請求
+// 根據超市id分頁獲取
+export const getRelationship = params => { return axios.get(`/Relationship/listpage`, { params: params }).then(res => res.data) }
 export const addMyGoods = params => { return axios.get(`/MyGoods/add`, { params: params }).then(res => res.data) }
 
 export const editGoods = params => { return axios.get(`/MyGoods/edit`, { params: params }).then(res => res.data) }
@@ -48,8 +50,6 @@ export const requestLogin = params => {
   return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
   ).then(res => res.data)
 }
-
-
 // 相关测试接口
 // 测试接口
 export const requestTest = params => {
@@ -62,4 +62,34 @@ export const requestCookie = params => {
 
 export const requestMock = params => {
   return axios.get('/commodity/list', { params }).then(res => res.data)
+}
+
+// 销售相关接口
+// 根据销售号查询销售记录/ 返回所有销售记录
+export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, { params: params }).then(res => res.data) }
+// 请求方法 get /Sell/OrderList
+// 请求体  page 页号
+//         order_id  销售记录
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//           orders:[
+//             order_id
+//             order_all_price
+//             order_create_time
+//             order_commodity_sum
+//             infors: [{
+//             commodity_barcode
+//             commodity_name
+//             commodity_specification
+//             commodity_each_count
+//             commodity_current_price
+//             }]
+//           ],
+//          total:   5    总页数方便显示
+
+// 關係測試接口
+export const RealtionrequestMock = params => {
+  return axios.get('/relationship/list', { params }).then(res => res.data)
 }
