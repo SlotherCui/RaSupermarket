@@ -7,7 +7,7 @@
           <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="searchcommodity">{{$t('message.query')}}</el-button>
+          <el-button type="primary" @click="searchcommodity">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="addGoods">{{$t('message.add')}}</el-button>
@@ -318,11 +318,10 @@ export default {
     searchcommodity () {
       var searchstring = this.mygoodsfilters.barcode
       // 条码搜索
+      console.log(searchstring)
       if (/^[0-9]+$/.test(searchstring)) {
         if (searchstring.length !== 13) {
-          this.$alert('条码位数必须为13位', '提示', {
-            confirmButtonText: '确定'
-          })
+          this.$alert('条码位数必须为13位', '提示', {confirmButtonText: '确定'})
         } else {
           let para = {
             page: this.page,

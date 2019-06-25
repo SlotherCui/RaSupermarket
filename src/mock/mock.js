@@ -221,9 +221,12 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
-            total: total,
-            Relation: mockRelation
-          }])
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              total: total,
+              orders: mockRelation
+            }}])
         }, 1000)
       })
     })

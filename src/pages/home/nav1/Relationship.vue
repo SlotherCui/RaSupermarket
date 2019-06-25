@@ -4,10 +4,10 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.name" placeholder="请输入商家编号"></el-input>
+          <el-input v-model="filters.id" placeholder="请输入商家编号" @input="change" @change="change"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsers">{{$t('message.query')}}</el-button>
+          <el-button type="primary" v-on:click="getUsers" @click="searchRelation">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleAdd">{{$t('message.add')}}</el-button>
@@ -69,21 +69,13 @@ export default {
   data () {
     return {
       filters: {
-        name: ''
+        id: ''
       },
       users: [],
       total: 0,
       page: 1,
       listLoading: false,
       sels: [], // 列表选中列
-      sells: [{
-        supermarket_id: 124547,
-        supermarket_name: '附近超市',
-        supermarket_address: '山东省济南市历下区舜华路1500号',
-        supermarket_tel: 18340018831,
-        supermarket_decription: '山东大学软件学院学生生活超市'
-
-      }],
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
       addFormRules: {
@@ -121,6 +113,18 @@ export default {
       // })
       this.addFormVisible = true
     },
+    searchRelation () {
+      var searchstring = this.filters.id
+      // 条码搜索
+      if ((/^[0-9]+$/.test(searchstring)) && searchstring.length === 13) {
+        // 搜索
+      } else {
+        console.log(searchstring.length)
+        this.$alert('超市编号必须为13位且为数字', '提示', {
+          confirmButtonText: '确定'
+        })
+      }
+    },
     handleCurrentChange (val) {
       this.page = val
       this.regetRelation()
@@ -140,7 +144,7 @@ export default {
     }
   },
   mounted () {
-    console.log('cyfhere')
+    console.log('改價關係MOCK')
     let para = {page: 1, supermarket_id: 0}
     RealtionrequestMock(para).then((res) => {
       // this.editLoading = false
