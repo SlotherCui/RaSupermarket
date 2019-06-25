@@ -1,7 +1,6 @@
 <template>
   <section>
     <!--工具条-->
-
     <el-col :span="24" class="toolbar" >
       <el-form :inline="true" :model="mygoodsfilters">
         <el-form-item>
@@ -15,9 +14,7 @@
         </el-form-item>
       </el-form>
     </el-col>
-
     <!--列表-->
-
     <el-table :data="goodslist" stripe="true" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
@@ -62,42 +59,84 @@
       </el-table-column>
       <el-table-column :label="$t('message.operation')"  width=" 150">
         <template scope="scope">
-<!--          编辑-->
+          <!--          编辑-->
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.edit')}}</el-button>
-<!--          删除-->
+          <!--          删除-->
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-col :span="24" class="toolbar2">
-<!--      批量删除-->
+      <!--      批量删除-->
       <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">{{$t('message.batchDelete')}}</el-button>
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
       </el-pagination>
     </el-col>
     <!--编辑界面-->
     <el-dialog :title="$t('message.edit')" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">
-      <el-form :model="editForm1" label-width="80px" :rules="editFormRules" ref="editForm1">
-        <el-form-item label="商品名称" prop="goods">
-          <el-input v-model="editForm1.goods" autocomplete="off" class="addinput"></el-input>
+      <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="editFormVisible" >
+        <el-form-item :label="$t('message.commodity_piclink')" prop="img">
+          <el-upload
+            :action="uploadActionUrl"
+            accept="image/jpeg,image/gif,image/png"
+            multiple
+            :limit="3"
+            :on-exceed="handleExceed"
+            :on-error="uploadError"
+            :on-success="uploadSuccess"
+            :on-remove="onRemoveTxt"
+            :before-upload="onBeforeUpload"
+            :file-list="files">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
+          </el-upload>
         </el-form-item>
-        <el-form-item label="条码" prop="barcode">
-          <el-input v-model="editForm1.barcode" autocomplete="off" class="addinput"></el-input>
+        <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
+          <el-input v-model="createcommodityForm.commodity_name"  class="addinput" size="small" ></el-input>
         </el-form-item>
-        <el-form-item label="价格" prop="price">
-          <el-input v-model="editForm1.price" autocomplete="off" class="addinput"></el-input>
+        <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
+          <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_brand')" prop="commodity_brand">
+          <el-input v-model="createcommodityForm.commodity_brand"  class="addinput" size="small" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_specification')" prop="commodity_specification">
+          <el-input v-model="createcommodityForm.commodity_specification" autocomplete="off" class="addinput" size="small"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_producer')" prop="commodity_producer">
+          <el-input v-model="createcommodityForm.commodity_producer"  class="addinput" size="small"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_description')" prop="commodity_description">
+          <el-input type="textarea" v-model="createcommodityForm.commodity_description" autocomplete="off" :autosize="{ minRows: 2, maxRows: 4}" class="addinput"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="editFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+        <el-button @click.native="createcommodity = false">取消</el-button>
+        <el-button type="primary" @click.native="createcommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
+<!--    <el-dialog :title="$t('message.edit')" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">-->
+<!--      <el-form :model="editForm1" label-width="80px" :rules="editFormRules" ref="editForm1">-->
+<!--        <el-form-item label="商品名称" prop="goods">-->
+<!--          <el-input v-model="editForm1.goods" autocomplete="off" class="addinput"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="条码" prop="barcode">-->
+<!--          <el-input v-model="editForm1.barcode" autocomplete="off" class="addinput"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="价格" prop="price">-->
+<!--          <el-input v-model="editForm1.price" autocomplete="off" class="addinput"></el-input>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+<!--      <div slot="footer" class="dialog-footer">-->
+<!--        <el-button @click.native="editFormVisible = false">取消</el-button>-->
+<!--        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
 
     <!--新增界面 外层输入条码-->
     <el-dialog title="添加商品" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible">
       <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addForm1Rules" :visible.sync="addFormVisible" label-width="100px" size="small">
-        <el-form-item label="商品条码号" prop="commodity_barcode">
+        <el-form-item label="搜索商品" prop="commodity_barcode">
           <el-input v-model="addForm1.commodity_barcode" autocomplete="off" class="addinput"></el-input>
         </el-form-item>
 
@@ -121,11 +160,11 @@
         </el-table>
       </el-dialog>
 <!--   内层   提示创建商品-->
-      <el-dialog width="30%" title="提示" :visible.sync="hasnotcommodity" append-to-body>
-        <span>暂无此商品，是否新建商品？</span>
+      <el-dialog width="35%" title="提示" :visible.sync="hasnotcommodity" append-to-body>
+        <span>暂无在售信息，可以添加一条</span>
         <span slot="footer" class="dialog-footer">
-        <el-button @click="hasnotcommodity = false">取 消</el-button>
-        <el-button type="primary" @click="hasnotcommodity = false ;createcommodity=true">确 定</el-button>
+          <el-button @click="hasnotcommodity = false">取 消</el-button>
+          <el-button type="primary" @click="hasnotcommodity = false ;createcommodity=true">确 定</el-button>
         </span>
       </el-dialog>
 <!--      内层新建产品表单-->
@@ -175,7 +214,7 @@
         </div>
       </el-dialog>
     </el-dialog>
-
+<!--    修改信息-->
   </section>
 </template>
 
@@ -391,6 +430,11 @@ export default {
       this.createcommodityForm.commodity_specification = ''
       this.createcommodityForm.commodity_producer = ''
       this.createcommodityForm.commodity_description = ''
+      this.$message({
+        message: '恭喜你，这是一条成功消息',
+        type: 'success',
+        length: '50%'
+      })
     },
     handleEdit (index, row) {
       this.editFormVisible = true
@@ -404,7 +448,7 @@ export default {
     },
     // 删除
     handleDel (index, row) {
-      this.$confirm('确认删除该记录吗?', '提示', {
+      this.$confirm('确认删除该商品吗?', '提示', {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
@@ -447,7 +491,7 @@ export default {
     // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示
     addCommodity () {
       this.clearValidate('addForm1')
-      var has = true
+      var has = false
       this.hascommodity = has
       this.hasnotcommodity = !has
     },
