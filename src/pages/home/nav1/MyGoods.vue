@@ -7,7 +7,7 @@
           <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
+          <el-button type="primary" v-on:click="searchcommodity">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="addGoods">{{$t('message.add')}}</el-button>
@@ -386,21 +386,35 @@ export default {
     }
   },
   methods: {
+    // toolbar   搜 索   +   新 增
+    searchcommodity () {
+      var searchstring = this.mygoodsfilters.barcode
+      // 条码搜索
+      if (/^[0-9]+$/.test(searchstring)) {
+        if (searchstring.length !== 13) {
+          this.$alert('条码位数必须为13位', '提示', {
+            confirmButtonText: '确定'
+          })
+        }
+      }
+      // 模糊搜索
+      else {
+
+      }
+      // let para = {
+      //   page: this.page,
+      //   barcode: this.mygoodsfilters.barcode
+      // }
+      // console.log(para)
+      // this.listLoading = true
+      // getMyGoodListPage(para).then((res) => {
+      //   this.total = res.data.total
+      //   this.goodslist = res.data.goodslist
+      //   this.listLoading = false
+      // })
+    },
     clearValidate (formName) {
       this.$refs[formName].clearValidate()
-    },
-    getGoods () {
-      let para = {
-        page: this.page,
-        barcode: this.mygoodsfilters.barcode
-      }
-      console.log(para)
-      this.listLoading = true
-      getMyGoodListPage(para).then((res) => {
-        this.total = res.data.total
-        this.goodslist = res.data.goodslist
-        this.listLoading = false
-      })
     },
     handleCurrentChange (val) {
       this.page = val
@@ -435,6 +449,11 @@ export default {
         type: 'success',
         length: '50%'
       })
+      // this.$message({
+      //   message: '警告哦，这是一条警告消息',
+      //   type: 'warning'
+      // });
+      // this.$message.error('错了哦，这是一条错误消息');
     },
     handleEdit (index, row) {
       this.editFormVisible = true
