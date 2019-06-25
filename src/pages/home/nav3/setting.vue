@@ -18,19 +18,28 @@
         </el-form>
       </el-row>
       <el-row>
-        <el-button type="text" @click="dialogVisible = true"></el-button>
+        <el-button type="text" @click="opinionVisible = true" style="font-size: large; padding-left: 5%;" icon="el-icon-info">意见反馈</el-button>
+      </el-row>
+      <el-row>
+        <el-button type="text" @click="aboutus = true" style="font-size: large; padding-left: 5%;" icon="el-icon-question">关于我们</el-button>
       </el-row>
     </el-col>
 
-    <el-dialog
-      title="关于我们"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span>实训项目</span>
+    <el-dialog title="关于我们" :visible.sync="aboutus" width="30%" >
+      <span>山东大学2016级实训项目</span>
+      <span slot="footer" class="dialog-footer"><el-button type="primary" @click="aboutus = false">确定</el-button></span>
+    </el-dialog>
+
+    <el-dialog title="意见反馈" :visible.sync="opinionVisible" width="30%">
+      <el-form :model="opinionForm" label-width="80px" ref="opinionForm" :visible.sync="opinionVisible" >
+        <el-form-item label="您的意见">
+        <el-input type="textarea" v-model="opinionForm.opinion" autocomplete="off" :autosize="{ minRows: 7, maxRows: 10}"></el-input>
+        </el-form-item>
+      </el-form>
       <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogVisible = false">确定</el-button>
-  </span>
+        <el-button @click.native="opinionForm.opinion=''; opinionVisible = false;  ">取 消</el-button>
+        <el-button type="primary" @click.native="opinionVisible = false">确 定</el-button>
+      </span>
     </el-dialog>
   </section>
 </template>
@@ -43,7 +52,11 @@ export default {
       formInline: {
         lang: '中文'
       },
-      dialogVisible: false
+      opinionForm: {
+        opinion: ''
+      },
+      aboutus: false,
+      opinionVisible: false
     }
   },
   methods: {
