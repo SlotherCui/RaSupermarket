@@ -109,6 +109,36 @@ export default {
       })
     })
 
+    mock.onGet('/Sell/getPrice').reply(config => {
+      // 获取请求体
+      let {commodity_barcode} = config.params
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              commodity_current_price: 17
+            }}])
+        }, 1000)
+      })
+    })
+    // 接受post请求
+    mock.onPost('/Sell/postOrder').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let commodity_list = JSON.parse(config.data)
+      console.log(commodity_list)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
     // 删除用户
     // mock.onGet('/user/remove').reply(config => {
     //   let { id } = config.params
@@ -191,9 +221,12 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
-            total: total,
-            Relation: mockRelation
-          }])
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              total: total,
+              orders: mockRelation
+            }}])
         }, 1000)
       })
     })
