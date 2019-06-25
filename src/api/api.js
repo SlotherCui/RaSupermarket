@@ -27,7 +27,9 @@ export const getMyGoodListPage = params => { return axios.get(`/MyGoods/listpage
 //           commodity_brand
 //           commodity_producer
 //           commodity_piclink
-
+// Relationship 請求
+// 根據超市id分頁獲取
+export const getRelationship = params => { return axios.get(`/Relationship/listpage`, { params: params }).then(res => res.data) }
 export const addMyGoods = params => { return axios.get(`/MyGoods/add`, { params: params }).then(res => res.data) }
 
 export const editGoods = params => { return axios.get(`/MyGoods/edit`, { params: params }).then(res => res.data) }
@@ -62,4 +64,8 @@ export const requestCookie = params => {
 
 export const requestMock = params => {
   return axios.get('/commodity/list', { params }).then(res => res.data)
+}
+// 關係測試接口
+export const RealtionrequestMock = params => {
+  return axios.get('/relationship/list', { params }).then(res => res.data)
 }
