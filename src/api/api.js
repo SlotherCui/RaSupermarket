@@ -89,6 +89,33 @@ export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, 
 //           ],
 //          total:   5    总页数方便显示
 
+// 根据条码号获取价格
+export const requestPriceByBarcode = params => { return axios.get(`/Sell/getPrice`, { params: params }).then(res => res.data) }
+// 请求方法 get /Sell/getPrice
+// 请求体   commodity_barcode  商品条码
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//        commodity_current_price： 17
+
+// 提交所有销售商品/ 提交销售记录
+export const postOrder = params => { return axios.post(`/Sell/postOrder`, { params: params }).then(res => res.data) }
+// 请求方法 post /Sell/postOrder
+// 请求体 commodityList:
+//       [{commodity_barcode
+//         commodity_each_count
+//         commodity_price
+//       }]
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//
+
+
 // 關係測試接口
 export const RealtionrequestMock = params => {
   return axios.get('/relationship/list', { params }).then(res => res.data)

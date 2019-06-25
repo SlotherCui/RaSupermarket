@@ -61,16 +61,26 @@
     </el-col>
     <!--新增界面-->
     <el-dialog title="新增" v-model="addFormVisible" v-show="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
-      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible">
-        <!--输入商品条码-->
-        <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode" >
-          <el-input v-model="addForm.commodity_barcode" auto-complete="off" style="width: 180px"></el-input>
-        </el-form-item>
-        <!--输入商品个数-->
-        <el-form-item :label="$t('message.commodity_each_count')" >
-          <el-input-number v-model="addForm.commodity_each_count" :min="1" :max="200"></el-input-number>
-        </el-form-item>
-      </el-form>
+        <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" :inline="true" >
+          <!--输入商品条码-->
+          <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode" >
+            <el-input v-model="addForm.commodity_barcode" auto-complete="off" style="width: 180px"></el-input>
+          </el-form-item>
+          <!--输入商品个数-->
+          <el-form-item :label="$t('message.commodity_each_count')" >
+            <el-input-number v-model="addForm.commodity_each_count" :min="1" :max="200"></el-input-number>
+          </el-form-item>
+            <el-button type="primary" @click.native="addGood" :loading="addLoading">增加</el-button>
+        </el-form>
+      <!--新增商品列表-->
+        <el-table :data="addGoodsList"  style="width: 100%;" >
+            <el-table-column prop="commodity_barcode" :label="$t('message.commodity_barcode')" min-width="120" >
+            </el-table-column>
+            <el-table-column prop="commodity_each_count" :label="$t('message.commodity_each_count')" min-width="130" >
+            </el-table-column>
+            <el-table-column prop="commodity_price" :label="$t('message.commodity_price')" width="150" >
+            </el-table-column>
+        </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
@@ -80,7 +90,7 @@
 </template>
 
 <script>
-import { requestOrderList } from '../../../api/api'
+import { requestOrderList, requestPriceByBarcode, postOrder} from '../../../api/api'
 export default {
   name: 'page1',
   data () {
@@ -106,15 +116,64 @@ export default {
       // 新增界面数据
       addForm: {
         commodity_barcode: '',
-        commodity_each_count: 1
-      }
+        commodity_each_count: 1,
+        commodity_price: 0
+      },
+      addGoodsList: []
 
     }
   },
   methods: {
+
+    isRealNum (val) {
+      // isNaN()函数 把空串 空格 以及NUll 按照0来处理 所以先去除
+      if (val === '' || val == null) {
+        return false
+      }
+      return !isNaN(val)
+    },
     // 新增方法
     handleAdd () {
       this.addFormVisible = true
+    },
+    // 增加一个商品
+    addGood () {
+      // 获取商品单价
+      let para = {commodity_barcode: this.addForm.commodity_barcode}
+      this.addLoading = true
+      requestPriceByBarcode(para).then((res) => {
+        if (res.code === 0) {
+          var price = res.data.commodity_current_price
+          console.log(price)
+          // 加入到购买表
+          this.addGoodsList.push({commodity_barcode: this.addForm.commodity_barcode,
+            commodity_each_count: this.addForm.commodity_each_count,
+            commodity_price: price * this.addForm.commodity_each_count
+          })
+          // 输入表单重置
+          this.addForm.commodity_barcode = ''
+          this.addForm.commodity_each_count = 1
+        }
+        // 关闭加载
+        this.addLoading = false
+      })
+    },
+    // 提交销售记录
+    addSubmit () {
+      // this.$alert(this.addGoodsList, 'fsdhkjaf')
+      this.addLoading = true
+      let para = {commodity_list: this.addGoodsList}
+      console.log(para)
+      postOrder(para).then((res) => {
+        if (res.code === 0) {
+          this.$message({message: '上传成功', type: 'success'})
+          this.addFormVisible = false
+          this.getOrderList(1)
+        } else {
+          this.$message({message: '上传失败', type: 'fail'})
+          this.addLoading = false
+        }
+      })
     },
     // 查询方法
     handleSearch () {
@@ -127,8 +186,9 @@ export default {
       this.listLoading = true
       this.getOrderList(this.page)
     },
-    // 请求消息记录
+    // 请求销售记录
     getOrderList (page) {
+      this.listLoading = true
       let para = {page: page, order_id: this.filters.order_id}
       requestOrderList(para).then((res) => {
         // this.editLoading = false
