@@ -34,12 +34,15 @@ new Vue({
   template: '<App/>'
 })
 
+// // 路由跳转之前
 // router.beforeEach((to, from, next) => {
-//   //NProgress.start();
-//   if (to.path == '/login2') {
-//     sessionStorage.removeItem('user');
+//   // NProgress.start();
+//   // 跳转到登录页自动清除用户登录信息
+//   if (to.path === '/login2') {
+//     sessionStorage.removeItem('user')
 //   }
-//   let user = JSON.parse(sessionStorage.getItem('user'));
+//   // 如果用户登录信息存在则正常跳转，否则跳转到登录页
+//   let user = JSON.parse(sessionStorage.getItem('user'))
 //   if (!user && to.path != '/login2') {
 //     next({ path: '/login2' })
 //   } else {
