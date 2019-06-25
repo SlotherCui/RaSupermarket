@@ -15,7 +15,7 @@
       </el-form>
     </el-col>
     <!--列表-->
-    <el-table :data="goodslist" stripe="true" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+    <el-table :data="goodslist" :stripe="true" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
           <el-row>
@@ -77,16 +77,9 @@
       <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="editFormVisible" >
         <el-form-item :label="$t('message.commodity_piclink')" prop="img">
           <el-upload
-            :action="uploadActionUrl"
             accept="image/jpeg,image/gif,image/png"
             multiple
-            :limit="3"
-            :on-exceed="handleExceed"
-            :on-error="uploadError"
-            :on-success="uploadSuccess"
-            :on-remove="onRemoveTxt"
-            :before-upload="onBeforeUpload"
-            :file-list="files">
+            :limit="3">
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
           </el-upload>
@@ -172,16 +165,9 @@
         <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="createcommodity" >
           <el-form-item :label="$t('message.commodity_piclink')" prop="img">
             <el-upload
-              :action="uploadActionUrl"
               accept="image/jpeg,image/gif,image/png"
               multiple
-              :limit="3"
-              :on-exceed="handleExceed"
-              :on-error="uploadError"
-              :on-success="uploadSuccess"
-              :on-remove="onRemoveTxt"
-              :before-upload="onBeforeUpload"
-              :file-list="files">
+              :limit="3">
               <el-button size="small" type="primary">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
             </el-upload>
@@ -237,73 +223,7 @@ export default {
       createcommodity: false, // 新建商品
       addLoading: false,
       editLoading: false,
-      goodslist: [{
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml',
-        commodity_price: '2元',
-        commodity_description: '纯悦包装饮用水',
-        commodity_brand: '可口可乐',
-        commodity_producer: '可口可乐青岛',
-        commodity_piclink: '/static/chunyue.jpg',
-        create_time: '2019-6-20'
-      },
-      {
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml',
-        commodity_price: '2元',
-        commodity_description: '纯悦包装饮用水',
-        commodity_brand: '可口可乐',
-        commodity_producer: '可口可乐青岛',
-        commodity_piclink: '/static/chunyue.jpg',
-        create_time: '2019-6-20'
-      },
-      {
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml',
-        commodity_price: '2元',
-        commodity_description: '纯悦包装饮用水',
-        commodity_brand: '可口可乐',
-        commodity_producer: '可口可乐青岛',
-        commodity_piclink: '/static/chunyue.jpg',
-        create_time: '2019-6-20'
-      },
-      {
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml',
-        commodity_price: '2元',
-        commodity_description: '纯悦包装饮用水',
-        commodity_brand: '可口可乐',
-        commodity_producer: '可口可乐青岛',
-        commodity_piclink: '/static/chunyue.jpg',
-        create_time: '2019-6-20'
-      },
-      {
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml',
-        commodity_price: '2元',
-        commodity_description: '纯悦包装饮用水',
-        commodity_brand: '可口可乐',
-        commodity_producer: '可口可乐青岛',
-        commodity_piclink: '/static/chunyue.jpg',
-        create_time: '2019-6-20'
-      },
-      {
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml',
-        commodity_price: '2元',
-        commodity_description: '纯悦包装饮用水',
-        commodity_brand: '可口可乐',
-        commodity_producer: '可口可乐青岛',
-        commodity_piclink: '/static/chunyue.jpg',
-        create_time: '2019-6-20'
-      }
-      ],
+      goodslist: [],
       showbutton: [{showb: true}, {showb: true}, {showb: true}, {showb: true}],
       commoditytoadd: [{
         commodity_barcode: '6954767473673',
@@ -387,6 +307,14 @@ export default {
   },
   methods: {
     // toolbar   搜 索   +   新 增
+    // let para = {page: 1, commodity_barcode: 0}
+    // requestMock(para).then((res) => {
+    //   // this.editLoading = false
+    //   // NProgress.done(
+    //   this.goodslist = res.Commodity
+    //   this.total = res.total
+    //   console.log(res)
+    // })
     searchcommodity () {
       var searchstring = this.mygoodsfilters.barcode
       // 条码搜索
@@ -395,11 +323,21 @@ export default {
           this.$alert('条码位数必须为13位', '提示', {
             confirmButtonText: '确定'
           })
+        } else {
+          let para = {
+            page: this.page,
+            barcode: searchstring
+          }
+          console.log(para)
+          this.listLoading = true
+          getMyGoodListPage(para).then((res) => {
+            this.total = res.data.total
+            this.goodslist = res.data.goodslist
+            this.listLoading = false
+          })
         }
-      }
-      // 模糊搜索
-      else {
-
+      } else {
+        // 模糊查询自身商品
       }
       // let para = {
       //   page: this.page,
@@ -423,16 +361,17 @@ export default {
     regetGoods () {
       let para = {
         page: this.page,
-        barcode: ''
+        commodity_barcode: 0
       }
-      console.log(para)
       this.listLoading = true
-      getMyGoodListPage(para).then((res) => {
-        this.total = res.data.total
-        this.goodslist = res.data.goodslist
+      // getMyGoodListPage
+      requestMock(para).then((res) => {
+        this.total = res.total
+        this.goodslist = res.Commodity
         this.listLoading = false
       })
     },
+
     // 新增商品填写完成后提交
     createcommoditySubmit () {
       this.createcommodity = false
