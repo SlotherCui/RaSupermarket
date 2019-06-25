@@ -25,13 +25,16 @@
     </el-header>
     <el-container direction="horizen">
       <el-aside width="250px" class="aside">
+        <!--background-color="#E9EEF3"-->
+        <!--text-color="#48576a"-->
+        <!--active-text-color="#20a0ff"-->
         <el-menu
           class="meau"
           :default-openeds="open_list"
           :collapse="collapsed"
-          background-color="#E9EEF3"
-          text-color="#48576a"
-          active-text-color="#20a0ff"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
           router
           >
           <el-submenu index="1" >
@@ -154,7 +157,8 @@ export default {
       }
     }
   .aside
-    background-color: #E9EEF3;
+    background-color: #545c64
+    /*background-color: #E9EEF3;*/
     .meau
       background-color: #E9EEF3
       text-align left
@@ -179,10 +183,19 @@ export default {
   text-align: center;
   line-height: 160px;
   height: 100%
-.el-menu-item
+//.el-menu-item
   // background: #00C9FF;  /* fallback for old browsers */
   // background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);  /* Chrome 10-25, Safari 5.1-6 */
   // background: linear-gradient(to right, #92FE9D, #00C9FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background-color: #e4e8f1 !important;
-  text-align left
+  //background-color: #e4e8f1 !important;
+  //text-align left
+//.el-menu-item:hover{
+  //outline: 0 !important;
+  //color: #409EFF !important;
+//}
+.el-menu-item.is-active {
+   background: #00C9FF;  /* fallback for old browsers */
+   background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);  /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to right, #92FE9D, #00C9FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 </style>
