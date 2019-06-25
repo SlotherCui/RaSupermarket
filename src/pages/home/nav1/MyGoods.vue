@@ -219,7 +219,7 @@
 </template>
 
 <script>
-import {getMyGoodListPage, editGoods, removeMyGoods, batchRemoveMyGoods} from '../../../api/api'
+import {getMyGoodListPage, editGoods, removeMyGoods, batchRemoveMyGoods, requestMock} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
@@ -560,6 +560,17 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+    console.log('cyfhere')
+    let para = {page: 1, commodity_barcode: 0}
+    requestMock(para).then((res) => {
+      // this.editLoading = false
+      // NProgress.done(
+      this.goodslist = res.Commodity
+      this.total = res.total
+      console.log(res)
+    })
   }
 }
 </script>

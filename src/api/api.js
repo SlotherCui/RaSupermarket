@@ -41,4 +41,7 @@ export const requestCookie = params => {
   return axios.get('/cookie', { params }).then(res => res.data)
 }
 
+export const requestMock = params => {
+  return axios.get('/commodity/list', { params }).then(res => res.data)
+}
 // export const requestLogin = params => { return axios.get('getthread.aspx', { params }).then(res => res.data) }

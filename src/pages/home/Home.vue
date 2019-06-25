@@ -27,12 +27,13 @@
       <el-aside width="250px" class="aside">
         <!--background-color="#E9EEF3"-->
         <!--text-color="#48576a"-->
+        <!--background-color="#545c64"-->
         <!--active-text-color="#20a0ff"-->
         <el-menu
           class="meau"
           :default-openeds="open_list"
           :collapse="collapsed"
-          background-color="#545c64"
+          background-color="#132f3b"
           text-color="#fff"
           active-text-color="#fff"
           router
@@ -135,7 +136,8 @@ export default {
   margin-left :-10px
   .header
     /*background: #20A0FF;*/
-    background: #545c64
+    /*background: #545c64 132f3b*/
+    background: #132f3b
     color white
     font-size 25px
     text-align left
@@ -158,7 +160,8 @@ export default {
       }
     }
   .aside
-    background-color: #545c64
+    background-color: #132f3b
+    /*background-color: #545c64*/
     /*background-color: #E9EEF3;*/
     .meau
       background-color: #E9EEF3
