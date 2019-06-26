@@ -337,11 +337,12 @@ export default {
       let para = { commodity_barcode: this.addForm1.commodity_barcode }
       var has
       searchAddCommodity(para).then((res) => {
-        has = res.has
+        console.log('re', res.data.has)
+        has = res.data.has
         this.commoditytoadd = res.data.Commodity
       })
-      this.hascommodity = !has
-      this.hasnotcommodity = has
+      this.hascommodity = has
+      this.hasnotcommodity = !has
       this.clearValidate('addForm1')
     },
     addFormClose () {

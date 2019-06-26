@@ -62,19 +62,20 @@ export default {
       // 获取请求体
       let {commodity_barcode} = config.params
       //
-      console.log(commodity_barcode)
+
       let mockCommodity = _Commodity.filter(commodity => {
         if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
         return true
       })
-      var has = (mockCommodity.length !== 0)
+      var has = mockCommodity.length !== 0
+      console.log('mock', has)
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
             code: 0,
             codeInfo: '成功',
-            has: has,
             data: {
+              has: has,
               Commodity: mockCommodity
             }}])
         }, 1000)
