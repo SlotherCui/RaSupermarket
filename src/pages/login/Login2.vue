@@ -69,6 +69,14 @@ export default {
     }
   },
   methods: {
+
+    messageUtil (val) {
+      this.$message({
+        message: val,
+        center: true,
+        type: 'error'
+      })
+    },
     Logincheck () {
       if ((this.form.Password.length !== 0) && (this.form.UserName.length !== 0)) {
         console.log(this.form.UserName + this.form.Password + this.form.Remember)
@@ -93,13 +101,11 @@ export default {
         if (data.code === 0) {
           var user = data.data
           sessionStorage.setItem('user', JSON.stringify(user))
-          this.$router.push({ path: '/Mygoods' })
-        } else {
-          this.$message({
-            message: '登录失败',
-            center: true,
-            type: 'error'
-          })
+          this.$router.push({path: '/Mygoods'})
+        } else if (data.code === 100) {
+          messageUtil('用户名未注册')
+        } else if (data.code === 201) {
+          messageUtil('密码不正确')
         }
       })
     },
