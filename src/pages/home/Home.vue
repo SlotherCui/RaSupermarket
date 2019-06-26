@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import {requestLogin} from '../../api/api'
 export default {
   name: 'Home',
   data () {
@@ -110,6 +111,7 @@ export default {
       this.$confirm('确认退出吗?', '提示', {
         // type: 'warning'
       }).then(() => {
+        requestLogin().then(data => {})
         sessionStorage.removeItem('user')
         _this.$router.push('/login2')
       }).catch(() => {

@@ -56,9 +56,14 @@ export const getInfo = params => { return axios.get(`/information`, { params: pa
 
 // 登录接口
 export const requestLogin = params => {
-  return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+  return axios.post('/login ', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
   ).then(res => res.data)
 }
+// 注销登录接口
+export const requestLogout = params => {
+  return axios.post('/logout', { params }).then(res => res.data)
+}
+
 // 相关测试接口
 // 测试接口
 export const requestTest = params => {
@@ -122,6 +127,64 @@ export const postOrder = params => { return axios.post(`/Sell/postOrder`, { para
 //      codeInfo 错误信息
 //      data     数据
 //
+
+
+// 改价页面相关接口
+
+// 根据条码查询需要改价的列表，要包含建议价，原价, 参考价
+export const requestPriceChangeList = params => { return axios.get(`/Price/PriceChangeList`, { params: params }).then(res => res.data) }
+// 请求方法 get /Price/PriceChangeList
+// 请求体  page 页号
+//         commodity_barcode  销售记录
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//           Commodity:[
+//                   {commodity_barcode
+//                     commodity_name
+//                     commodity_specification
+//                     commodity_price
+//                     commodity_description
+//                     supplier_min_price
+//                     suggest_price
+//                     commodity_piclink}
+//           ],
+//          total:   5    总页数方便显示
+
+// 单一商品改价
+export const requestSingleChange = params => { return axios.post(`/Price/SingleChange`, { params: params }).then(res => res.data) }
+// 请求方法 post /Price/SingleChange
+// 请求体 commodity_barcode:
+//        new_price:
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+
+// 组改价
+export const requestGroupChange = params => { return axios.post(`/Price/GroupChange`, { params: params }).then(res => res.data) }
+// 请求方法 post /Price/GroupChange
+// 请求体 commodity_barcode:
+//        new_price:
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+
+// 联动改价
+export const requestRelationChange = params => { return axios.post(`/Price/RelationChange`, { params: params }).then(res => res.data) }
+// 请求方法 post /Price/RelationChange
+// 请求体 commodity_barcode:
+//        new_price:
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+
 
 // 關係測試接口
 // 关系列表获取
