@@ -11,8 +11,11 @@
           </el-form-item>
         </el-form>
       </el-col>
+      <el-col :span="24" v-loading="listLoading" v-if="listLoading">
+        <div  style="min-height: 100px"  v-if="listLoading"></div>
+      </el-col>
     </el-row>
-    <el-row :gutter="15" v-for="(item,index) of GoodsList.length" :key="index" >
+    <el-row :gutter="15" v-for="(item,index) of GoodsList.length" :key="index">
       <el-col :span="8" v-for="(carditem,cardindex) of GoodsList.slice(index*3,index*3+3)" :key="carditem.commodity_barcode">
       <el-card :span="24" class="card">
         <!--商品基本信息-->
@@ -40,9 +43,9 @@
         <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
         <!--三种改价操作-->
         <el-row style="margin-top: 20px; text-align: right">
-          <el-button type="primary" size="small" v-on:click="SingleChange(index*3+cardindex, carditem.commodity_barcode)"> 确认修改</el-button>
-          <el-button type="primary" size="small" v-on:click="GroupChange(index*3+cardindex,carditem.commodity_barcode)">组改价</el-button>
-          <el-button type="primary" size="small" v-on:click="RelationChange(index*3+cardindex,carditem.commodity_barcode)">联动改价</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="SingleChange(index*3+cardindex, carditem.commodity_barcode)"> 确认修改</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="GroupChange(index*3+cardindex,carditem.commodity_barcode)">组改价</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="RelationChange(index*3+cardindex,carditem.commodity_barcode)">联动改价</el-button>
         </el-row>
       </el-card>
       </el-col>
@@ -61,21 +64,27 @@ export default {
       },
       GoodsList: [],
       // 输入的新价格
-      new_price: ['', '', '', '', '', '', '', '', '']
+      new_price: ['', '', '', '', '', '', '', '', ''],
+
+      changeLoading: false,
+      listLoading: false
     }
   },
   methods: {
     // 查询商品
     getGoods () {
+      this.listLoading = true
       let para = {page: 1, commodity_barcode: this.filters.commodity_barcode}
       requestPriceChangeList(para).then((res) => {
         if (res.code === 0) {
           this.GoodsList = res.data.Commodity
         }
+        this.listLoading = false
       })
     },
     // 单个修改
     SingleChange (index, commodity_barcode) {
+      this.changeLoading = true
       console.log(commodity_barcode)
       let para = {commodity_barcode: commodity_barcode, new_price: this.new_price[index]}
       requestSingleChange(para).then((res) => {
@@ -85,10 +94,12 @@ export default {
         } else {
           this.$message({message: '修改失败' + res.code, type: 'fail'})
         }
+        this.changeLoading = false
       })
     },
     // 组修改
     GroupChange (index, commodity_barcode) {
+      this.changeLoading = true
       console.log(commodity_barcode)
       let para = {commodity_barcode: commodity_barcode, new_price: this.new_price[index]}
       requestGroupChange(para).then((res) => {
@@ -98,10 +109,12 @@ export default {
         } else {
           this.$message({message: '修改失败' + res.code, type: 'fail'})
         }
+        this.changeLoading = false
       })
     },
     // 关联改价
     RelationChange (index, commodity_barcode) {
+      this.changeLoading = true
       console.log(commodity_barcode)
       let para = {commodity_barcode: commodity_barcode, new_price: this.new_price[index]}
       requestRelationChange(para).then((res) => {
@@ -111,6 +124,7 @@ export default {
         } else {
           this.$message({message: '修改失败' + res.code, type: 'fail'})
         }
+        this.changeLoading = false
       })
     }
   }
