@@ -135,7 +135,7 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addFormVisible = false">取消</el-button>
+        <el-button @click.native="clearValidate('addForm1');addFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="addCommodity" :loading="addLoading">确认</el-button>
       </div>
       <!--        内层添加商品表-->
@@ -306,7 +306,7 @@ export default {
     }
   },
   methods: {
-    // toolbar   搜 索   +   新 增
+
     // let para = {page: 1, commodity_barcode: 0}
     // requestMock(para).then((res) => {
     //   // this.editLoading = false
@@ -315,40 +315,45 @@ export default {
     //   this.total = res.total
     //   console.log(res)
     // })
+    // toolbar   搜 索   +   新 增
     searchcommodity () {
       var searchstring = this.mygoodsfilters.barcode
       // 条码搜索
       console.log(searchstring)
-      if (/^[0-9]+$/.test(searchstring)) {
-        if (searchstring.length !== 13) {
-          this.$alert('条码位数必须为13位', '提示', {confirmButtonText: '确定'})
-        } else {
-          let para = {
-            page: this.page,
-            barcode: searchstring
-          }
-          console.log(para)
-          this.listLoading = true
-          getMyGoodListPage(para).then((res) => {
-            this.total = res.data.total
-            this.goodslist = res.data.goodslist
-            this.listLoading = false
-          })
+      if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
+        let para = {
+          page: this.page,
+          barcode: searchstring
         }
+        this.listLoading = true
+        getMyGoodListPage(para).then((res) => {
+          this.total = res.data.total
+          this.goodslist = res.data.goodslist
+          this.listLoading = false
+        })
       } else {
-        // 模糊查询自身商品
+        this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
       }
-      // let para = {
-      //   page: this.page,
-      //   barcode: this.mygoodsfilters.barcode
-      // }
-      // console.log(para)
-      // this.listLoading = true
-      // getMyGoodListPage(para).then((res) => {
-      //   this.total = res.data.total
-      //   this.goodslist = res.data.goodslist
-      //   this.listLoading = false
-      // })
+    },
+    // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示 true显示hascommodity 添加列表
+    addCommodity () {
+      // 清除外层表单提示
+      this.clearValidate('addForm1')
+      let para = { searchcommodity: this.addForm1.commodity_barcode }
+      var has
+      searchAddCommodity(para).then((res) => {
+        has = res.data.has
+        this.commoditytoadd = res.data.commoditytoadd
+      })
+      this.hascommodity = has
+      this.hasnotcommodity = !has
+    },
+    addGoods () {
+      this.addFormVisible = true
+      this.addForm1 = {
+        commodity_barcode: ''
+      }
+      this.$refs['editForm1'].resetFields()
     },
     clearValidate (formName) {
       this.$refs[formName].clearValidate()
@@ -365,8 +370,11 @@ export default {
       this.listLoading = true
       // getMyGoodListPage
       requestMock(para).then((res) => {
-        this.total = res.total
-        this.goodslist = res.Commodity
+        console.log(
+          res
+        )
+        this.total = res.data.total
+        this.goodslist = res.data.Commodity
         this.listLoading = false
       })
     },
@@ -396,12 +404,6 @@ export default {
     handleEdit (index, row) {
       this.editFormVisible = true
       this.editForm1 = Object.assign({}, row)
-    },
-    addGoods () {
-      this.addFormVisible = true
-      this.addForm1 = {
-        commodity_barcode: ''
-      }
     },
     // 删除
     handleDel (index, row) {
@@ -445,13 +447,7 @@ export default {
 
       })
     },
-    // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示
-    addCommodity () {
-      this.clearValidate('addForm1')
-      var has = false
-      this.hascommodity = has
-      this.hasnotcommodity = !has
-    },
+
     // 提交新增商品
     // addSubmit () {
     //   this.$refs.addForm1.validate((valid) => {
@@ -500,15 +496,7 @@ export default {
     }
   },
   mounted () {
-    console.log('cyfhere')
-    let para = {page: 1, commodity_barcode: 0}
-    requestMock(para).then((res) => {
-      // this.editLoading = false
-      // NProgress.done(
-      this.goodslist = res.Commodity
-      this.total = res.total
-      console.log(res)
-    })
+    this.regetGoods()
   }
 }
 </script>

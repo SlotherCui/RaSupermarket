@@ -34,8 +34,20 @@ export const editGoods = params => { return axios.get(`/MyGoods/edit`, { params:
 export const removeMyGoods = params => { return axios.get(`/MyGoods/remove`, { params: params }).then(res => res.data) }
 
 export const batchRemoveMyGoods = params => { return axios.get(`/MyGoods/batchremove`, { params: params }).then(res => res.data) }
-
+// toolbar 新增弹窗搜索公共库是否已有目标商品
+export const searchAddCommodity = params => { return axios.get(`/MyGoods/searchaddcommodity`, { params: params }).then(res => res.data) }
+// 请求方法 get /MyGoods/searchaddcommodity
+// 请求体  searchcommodity 输入的搜索商品
 // 公共商品浏览接口
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data[
+//           commodity_barcode  ：条码号
+//           commodity_name     ：
+//           commodity_specification
+//           supplier_min_price 参考价
+//           suggest_price 建议价     ]
 export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }) }
 export const editGood = params => { return axios.get(`/CommonGoods/edit`, { params: params }) }
 export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }) }
