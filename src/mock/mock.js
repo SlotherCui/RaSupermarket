@@ -233,6 +233,7 @@ export default {
     //     }, 500)
     //   })
     // })
+    // 获取列表
     mock.onGet('/relationship/list').reply(config => {
       let {page, supermarket_id} = config.params
       let mockRelation = _Relation.filter(Relation => {
@@ -249,6 +250,36 @@ export default {
             data: {
               total: total,
               orders: mockRelation
+            }}])
+        }, 1000)
+      })
+    })
+    // 添加列表 通过编号查询超市名字
+    mock.onGet('/relationship/query').reply(config => {
+      // 获取请求体
+      let {supermarket_id} = config.params
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              supermarket_name: '德玛西亚超市'
+            }}])
+        }, 1000)
+      })
+    })
+    // 接受post请求
+    mock.onPost('/relationship/post').reply(config => {
+      // 获取请求体
+      let supermarket_list = JSON.parse(config.data)
+      console.log(supermarket_list)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
             }}])
         }, 1000)
       })
