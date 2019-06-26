@@ -16,7 +16,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+    <el-table :data="users"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
       <el-table-column type="selection" width="55">
       </el-table-column>
       <!--<el-table-column type="index" width="60">-->
@@ -93,8 +93,7 @@ export default {
       },
       // 新增界面数据
       addForm: {
-        supermarket_id: '',
-        supermarket_name: ''
+        supermarket_id: ''
       },
       addRelationList: []
     }
@@ -113,12 +112,13 @@ export default {
           var name = res.data.supermarket_name
           console.log(name)
           // 加入到购买表
-          this.addRelationList.push({supermarket_id: this.addForm.supermarket_id,
-            supermarket_name: this.addForm.supermarket_name
+          this.addRelationList.push({
+            supermarket_id: this.addForm.supermarket_id,
+            supermarket_name: name
           })
           // 输入表单重置
           this.addForm.supermarket_id = ''
-          this.addForm.supermarket_name = 1
+          this.addForm.supermarket_name = ''
         }
         // 关闭加载
         this.addLoading = false
@@ -134,53 +134,36 @@ export default {
         if (res.code === 0) {
           this.$message({message: '上传成功', type: 'success'})
           this.addFormVisible = false
-          this.getOrderList(1)
+          this.getRelationList(1)
         } else {
           this.$message({message: '上传失败', type: 'fail'})
           this.addLoading = false
         }
       })
     },
-    handleCurrentChange (val) {
-      this.page = val
-      this.regetRelation()
-    },
-    regetRelation () {
-      let para = {
-        page: this.page,
-        id: ''
-      }
-      console.log(para)
+    handleSearch () {
       this.listLoading = true
+      this.getRelationList(1)
+    },
+    // 翻页方法
+    handleCurrentChange (val) {
+      this.listLoading = true
+      this.getRelationList(this.page)
+    },
+    // 请求关系记录
+    getRelationList (page) {
+      this.listLoading = true
+      let para = {page: page, supermarket_id: this.filters.supermarket_id}
       requestRelation(para).then((res) => {
-        this.total = res.data.total
-        this.sells = res.data.sells
+        // this.editLoading = false
+        // NProgress.done(
+        if (res.code === 0) {
+          this.users = res.data.relation
+          this.total = res.data.total
+        }
         this.listLoading = false
       })
     }
-  },
-  handleSearch () {
-    this.listLoading = true
-    this.getRelationList(1)
-  },
-  // 翻页方法
-  handleCurrentChange (val) {
-    this.listLoading = true
-    this.getRelationList(this.page)
-  },
-  // 请求关系记录
-  getRelationList (page) {
-    this.listLoading = true
-    let para = {page: page, supermarket_id: this.filters.supermarket_id}
-    requestRelation(para).then((res) => {
-      // this.editLoading = false
-      // NProgress.done(
-      if (res.code === 0) {
-        this.sells = res.data.Relation
-        this.total = res.data.total
-      }
-      this.listLoading = false
-    })
   },
   mounted () {
     this.getRelationList(this.page)

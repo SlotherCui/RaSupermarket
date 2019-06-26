@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { requestOrderList, requestPriceByBarcode, postOrder} from '../../../api/api'
+import {requestOrderList, requestPriceByBarcode, postOrder} from '../../../api/api'
 export default {
   name: 'page1',
   data () {
