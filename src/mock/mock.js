@@ -58,10 +58,33 @@ export default {
     //     }, 1000)
     //   })
     // })
-    mock.onGet('/commodity/list').reply(config => {
+    mock.onGet('/Commodity/searchaddcommodity').reply(config => {
+      // 获取请求体
+      let {commodity_barcode} = config.params
+      //
+      console.log(commodity_barcode)
+      let mockCommodity = _Commodity.filter(commodity => {
+        if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
+        return true
+      })
+      var has = (mockCommodity.length !== 0)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            has: has,
+            data: {
+              Commodity: mockCommodity
+            }}])
+        }, 1000)
+      })
+    })
+    mock.onGet('/Commodity/list').reply(config => {
       // 获取请求体
       let {page, commodity_barcode} = config.params
       //
+      console.log(commodity_barcode)
       let mockCommodity = _Commodity.filter(commodity => {
         if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
         return true

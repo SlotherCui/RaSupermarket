@@ -3,7 +3,7 @@ const Commodity = []
 
 for (let i = 0; i < 86; i++) {
   Commodity.push(Mock.mock({
-    commodity_barcode: Mock.Random.integer(1000000000000, 99999999999999),
+    commodity_barcode: Mock.Random.integer(1000000000000, 99999999999999).toString(),
     commodity_name: Mock.Random.cword(3, 7),
     commodity_specification: Mock.Random.cword(3, 5),
     commodity_price: Mock.Random.integer(1, 1000),

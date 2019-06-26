@@ -11,7 +11,7 @@ export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchr
 
 // MyGoods请求
 // 根据条码号分页获取商品
-export const getMyGoodListPage = params => { return axios.get(`/MyGoods/listpage`, { params: params }).then(res => res.data) }
+export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`, { params: params }).then(res => res.data) }
 // 请求方法 get /MyCommodity/listpage
 // 请求体  page 页号
 //         commodity_barcode  商品条码号
@@ -38,7 +38,7 @@ export const removeMyGoods = params => { return axios.get(`/MyGoods/remove`, { p
 
 export const batchRemoveMyGoods = params => { return axios.get(`/MyGoods/batchremove`, { params: params }).then(res => res.data) }
 // toolbar 新增弹窗搜索公共库是否已有目标商品
-export const searchAddCommodity = params => { return axios.get(`/MyGoods/searchaddcommodity`, { params: params }).then(res => res.data) }
+export const searchAddCommodity = params => { return axios.get(`/Commodity/searchaddcommodity`, { params: params }).then(res => res.data) }
 // 请求方法 get /MyGoods/searchaddcommodity
 // 请求体  searchcommodity 输入的搜索商品
 // 公共商品浏览接口
