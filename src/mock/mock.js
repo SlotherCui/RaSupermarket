@@ -1,10 +1,11 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { Commodity } from './data/Commodity'
+import { Commodity, CommodityPrice } from './data/Commodity'
 import { Orders } from './data/Order'
 import { Relation } from './data/Relation'
 
 let _Commodity = Commodity
+let _CommodityPrice = CommodityPrice
 let _Orders = Orders
 let _Relation = Relation
 export default {
@@ -58,10 +59,34 @@ export default {
     //     }, 1000)
     //   })
     // })
-    mock.onGet('/commodity/list').reply(config => {
+    mock.onGet('/Commodity/searchaddcommodity').reply(config => {
+      // 获取请求体
+      let {commodity_barcode} = config.params
+      //
+
+      let mockCommodity = _Commodity.filter(commodity => {
+        if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
+        return true
+      })
+      var has = mockCommodity.length !== 0
+      console.log('mock', has)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              has: has,
+              Commodity: mockCommodity
+            }}])
+        }, 1000)
+      })
+    })
+    mock.onGet('/Commodity/list').reply(config => {
       // 获取请求体
       let {page, commodity_barcode} = config.params
       //
+      console.log(commodity_barcode)
       let mockCommodity = _Commodity.filter(commodity => {
         if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
         return true
@@ -129,6 +154,47 @@ export default {
       // let {commodity_list} = config.params
       let commodity_list = JSON.parse(config.data)
       console.log(commodity_list)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
+
+    mock.onGet('/Price/PriceChangeList').reply(config => {
+      // 获取请求体
+      let {page, commodity_barcode} = config.params
+      //
+      let mockCommodity = _CommodityPrice.filter(commodity => {
+        if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
+        return true
+      })
+      // 总长度
+      let total = mockCommodity.length
+      // 商品查询结果分页
+      mockCommodity = mockCommodity.filter((u, index) => index < 9 * page && index >= 9 * (page - 1))
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              total: total,
+              Commodity: mockCommodity
+            }}])
+        }, 1000)
+      })
+    })
+
+    mock.onPost('/Price/SingleChange').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let parma = JSON.parse(config.data)
+      console.log(parma)
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
