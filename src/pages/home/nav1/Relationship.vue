@@ -4,10 +4,10 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.id" placeholder="请输入商家编号" @input="change" @change="change"></el-input>
+          <el-input v-model="filters.supermarket_id" placeholder="请输入商家编号" @input="change" @change="change"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsers" @click="searchRelation">{{$t('message.query')}}</el-button>
+          <el-button type="primary" @click="handleSearch">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleAdd">{{$t('message.add')}}</el-button>
@@ -44,32 +44,40 @@
     <!--工具条-->
     <el-col :span="24" class="toolbar">
       <el-button type="danger" @click="batchRemove" :disabled="this.sels.length!==0">{{$t('message.batchDelete')}}</el-button>
-      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" :current-page="page" style="float:right;">
       </el-pagination>
     </el-col>
     <!--新增界面-->
-    <el-dialog :title="$t('message.shop_change_relation')" v-model="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
-      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-        <el-form-item :label="$t('message.supermarket_id')" prop="id">
-          <el-input v-model="addForm.id" auto-complete="off"></el-input>
+    <el-dialog :title="$t('message.shop_change_relation')" v-model="addFormVisible" v-show="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
+      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :inline="true">
+        <el-form-item :label="$t('message.supermarket_id')" prop="supermarket_id">
+          <el-input v-model="addForm.supermarket_id" auto-complete="off" style="width: 280px"></el-input>
         </el-form-item>
+        <el-button type="primary" @click.native="addRelation" :loading="addLoading">{{$t('message.add')}}</el-button>
       </el-form>
+      <!--新增关系列表-->
+      <el-table :data="addRelationList"  style="width: 100%;" >
+        <el-table-column prop="supermarket_id" :label="$t('message.supermarket_id')" min-width="120" >
+        </el-table-column>
+        <el-table-column prop="supermarket_name" :label="$t('message.supermarket_name')" width="150" >
+        </el-table-column>
+      </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">{{$t('message.add')}}</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
       </div>
     </el-dialog>
   </section>
 </template>
 
 <script>
-import {RealtionrequestMock, getRelationship} from '../../../api/api'
+import {requestRelation, requestRelationByID, postRelation} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
     return {
       filters: {
-        id: ''
+        supermarket_id: ''
       },
       users: [],
       total: 0,
@@ -79,51 +87,59 @@ export default {
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
       addFormRules: {
-        name: [
-          { required: true, message: '请输入超市名称', trigger: 'blur' }
-        ],
-        desc: [
-          { required: true, message: '请输入超市描述', trigger: 'blur' }
-        ],
-        id: [
+        supermarket_id: [
           { required: true, message: '请输入超市编号', trigger: 'blur' }
-        ],
-        tel: [
-          { required: true, message: '请输入超市电话', trigger: 'blur' }
-        ],
-        addr: [
-          { required: true, message: '请输入超市地址', trigger: 'blur' }
         ]
       },
       // 新增界面数据
       addForm: {
-        name: '',
-        tel: '',
-        desc: '',
-        id: '',
-        addr: ''
-      }
-
+        supermarket_id: '',
+        supermarket_name: ''
+      },
+      addRelationList: []
     }
   },
   methods: {
     handleAdd () {
-      // requestCookie({}).then(data => {
-      //   console.log(data)
-      // })
       this.addFormVisible = true
     },
-    searchRelation () {
-      var searchstring = this.filters.id
-      // 条码搜索
-      if ((/^[0-9]+$/.test(searchstring)) && searchstring.length === 13) {
-        // 搜索
-      } else {
-        console.log(searchstring.length)
-        this.$alert('超市编号必须为13位且为数字', '提示', {
-          confirmButtonText: '确定'
-        })
-      }
+    // 查询超市
+    addRelation () {
+      // 获取商品单价
+      let para = {supermarket_id: this.addForm.supermarket_id}
+      this.addLoading = true
+      requestRelationByID(para).then((res) => {
+        if (res.code === 0) {
+          var name = res.data.supermarket_name
+          console.log(name)
+          // 加入到购买表
+          this.addRelationList.push({supermarket_id: this.addForm.supermarket_id,
+            supermarket_name: this.addForm.supermarket_name
+          })
+          // 输入表单重置
+          this.addForm.supermarket_id = ''
+          this.addForm.supermarket_name = 1
+        }
+        // 关闭加载
+        this.addLoading = false
+      })
+    },
+    // 提交确认
+    addSubmit () {
+      // this.$alert(this.addGoodsList, 'fsdhkjaf')
+      this.addLoading = true
+      let para = {supermarket_list: this.addRelationList}
+      console.log(para)
+      postRelation(para).then((res) => {
+        if (res.code === 0) {
+          this.$message({message: '上传成功', type: 'success'})
+          this.addFormVisible = false
+          this.getOrderList(1)
+        } else {
+          this.$message({message: '上传失败', type: 'fail'})
+          this.addLoading = false
+        }
+      })
     },
     handleCurrentChange (val) {
       this.page = val
@@ -136,23 +152,38 @@ export default {
       }
       console.log(para)
       this.listLoading = true
-      getRelationship(para).then((res) => {
+      requestRelation(para).then((res) => {
         this.total = res.data.total
         this.sells = res.data.sells
         this.listLoading = false
       })
     }
   },
-  mounted () {
-    console.log('改價關係MOCK')
-    let para = {page: 1, supermarket_id: 0}
-    RealtionrequestMock(para).then((res) => {
+  handleSearch () {
+    this.listLoading = true
+    this.getRelationList(1)
+  },
+  // 翻页方法
+  handleCurrentChange (val) {
+    this.listLoading = true
+    this.getRelationList(this.page)
+  },
+  // 请求关系记录
+  getRelationList (page) {
+    this.listLoading = true
+    let para = {page: page, supermarket_id: this.filters.supermarket_id}
+    requestRelation(para).then((res) => {
       // this.editLoading = false
       // NProgress.done(
-      this.sells = res.Relation
-      this.total = res.total
-      console.log(res)
+      if (res.code === 0) {
+        this.sells = res.data.Relation
+        this.total = res.data.total
+      }
+      this.listLoading = false
     })
+  },
+  mounted () {
+    this.getRelationList(this.page)
   }
 }
 </script>
