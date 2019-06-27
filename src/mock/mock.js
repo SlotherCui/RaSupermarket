@@ -205,6 +205,21 @@ export default {
         }, 1000)
       })
     })
+    mock.onPost('/Setting/FeedBack').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let parma = JSON.parse(config.data)
+      console.log(parma)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
     // 删除用户
     // mock.onGet('/user/remove').reply(config => {
     //   let { id } = config.params
