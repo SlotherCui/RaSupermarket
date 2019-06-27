@@ -277,7 +277,7 @@ export default {
     //   })
     // })
     // 获取列表
-    mock.onGet('/relationship/list').reply(config => {
+    mock.onGet('/RelationShip/list').reply(config => {
       let {page, supermarket_id} = config.params
       let mockRelation = _Relation.filter(Relation => {
         if (supermarket_id && Relation.supermarket_id.indexOf(supermarket_id) === -1) return false
@@ -298,7 +298,7 @@ export default {
       })
     })
     // 添加列表 通过编号查询超市名字
-    mock.onGet('/relationship/query').reply(config => {
+    mock.onGet('/RelationShip/query').reply(config => {
       // 获取请求体
       let {supermarket_id} = config.params
       return new Promise((resolve, reject) => {
@@ -313,7 +313,7 @@ export default {
       })
     })
     // 接受post请求
-    mock.onPost('/relationship/post').reply(config => {
+    mock.onPost('/RelationShip/post').reply(config => {
       // 获取请求体
       let supermarket_list = JSON.parse(config.data)
       console.log(supermarket_list)

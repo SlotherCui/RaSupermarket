@@ -189,14 +189,17 @@ export const requestRelationChange = params => { return axios.post(`/Price/Relat
 // 關係測試接口
 // 关系列表获取
 export const requestRelation = params => {
-  return axios.get('/relationship/list', { params }).then(res => res.data)
+  return axios.get('/RelationShip/list', { params }).then(res => res.data)
 }
 // 通过编号查找商家
 export const requestRelationByID = params => {
-  return axios.get('/relationship/query', { params }).then(res => res.data)
+  return axios.get('/RelationShip/query', { params }).then(res => res.data)
 }
 // 提交关联关系
 export const postRelation = params => {
-  return axios.get('/relationship/post', { params }).then(res => res.data)
+  return axios.post('/RelationShip/post', { params }).then(res => res.data)
 }
 // 删除/批量删除关联关系
+export const removeRelation = params => { return axios.get(`/RelationShip/remove`, { params: params }).then(res => res.data) }
+
+export const batchRemoveRelation = params => { return axios.get(`/RelationShip/batchremove`, { params: params }).then(res => res.data) }
