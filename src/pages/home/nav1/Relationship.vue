@@ -35,7 +35,7 @@
       <!--</el-table-column>-->
       <el-table-column :label="$t('message.operation')" width="150">
         <template scope="scope">
-          <el-button size="small" @click="handleOpen(scope.$index, scope.row)" :loading="openLoading">{{$t('message.open')}}</el-button>
+          <el-button size="small" @click="handleOpen(scope.$index, scope.row)" :loading="openLoading" v-model="openVisible">{{$t('message.open')}}</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {requestRelation, requestRelationByID, postRelation, removeRelation, batchRemoveRelation} from '../../../api/api'
+import {requestRelation, requestRelationByID, postRelation, removeRelation, batchRemoveRelation, openRelation} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
@@ -87,6 +87,7 @@ export default {
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
       openLoading: false,
+      openVisible: true,
       addFormRules: {
         supermarket_id: [
           { required: true, message: '请输入超市编号', trigger: 'blur' }
@@ -184,7 +185,15 @@ export default {
     },
     // 关联关系开启方法
     handleOpen (index, row) {
+      let para = { supermarket_id: row.supermarket_id }
       this.openLoading = true
+      openRelation(para).then((res) => {
+        if (res.code === 0) {
+          // 开启按钮变为关闭
+        }
+        // 关闭加载
+        this.addLoading = false
+      })
     },
     // 查询方法
     handleSearch () {

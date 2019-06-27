@@ -327,5 +327,20 @@ export default {
         }, 1000)
       })
     })
+    // 开启请求
+    mock.onPost('/RelationShip/openrelation').reply(config => {
+      let {supermarket_id} = config.params
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              supermarket_name: '德玛西亚超市'
+            }
+          }])
+        }, 1000)
+      })
+    })
+    }
   }
-}

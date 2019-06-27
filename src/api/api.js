@@ -203,3 +203,5 @@ export const postRelation = params => {
 export const removeRelation = params => { return axios.get(`/RelationShip/remove`, { params: params }).then(res => res.data) }
 
 export const batchRemoveRelation = params => { return axios.get(`/RelationShip/batchremove`, { params: params }).then(res => res.data) }
+// 关联关系开启
+export const openRelation = params => { return axios.get(`/RelationShip/openrelation`, { params: params }).then(res => res.data) }
