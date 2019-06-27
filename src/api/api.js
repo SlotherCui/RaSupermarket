@@ -35,9 +35,9 @@ export const searchAddCommodity = params => { return axios.get(`/Commodity/searc
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
-//      data[
+//      data
 //           has 公共库是否有所搜商品
-//           Commodity:
+//           Commodity:[
 //           {
 //           commodity_barcode
 //           commodity_name
@@ -47,11 +47,18 @@ export const searchAddCommodity = params => { return axios.get(`/Commodity/searc
 //           commodity_piclink
 //           commodity_description
 //           }]
+export const removeMyGoods = params => { return axios.get(`/Commodity/remove`, { params: params }).then(res => res.data) }
+// 请求方法 get /Commodity/remove
+// 请求体  commodity_barcode   数组例commodity_barcode:"1234,1234"
+// 商家商品删除
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data
+
 export const addMyGoods = params => { return axios.get(`/MyGoods/add`, { params: params }).then(res => res.data) }
 
 export const editGoods = params => { return axios.get(`/MyGoods/edit`, { params: params }).then(res => res.data) }
-
-export const removeMyGoods = params => { return axios.get(`/MyGoods/remove`, { params: params }).then(res => res.data) }
 
 export const batchRemoveMyGoods = params => { return axios.get(`/MyGoods/batchremove`, { params: params }).then(res => res.data) }
 
