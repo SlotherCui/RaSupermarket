@@ -75,7 +75,7 @@ export default {
         }, 1000)
       })
     })
-    mock.onGet('/Commodity/searchaddcommodity').reply(config => {
+    mock.onGet('/Commodity/searchAddCommodity').reply(config => {
       // 获取请求体
       let {commodity_barcode} = config.params
       //

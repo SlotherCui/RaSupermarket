@@ -7,7 +7,7 @@
           <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="searchcommodity">{{$t('message.query')}}</el-button>
+          <el-button type="primary" @click="searchCommodity">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="addGoods" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>
@@ -303,14 +303,39 @@ export default {
     }
   },
   methods: {
-    // ***********************************************************************  toolbar   搜 索   +   新 增
-    searchcommodity () {
-      var searchstring = this.mygoodsfilters.barcode
-      // 条码搜索
-      // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
+    // ********************************************************   清空表单的验证提示
+    clearValidate (formName) {
+      this.$refs[formName].resetFields()
+    },
+    // ********************************************************   获取商品表
+    // 获取第几个页面 条码固定0
+    regetGoods () {
+      let para = {
+        page: this.page,
+        commodity_barcode: 0
+      }
+      this.listLoading = true
+      getMyGoodListPage(para).then((res) => {
+        console.log(
+          res
+        )
+        this.total = res.data.total
+        this.goodslist = res.data.Commodity
+        this.listLoading = false
+      })
+    },
+    // ******************************************************************页面操作
+    // 翻页  设置页码后，reget
+    handleCurrentChange (val) {
+      this.page = val
+      this.regetGoods()
+    },
+    // ***** toolbar   搜 索   +   新 增
+    // 搜索
+    searchCommodity () {
       let para = {
         page: 1,
-        commodity_barcode: searchstring
+        commodity_barcode: this.mygoodsfilters.barcode
       }
       this.listLoading = true
       getMyGoodListPage(para).then((res) => {
@@ -318,10 +343,12 @@ export default {
         this.goodslist = res.data.Commodity
         this.listLoading = false
       })
+      // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
       // } else {
       //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
       // }
     },
+    // 添加商品，有没有，有-> 列表，没有-> 提示新增
     addGoods () {
       this.addbuttonLoading = true
       let para = { commodity_barcode: this.mygoodsfilters.barcode }
@@ -337,7 +364,7 @@ export default {
         this.hasnotcommodity = !has
       })
     },
-    // ******************************************************************** 新增结果是公共商品库已有所查询内容
+    // ******************************************************************** 有-> 列表 ， 新增结果是公共商品库已有所查询内容
     // 新增dialog列表 右上关闭方法
     addFormClose () {
       this.rollbutton = []
@@ -358,7 +385,7 @@ export default {
       this.$set(this.rollbutton, this.addindex, true)
       this.addindex = -1
     },
-    // 内层dialog右下确认了修改价格，按钮旋转，post进行提交 框消失 添加按钮消失
+    // 内层dialog右下确认了修改价格，按钮旋转，post进行提交 框消失 添加按钮消失 使用了改价中的接口
     addPrice () {
       this.changeLoading = true
       var price = this.addpriceform.new_price
@@ -383,40 +410,18 @@ export default {
       }
     },
     // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示 true显示hascommodity 添加列表
-    addCommodity () {
-      // 清除外层表单提
-      let para = { commodity_barcode: this.addForm1.commodity_barcode }
+    // addCommodity () {
+    //   // 清除外层表单提
+    //   let para = { commodity_barcode: this.addForm1.commodity_barcode }
+    //
+    //   searchAddCommodity(para).then((res) => {
+    //     var has = res.data.has
+    //     this.commoditytoadd = res.data.Commodity
+    //     this.hascommodity = has
+    //     this.hasnotcommodity = !has
+    //   })
+    // },
 
-      searchAddCommodity(para).then((res) => {
-        var has = res.data.has
-        this.commoditytoadd = res.data.Commodity
-        this.hascommodity = has
-        this.hasnotcommodity = !has
-      })
-    },
-    regetGoods () {
-      let para = {
-        page: this.page,
-        commodity_barcode: 0
-      }
-      this.listLoading = true
-      // getMyGoodListPage
-      getMyGoodListPage(para).then((res) => {
-        console.log(
-          res
-        )
-        this.total = res.data.total
-        this.goodslist = res.data.Commodity
-        this.listLoading = false
-      })
-    },
-    clearValidate (formName) {
-      this.$refs[formName].resetFields()
-    },
-    handleCurrentChange (val) {
-      this.page = val
-      this.regetGoods()
-    },
     // 新增商品填写完成后提交
     createcommoditySubmit () {
       this.createcommodity = false
@@ -485,7 +490,6 @@ export default {
 
       })
     },
-
     // 提交新增商品
     // addSubmit () {
     //   this.$refs.addForm1.validate((valid) => {
