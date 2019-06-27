@@ -1,6 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import { Commodity, CommodityPrice } from './data/Commodity'
+import { Commodity, CommodityPrice, PublicCommodity} from './data/Commodity'
 import { Orders } from './data/Order'
 import { Relation } from './data/Relation'
 
@@ -8,6 +8,7 @@ let _Commodity = Commodity
 let _CommodityPrice = CommodityPrice
 let _Orders = Orders
 let _Relation = Relation
+let _PublicCommodity = PublicCommodity
 export default {
   /**
    * mock bootstrap
@@ -59,12 +60,27 @@ export default {
     //     }, 1000)
     //   })
     // })
+    mock.onPost('/Commodity/AddNewPrice').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let parma = JSON.parse(config.data)
+      console.log(parma)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
     mock.onGet('/Commodity/searchaddcommodity').reply(config => {
       // 获取请求体
       let {commodity_barcode} = config.params
       //
 
-      let mockCommodity = _Commodity.filter(commodity => {
+      let mockCommodity = _PublicCommodity.filter(commodity => {
         if (commodity_barcode && commodity.commodity_barcode.indexOf(commodity_barcode) === -1) return false
         return true
       })
