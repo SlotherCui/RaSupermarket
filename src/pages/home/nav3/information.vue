@@ -6,12 +6,14 @@
         <!--<template slot-scope="scope" >-->
           <!--<img src="/static/good.jpg" width="100px"/>-->
         <!--</template>-->
+        <!--上传地址action-->
         <el-upload
+          action=""
           class="avatar-uploader"
           :show-file-list="false"
           :on-success="uploadSuccess"
           :before-upload="onBeforeUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <img v-if="supermarket_piclink" :src="supermarket_piclink" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -114,11 +116,11 @@
   }
 </style>
 <script>
-import { requestInformation } from '../../../api/api'
+import { requestInformation, postInformation ,postPassword} from '../../../api/api'
 export default {
   data () {
     return {
-      imageUrl: '/static/Avator.jpg',
+      supermarket_piclink: '/static/Avator.jpg',
       // form: {
       //   name: '德玛西亚超市',
       //   tax: '110',
@@ -134,7 +136,7 @@ export default {
         supermarket_tax: '',
         supermarket_tel: '',
         supermarket_manager_name: '',
-        supermarket_piclink: '',
+        // supermarket_piclink: '',
         supermarket_address: '',
         supermarket_email: '',
         supermarket_decription: ''
@@ -176,13 +178,34 @@ export default {
         // NProgress.done();
       })
     },
+    // 保存修改文本信息
     Save (ev) {
       // alert('保存成功')
-      this.$message({message: '保存成功', type: 'success'})
-      this.getInfo()
+      // this.$message({message: '保存成功', type: 'success'})
       this.editVisible = true
       this.inputDisabled = true
       this.setvisible = false
+      postInformation(this.form).then((res) => {
+        if (res.code === 0) {
+          this.$message({message: '保存成功', type: 'success'})
+        } else {
+          this.$message({message: '保存失败', type: 'fail'})
+        }
+        this.getInfo()
+        // NProgress.done();
+      })
+    },
+    // 提交密码修改
+    PasswdChange () {
+      postPassword(this.changepasswdForm).then((res) => {
+        if (res.code === 0) {
+          this.$message({message: '修改成功', type: 'success'})
+        } else {
+          this.$message({message: '修改失败', type: 'fail'})
+        }
+        this.changepasswdFormVisible = false
+        // NProgress.done();
+      })
     },
     PasswdChangeForm: function () {
       this.changepasswdFormVisible = true
@@ -190,8 +213,6 @@ export default {
         oldpasswd: '',
         newpasswd: ''
       }
-    },
-    PasswdChange (ev) {
     },
     // 判断渲染，true:暗文显示，false:明文显示
     changePass (value) {
@@ -210,6 +231,12 @@ export default {
   },
   mounted () {
     this.getInfo()
+    // 加载头像
+    // var user = sessionStorage.getItem('user')
+    // if (user) {
+    //   user = JSON.parse(user)
+    //   this.supermarket_piclink = user.headpic
+    // }
   }
 }
 </script>

@@ -9,7 +9,7 @@ export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { 
 
 export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchremove`, { params: params }) }
 
-// MyGoods请求
+// *************************  我的商品维护相关接口
 // 根据条码号分页获取商品
 export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`, { params: params }).then(res => res.data) }
 // 请求方法 get /MyCommodity/listpage
@@ -63,6 +63,11 @@ export const addGood = params => { return axios.get(`/CommonGoods/add`, { params
 // 商家信息接口
 export const getInfo = params => { return axios.get(`/information`, { params: params }) }
 
+
+
+
+
+// *********************************************登录页面相关接口
 // 登录接口
 export const requestLogin = params => {
   return axios.post('/login ', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
@@ -73,7 +78,10 @@ export const requestLogout = params => {
   return axios.post('/logout', { params }).then(res => res.data)
 }
 
-// 相关测试接口
+
+
+
+// ********************************************相关测试接口
 // 测试接口
 export const requestTest = params => {
   return axios.get('/say2', { params }).then(res => res.data)
@@ -86,7 +94,13 @@ export const requestCookie = params => {
 export const requestMock = params => {
   return axios.get('/commodity/list', { params }).then(res => res.data)
 }
-// 销售相关接口
+
+
+
+
+
+
+// ***************************************** 销售相关接口
 // 根据销售号查询销售记录/ 返回所有销售记录
 export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, { params: params }).then(res => res.data) }
 // 请求方法 get /Sell/OrderList
@@ -136,6 +150,14 @@ export const postOrder = params => { return axios.post(`/Sell/postOrder`, { para
 //      codeInfo 错误信息
 //      data     数据
 //
+
+
+
+
+
+
+
+
 
 // **********************************改价页面相关接口
 // 根据条码查询需要改价的列表，要包含建议价，原价, 参考价
@@ -193,7 +215,14 @@ export const requestRelationChange = params => { return axios.post(`/Price/Relat
 //      codeInfo 错误信息
 //      data     数据
 
-// ********************  设置相关接口
+
+
+
+
+
+
+
+// **********************************  设置相关接口
 // 意见反馈接口
 export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, { params: params }).then(res => res.data) }
 // 请求方法 POST /Setting/FeedBack
@@ -217,7 +246,6 @@ export const requestInformation = params => { return axios.get(`/Setting/getInfo
 //             supermarket_tax: '110',
 //             supermarket_tel: '110',
 //             supermarket_manager_name: '盖伦',
-//             supermarket_piclink: '/static/',
 //             supermarket_address: '召唤师峡谷301号',
 //             supermarket_email: '110@163.com',
 //             supermarket_decription: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
@@ -230,7 +258,6 @@ export const postInformation = params => { return axios.post(`/Setting/postInfor
 //             supermarket_tax: '110',
 //             supermarket_tel: '110',
 //             supermarket_manager_name: '盖伦',
-//             supermarket_piclink: '/static/',
 //             supermarket_address: '召唤师峡谷301号',
 //             supermarket_email: '110@163.com',
 //             supermarket_decription: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
@@ -239,7 +266,24 @@ export const postInformation = params => { return axios.post(`/Setting/postInfor
 //      codeInfo 错误信息
 //      data     数据
 
-// 關係測試接口
+// 提交修改密码
+export const postPassword = params => { return axios.post(`/Setting/postPassword`, { params: params }).then(res => res.data) }
+// 请求方法 get /Setting/getInformation
+// 请求体
+//         oldpasswd
+//         newpasswd
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+
+
+
+
+
+
+
+// ******************************************改价关系界面接口
 // 关系列表获取
 export const requestRelation = params => {
   return axios.get('/RelationShip/list', { params }).then(res => res.data)
