@@ -1,8 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
-import Mock from 'mockjs'
 axios.defaults.baseURL = '/api'
-
+// axios.defaults.baseURL = 'http://localhost:8080'
 axios.defaults.withCredentials = true
 
 export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { params: params }) }
@@ -94,7 +93,6 @@ export const requestCookie = params => {
 export const requestMock = params => {
   return axios.get('/commodity/list', { params }).then(res => res.data)
 }
-
 
 
 

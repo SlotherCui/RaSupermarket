@@ -11,8 +11,8 @@ import VueI18n from 'vue-i18n'
 import messages from './common/lang'
 import ElementLocale from 'element-ui/lib/locale'
 
-import Mock from './mock'
-Mock.bootstrap()
+// import Mock from './mock'
+// Mock.bootstrap()
 Vue.config.productionTip = false
 Vue.use(ElementUI) // UI模块
 Vue.use(VueAxios, axios) // 网络请求模块
