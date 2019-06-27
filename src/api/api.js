@@ -128,7 +128,6 @@ export const postOrder = params => { return axios.post(`/Sell/postOrder`, { para
 //      data     数据
 //
 
-
 // 改价页面相关接口
 
 // 根据条码查询需要改价的列表，要包含建议价，原价, 参考价
@@ -173,6 +172,8 @@ export const requestGroupChange = params => { return axios.post(`/Price/GroupCha
 //      code     错误码
 //      codeInfo 错误信息
 //      data     数据
+// 设置界面相关接口
+
 
 // 联动改价
 export const requestRelationChange = params => { return axios.post(`/Price/RelationChange`, { params: params }).then(res => res.data) }
@@ -185,6 +186,14 @@ export const requestRelationChange = params => { return axios.post(`/Price/Relat
 //      codeInfo 错误信息
 //      data     数据
 
+export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, { params: params }).then(res => res.data) }
+// 请求方法 POST /Setting/FeedBack
+// 请求体  feedback
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
 
 // 關係測試接口
 // 关系列表获取
