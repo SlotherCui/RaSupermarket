@@ -128,8 +128,7 @@ export const postOrder = params => { return axios.post(`/Sell/postOrder`, { para
 //      data     数据
 //
 
-// 改价页面相关接口
-
+// **********************************改价页面相关接口
 // 根据条码查询需要改价的列表，要包含建议价，原价, 参考价
 export const requestPriceChangeList = params => { return axios.get(`/Price/PriceChangeList`, { params: params }).then(res => res.data) }
 // 请求方法 get /Price/PriceChangeList
@@ -174,7 +173,6 @@ export const requestGroupChange = params => { return axios.post(`/Price/GroupCha
 //      data     数据
 // 设置界面相关接口
 
-
 // 联动改价
 export const requestRelationChange = params => { return axios.post(`/Price/RelationChange`, { params: params }).then(res => res.data) }
 // 请求方法 post /Price/RelationChange
@@ -186,10 +184,47 @@ export const requestRelationChange = params => { return axios.post(`/Price/Relat
 //      codeInfo 错误信息
 //      data     数据
 
+// ********************  设置相关接口
+// 意见反馈接口
 export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, { params: params }).then(res => res.data) }
 // 请求方法 POST /Setting/FeedBack
 // 请求体  feedback
 //
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+
+// 查询已有信息接口
+export const requestInformation = params => { return axios.get(`/Setting/getInformation`, { params: params }).then(res => res.data) }
+// 请求方法 get /Setting/getInformation
+// 请求体
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//             supermarket_name: '德玛西亚超市',
+//             supermarket_tax: '110',
+//             supermarket_tel: '110',
+//             supermarket_manager_name: '盖伦',
+//             supermarket_piclink: '/static/',
+//             supermarket_address: '召唤师峡谷301号',
+//             supermarket_email: '110@163.com',
+//             supermarket_decription: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
+
+//  提交修改信息
+export const postInformation = params => { return axios.post(`/Setting/postInformation`, { params: params }).then(res => res.data) }
+// 请求方法 get /Setting/getInformation
+// 请求体
+//             supermarket_name: '德玛西亚超市',
+//             supermarket_tax: '110',
+//             supermarket_tel: '110',
+//             supermarket_manager_name: '盖伦',
+//             supermarket_piclink: '/static/',
+//             supermarket_address: '召唤师峡谷301号',
+//             supermarket_email: '110@163.com',
+//             supermarket_decription: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息

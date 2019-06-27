@@ -220,6 +220,28 @@ export default {
         }, 1000)
       })
     })
+
+    mock.onGet('/Setting/getInformation').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              supermarket_name: '德玛西亚超市',
+              supermarket_tax: '1FSDAFDSAF10',
+              supermarket_tel: '11VXCZVCZXVZXCV0',
+              supermarket_manager_name: '盖伦',
+              supermarket_piclink: '/static/',
+              supermarket_address: '召唤师峡谷301号',
+              supermarket_email: '110@163.com',
+              supermarket_decription: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
+            }}])
+        }, 1000)
+      })
+    })
     // 删除用户
     // mock.onGet('/user/remove').reply(config => {
     //   let { id } = config.params
@@ -357,5 +379,5 @@ export default {
         }, 1000)
       })
     })
-    }
   }
+}
