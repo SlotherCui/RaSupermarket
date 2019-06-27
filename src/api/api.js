@@ -27,6 +27,15 @@ export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`,
 //           commodity_brand
 //           commodity_producer
 //           commodity_piclink
+export const requestAddNewPrice = params => { return axios.post(`/Commodity/AddNewPrice`, { params: params }).then(res => res.data) }
+// 请求方法 post /Commodity/AddNewPrice
+// 请求体 commodity_barcode:
+//        new_price:
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
 export const addMyGoods = params => { return axios.get(`/MyGoods/add`, { params: params }).then(res => res.data) }
 
 export const editGoods = params => { return axios.get(`/MyGoods/edit`, { params: params }).then(res => res.data) }
