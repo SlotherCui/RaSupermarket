@@ -35,7 +35,7 @@
       <!--</el-table-column>-->
       <el-table-column :label="$t('message.operation')" width="150">
         <template scope="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.open')}}</el-button>
+          <el-button size="small" @click="handleOpen(scope.$index, scope.row)" :loading="openLoading" v-model="openVisible">{{$t('message.open')}}</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {requestRelation, requestRelationByID, postRelation} from '../../../api/api'
+import {requestRelation, requestRelationByID, postRelation, removeRelation, batchRemoveRelation, openRelation} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
@@ -86,6 +86,8 @@ export default {
       sels: [], // 列表选中列
       addFormVisible: false, // 新增界面是否显示
       addLoading: false,
+      openLoading: false,
+      openVisible: true,
       addFormRules: {
         supermarket_id: [
           { required: true, message: '请输入超市编号', trigger: 'blur' }
@@ -99,12 +101,13 @@ export default {
     }
   },
   methods: {
+
     handleAdd () {
       this.addFormVisible = true
     },
-    // 查询超市
+    // 添加关联超市
     addRelation () {
-      // 获取商品单价
+      // 获取超市名称
       let para = {supermarket_id: this.addForm.supermarket_id}
       this.addLoading = true
       requestRelationByID(para).then((res) => {
@@ -118,13 +121,12 @@ export default {
           })
           // 输入表单重置
           this.addForm.supermarket_id = ''
-          this.addForm.supermarket_name = ''
         }
         // 关闭加载
         this.addLoading = false
       })
     },
-    // 提交确认
+    // 提交添加确认
     addSubmit () {
       // this.$alert(this.addGoodsList, 'fsdhkjaf')
       this.addLoading = true
@@ -141,6 +143,59 @@ export default {
         }
       })
     },
+    // 删除方法
+    handleDel (index, row) {
+      this.$confirm('确认删除该商品吗?', '提示', {
+        type: 'warning'
+      }).then(() => {
+        this.listLoading = true
+        let para = { supermarket_id: row.supermarket_id }
+        removeRelation(para).then((res) => {
+          this.listLoading = false
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          this.getRelationList(1)
+        })
+      }).catch(() => {
+      })
+    },
+    // 批量删除
+    batchRemove () {
+      var id = this.sels.map(item => item.supermarket_id).toString()
+      this.$confirm('确认删除选中记录吗？', '提示', {
+        type: 'warning'
+      }).then(() => {
+        this.listLoading = true
+        // NProgress.start();
+        let para = { supermarket_id: id }
+        batchRemoveRelation(para).then((res) => {
+          this.listLoading = false
+          // NProgress.done();
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          this.getRelationList(1)
+        })
+      }).catch(() => {
+
+      })
+    },
+    // 关联关系开启方法
+    handleOpen (index, row) {
+      let para = { supermarket_id: row.supermarket_id }
+      this.openLoading = true
+      openRelation(para).then((res) => {
+        if (res.code === 0) {
+          // 开启按钮变为关闭
+        }
+        // 关闭加载
+        this.addLoading = false
+      })
+    },
+    // 查询方法
     handleSearch () {
       this.listLoading = true
       this.getRelationList(1)

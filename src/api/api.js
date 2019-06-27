@@ -137,7 +137,6 @@ export const postOrder = params => { return axios.post(`/Sell/postOrder`, { para
 //      data     数据
 //
 
-
 // 改价页面相关接口
 
 // 根据条码查询需要改价的列表，要包含建议价，原价, 参考价
@@ -182,6 +181,8 @@ export const requestGroupChange = params => { return axios.post(`/Price/GroupCha
 //      code     错误码
 //      codeInfo 错误信息
 //      data     数据
+// 设置界面相关接口
+
 
 // 联动改价
 export const requestRelationChange = params => { return axios.post(`/Price/RelationChange`, { params: params }).then(res => res.data) }
@@ -194,18 +195,31 @@ export const requestRelationChange = params => { return axios.post(`/Price/Relat
 //      codeInfo 错误信息
 //      data     数据
 
+export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, { params: params }).then(res => res.data) }
+// 请求方法 POST /Setting/FeedBack
+// 请求体  feedback
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
 
 // 關係測試接口
 // 关系列表获取
 export const requestRelation = params => {
-  return axios.get('/relationship/list', { params }).then(res => res.data)
+  return axios.get('/RelationShip/list', { params }).then(res => res.data)
 }
 // 通过编号查找商家
 export const requestRelationByID = params => {
-  return axios.get('/relationship/query', { params }).then(res => res.data)
+  return axios.get('/RelationShip/query', { params }).then(res => res.data)
 }
 // 提交关联关系
 export const postRelation = params => {
-  return axios.get('/relationship/post', { params }).then(res => res.data)
+  return axios.post('/RelationShip/post', { params }).then(res => res.data)
 }
 // 删除/批量删除关联关系
+export const removeRelation = params => { return axios.get(`/RelationShip/remove`, { params: params }).then(res => res.data) }
+
+export const batchRemoveRelation = params => { return axios.get(`/RelationShip/batchremove`, { params: params }).then(res => res.data) }
+// 关联关系开启
+export const openRelation = params => { return axios.get(`/RelationShip/openrelation`, { params: params }).then(res => res.data) }

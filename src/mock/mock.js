@@ -221,6 +221,21 @@ export default {
         }, 1000)
       })
     })
+    mock.onPost('/Setting/FeedBack').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let parma = JSON.parse(config.data)
+      console.log(parma)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
     // 删除用户
     // mock.onGet('/user/remove').reply(config => {
     //   let { id } = config.params
@@ -293,7 +308,7 @@ export default {
     //   })
     // })
     // 获取列表
-    mock.onGet('/relationship/list').reply(config => {
+    mock.onGet('/RelationShip/list').reply(config => {
       let {page, supermarket_id} = config.params
       let mockRelation = _Relation.filter(Relation => {
         if (supermarket_id && Relation.supermarket_id.indexOf(supermarket_id) === -1) return false
@@ -314,7 +329,7 @@ export default {
       })
     })
     // 添加列表 通过编号查询超市名字
-    mock.onGet('/relationship/query').reply(config => {
+    mock.onGet('/RelationShip/query').reply(config => {
       // 获取请求体
       let {supermarket_id} = config.params
       return new Promise((resolve, reject) => {
@@ -329,7 +344,7 @@ export default {
       })
     })
     // 接受post请求
-    mock.onPost('/relationship/post').reply(config => {
+    mock.onPost('/RelationShip/post').reply(config => {
       // 获取请求体
       let supermarket_list = JSON.parse(config.data)
       console.log(supermarket_list)
@@ -343,5 +358,20 @@ export default {
         }, 1000)
       })
     })
+    // 开启请求
+    mock.onPost('/RelationShip/openrelation').reply(config => {
+      let {supermarket_id} = config.params
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              supermarket_name: '德玛西亚超市'
+            }
+          }])
+        }, 1000)
+      })
+    })
+    }
   }
-}
