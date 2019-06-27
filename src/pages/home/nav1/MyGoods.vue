@@ -139,15 +139,17 @@
         <el-button type="primary" @click.native="addCommodity" :loading="addLoading">确认</el-button>
       </div>
       <!--        内层添加商品表-->
-      <el-dialog width="50%" title="选择添加商品" height="250" :visible.sync="hascommodity" append-to-body>
-        <el-table :data="commoditytoadd">
+      <el-dialog width="50%" title="选择添加商品" :visible.sync="hascommodity" append-to-body>
+        <el-table :data="commoditytoadd" max-height="300" highlight-current-row>
           <el-table-column property="commodity_barcode" label="条码号" width="150"></el-table-column>
-          <el-table-column property="commodity_name" label="名称" width="200"></el-table-column>
-          <el-table-column property="commodity_specification" label="规格"></el-table-column>
-          <el-table-column :label="$t('message.operation')"  width=" 150">
+          <el-table-column property="commodity_name" label="名称" width="150"></el-table-column>
+          <el-table-column property="commodity_specification" label="规格" width="100"></el-table-column>
+          <el-table-column property="supplier_min_price" label="参考价" width="100"></el-table-column>
+          <el-table-column property="suggest_price" label="建议价"></el-table-column>
+          <el-table-column :label="$t('message.operation')"  width=" 100">
             <template scope="scope">
               <!--          添加-->
-              <el-button size="small" @click="alert(scope.$index, scope.row)">添加</el-button>
+              <el-button type="" size="small" @click="alert(scope.$index, scope.row)">添加</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -225,27 +227,7 @@ export default {
       editLoading: false,
       goodslist: [],
       showbutton: [{showb: true}, {showb: true}, {showb: true}, {showb: true}],
-      commoditytoadd: [{
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml'
-      },
-      {
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml'
-      },
-      {
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml'
-      },
-      {
-        commodity_barcode: '6954767473673',
-        commodity_name: '纯悦',
-        commodity_specification: '550ml'
-      }
-      ],
+      commoditytoadd: [],
       editFormVisible: false,
       addForm1: {
         commodity_barcode: ''
@@ -335,15 +317,13 @@ export default {
     addCommodity () {
       // 清除外层表单提
       let para = { commodity_barcode: this.addForm1.commodity_barcode }
-      var has
+
       searchAddCommodity(para).then((res) => {
-        console.log('re', res.data.has)
-        has = res.data.has
+        var has = res.data.has
         this.commoditytoadd = res.data.Commodity
+        this.hascommodity = has
+        this.hasnotcommodity = !has
       })
-      this.hascommodity = has
-      this.hasnotcommodity = !has
-      this.clearValidate('addForm1')
     },
     addFormClose () {
       this.addFormVisible = false

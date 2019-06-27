@@ -10,6 +10,8 @@ for (let i = 0; i < 86; i++) {
     commodity_description: Mock.Random.csentence(),
     commodity_brand: Mock.Random.cword(3, 5),
     commodity_producer: Mock.Random.cword(5, 10),
+    supplier_min_price: Mock.Random.integer(1, 1000),
+    suggest_price: Mock.Random.integer(1, 1000),
     commodity_piclink: Mock.Random.image('100x100', '#894FC4', '#FFF', 'png', '!')
   }))
 
