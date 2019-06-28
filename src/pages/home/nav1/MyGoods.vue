@@ -386,7 +386,7 @@ export default {
         let para = {
           commodity_barcode: this.addpriceform.commodity_barcode,
           commodity_price: this.addpriceform.new_price,
-          commodity: ''
+          commodity: {}
         }
         addMyGoods(para).then((res) => {
           if (res.code === 0) {
