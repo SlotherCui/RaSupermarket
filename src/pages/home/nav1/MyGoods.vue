@@ -112,7 +112,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click.native="editFormVisible = false" :loading="editLoading">取消</el-button>
-        <el-button type="primary" @click.native="editSubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
+        <el-button type="primary" @click.native="editSubmit" :loading="addLoading" :disabled="!editSubmitAble">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
       <!--        添加商品表-->
@@ -291,7 +291,8 @@ export default {
         commodity_specification: '',
         commodity_producer: '',
         commodity_description: ''
-      }
+      },
+      editSubmitAble: false
     }
   },
   methods: {
@@ -514,11 +515,13 @@ export default {
       this.editForm.commodity_description = this.goodslist[index].commodity_description
       // 设置界面是否可以编辑
       this.$set(this.editAbles, 0, this.goodslist[index].commodity_name === null)
-      // this.editAbles[0] = this.goodslist[index].commodity_name === null
-      this.editAbles[1] = this.goodslist[index].commodity_brand === null
-      this.editAbles[2] = this.goodslist[index].commodity_specification === null
-      this.editAbles[3] = this.goodslist[index].commodity_producer === null
-      this.editAbles[4] = this.goodslist[index].commodity_description === null
+      this.$set(this.editAbles, 1, this.goodslist[index].commodity_brand === null)
+      this.$set(this.editAbles, 2, this.goodslist[index].commodity_specification === null)
+      this.$set(this.editAbles, 3, this.goodslist[index].commodity_producer === null)
+      this.$set(this.editAbles, 4, this.goodslist[index].commodity_description === null)
+
+      // 提交按钮是否可以点击  如果均已上传则不可点击
+      this.editSubmitAble = this.editAbles[0] || this.editAbles[1] || this.editAbles[2] || this.editAbles[3] || this.editAbles[4]
     },
     // 提交编辑
     editSubmit () {
