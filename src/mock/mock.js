@@ -63,8 +63,39 @@ export default {
     mock.onPost('/Commodity/AddNewPrice').reply(config => {
       // 获取请求体
       // let {commodity_list} = config.params
-      let parma = JSON.parse(config.data)
+      let para = JSON.parse(config.data)
       console.log(parma)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
+    mock.onPost('/Commodity/add').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let para = JSON.parse(config.data)
+      console.log(para)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
+    // /Commodity/remove
+    mock.onGet('/Commodity/remove').reply(config => {
+      // 获取请求体
+      let {commodity_barcode} = config.params
+      //
+      console.log('mock_delete', commodity_barcode)
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
@@ -119,6 +150,22 @@ export default {
             data: {
               total: total,
               Commodity: mockCommodity
+            }}])
+        }, 1000)
+      })
+    })
+
+    mock.onPost('/Commodity/edit').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let parma = JSON.parse(config.data)
+      console.log(parma)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
             }}])
         }, 1000)
       })
