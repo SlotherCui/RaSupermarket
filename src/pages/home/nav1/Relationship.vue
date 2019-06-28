@@ -199,6 +199,7 @@ export default {
     handleSearch () {
       this.listLoading = true
       this.getRelationList(1)
+      this.filters.supermarket_id = ''
     },
     // 翻页方法
     handleCurrentChange (val) {
@@ -218,6 +219,7 @@ export default {
         }
         this.listLoading = false
       })
+
     }
   },
   mounted () {

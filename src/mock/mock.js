@@ -432,10 +432,7 @@ export default {
         setTimeout(() => {
           resolve([200, {
             code: 0,
-            codeInfo: '成功',
-            data: {
-              supermarket_name: '德玛西亚超市'
-            }
+            codeInfo: '成功'
           }])
         }, 1000)
       })
