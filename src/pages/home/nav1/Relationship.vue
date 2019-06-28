@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {requestRelation, requestRelationByID, postRelation, removeRelation, batchRemoveRelation, openRelation} from '../../../api/api'
+import {requestRelation, requestRelationByID, postRelation, removeRelation, openRelation} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
