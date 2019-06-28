@@ -384,10 +384,11 @@ export default {
       var price = this.addpriceform.new_price
       if (/^[0-9]+$/.test(price)) {
         let para = {
-          commodity_barcod: this.addpriceform.commodity_barcode,
-          new_price: this.addpriceform.new_price
+          commodity_barcode: this.addpriceform.commodity_barcode,
+          commodity_price: this.addpriceform.new_price,
+          commodity: ''
         }
-        requestSingleChange(para).then((res) => {
+        addMyGoods(para).then((res) => {
           if (res.code === 0) {
             this.$message({message: '增加成功', type: 'success'})
           } else {
@@ -450,7 +451,17 @@ export default {
       this.addLoading = true
       let barcode = this.createcommodityForm.commodity_barcode
       if (/^[0-9]+$/.test(barcode) && barcode.length === 13) {
-        let para = Object.assign({}, this.createcommodityForm)
+        let para = {
+          commodity_barcode: this.createcommodityForm.commodity_barcode,
+          commodity_price: this.createcommodityForm.commodity_price,
+          commodity: {
+            commodity_name: this.createcommodityForm.commodity_name,
+            commodity_brand: this.createcommodityForm.commodity_brand,
+            commodity_specification: this.createcommodityForm.commodity_specification,
+            commodity_producer: this.createcommodityForm.commodity_producer,
+            commodity_description: this.createcommodityForm.commodity_description
+          }
+        }
         console.log(para)
         addMyGoods(para).then((res) => {
           if (res.code === 0) {
