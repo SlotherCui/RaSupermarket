@@ -102,19 +102,7 @@
         <el-button type="primary" @click.native="createcommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
-<!--新增界面 外层输入条码-->
-<!--    <el-dialog title="添加商品" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible" :before-close="addFormClose">-->
-<!--      <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addForm1Rules" :visible.sync="addFormVisible" label-width="100px" size="small">-->
-<!--        <el-form-item label="搜索商品" prop="commodity_barcode">-->
-<!--          <el-input v-model="addForm1.commodity_barcode" autocomplete="off" class="addinput"></el-input>-->
-<!--        </el-form-item>-->
-
-<!--      </el-form>-->
-<!--      <div slot="footer" class="dialog-footer">-->
-<!--        <el-button @click.native="clearValidate('addForm1');addFormVisible = false">取消</el-button>-->
-<!--        <el-button type="primary" @click.native="addCommodity" :loading="addLoading">确认</el-button>-->
-<!--      </div>-->
-      <!--        内层添加商品表-->
+      <!--        添加商品表-->
     <el-dialog width="50%" title="选择添加商品" :visible.sync="hascommodity" :before-close="addFormClose">
       <el-table :data="commoditytoadd" max-height="300">
         <el-table-column property="commodity_barcode" label="条码号" width="150"></el-table-column>
@@ -409,6 +397,52 @@ export default {
         this.changeLoading = false
       }
     },
+    handleEdit (index, row) {
+      this.editFormVisible = true
+      this.editForm1 = Object.assign({}, row)
+    },
+    // ************************************************************** 删除 + 批量删除 同一接口
+    // 右侧删除按钮
+    handleDel (index, row) {
+      this.$confirm('确认删除该商品吗?', '提示', {
+        type: 'warning'
+      }).then(() => {
+        this.listLoading = true
+        let para = { commodity_barcode: row.commodity_barcode }
+        removeMyGoods(para).then((res) => {
+          this.listLoading = false
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          this.regetGoods()
+        })
+      }).catch(() => {
+      })
+    },
+    // 左侧选中
+    selsChange (sels) {
+      this.sels = sels
+    },
+    // 批量删除
+    batchRemove () {
+      var commodityBarcode = this.sels.map(item => item.commodity_barcode).toString()
+      this.$confirm('确认删除选中记录吗？', '提示', {
+        type: 'warning'
+      }).then(() => {
+        this.listLoading = true
+        let para = { commodity_barcode: commodityBarcode }
+        removeMyGoods(para).then((res) => {
+          this.listLoading = false
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          this.regetGoods()
+        })
+      }).catch(() => {
+      })
+    },
     // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示 true显示hascommodity 添加列表
     // addCommodity () {
     //   // 清除外层表单提
@@ -444,52 +478,8 @@ export default {
       // });
       // this.$message.error('错了哦，这是一条错误消息');
     },
-    handleEdit (index, row) {
-      this.editFormVisible = true
-      this.editForm1 = Object.assign({}, row)
-    },
-    // 删除
-    handleDel (index, row) {
-      this.$confirm('确认删除该商品吗?', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        let para = { barcode: row.barcode }
-        removeMyGoods(para).then((res) => {
-          this.listLoading = false
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.regetGoods()
-        })
-      }).catch(() => {
-      })
-    },
-    selsChange (sels) {
-      this.sels = sels
-    },
-    batchRemove () {
-      var barcodes = this.sels.map(item => item.barcode).toString()
-      this.$confirm('确认删除选中记录吗？', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        // NProgress.start();
-        let para = { barcodes: barcodes }
-        batchRemoveMyGoods(para).then((res) => {
-          this.listLoading = false
-          // NProgress.done();
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.regetGoods()
-        })
-      }).catch(() => {
 
-      })
-    },
+    // ************************************************************ 编 辑 + 新 建
     // 提交新增商品
     // addSubmit () {
     //   this.$refs.addForm1.validate((valid) => {
