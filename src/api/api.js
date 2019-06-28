@@ -62,12 +62,11 @@ export const removeMyGoods = params => { return axios.get(`/Commodity/remove`, {
 
 export const addMyGoods = params => { return axios.post(`/Commodity/add`, { params: params }).then(res => res.data) }
 // 请求方法 post /Commodity/add
-// 请求体
-//              {
+// 请求体  commodity_barcode
+//         commodity_price
+//         commodity :{
 //                 commodity_name
-//                 commodity_barcode
 //                 commodity_brand
-//                 commodity_price
 //                 commodity_specification
 //                 commodity_producer
 //                 commodity_description
