@@ -123,7 +123,7 @@ export default {
             code: 0,
             codeInfo: '成功',
             data: {
-              has: !has,
+              has: has,
               Commodity: mockCommodity
             }}])
         }, 1000)
