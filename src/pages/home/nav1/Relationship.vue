@@ -38,11 +38,7 @@
       <el-table-column :label="$t('message.operation')" width="150">
         <!--magic(){{$t('message.open')}}-->
         <template scope="scope">
-<<<<<<< HEAD
           <el-button size="small" @click="handleOpen(scope.$index, scope.row)" :loading="openLoading" v-model="openVisible" v-text="magic(users[scope.$index].has_related)"></el-button>
-=======
-          <el-button size="small" @click="handleOpen(scope.$index, scope.row)"  v-model="openVisible">{{$t('message.open')}}</el-button>
->>>>>>> 1e96bef8d0c0227ef4673208a0e179e2c2257812
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
