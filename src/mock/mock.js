@@ -411,7 +411,7 @@ export default {
       })
     })
     // 开启请求
-    mock.onPost('/RelationShip/openrelation').reply(config => {
+    mock.onGet('/RelationShip/openrelation').reply(config => {
       let {supermarket_id} = config.params
       return new Promise((resolve, reject) => {
         setTimeout(() => {

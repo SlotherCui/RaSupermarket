@@ -101,7 +101,9 @@ export default {
     }
   },
   methods: {
-
+    handleOpenVisible () {
+      this.openVisible = false
+    },
     handleAdd () {
       this.addFormVisible = true
     },
@@ -190,6 +192,7 @@ export default {
       openRelation(para).then((res) => {
         if (res.code === 0) {
           // 开启按钮变为关闭
+          this.handleOpenVisible()
         }
         // 关闭加载
         this.addLoading = false
@@ -219,7 +222,6 @@ export default {
         }
         this.listLoading = false
       })
-
     }
   },
   mounted () {
