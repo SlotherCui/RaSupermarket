@@ -460,12 +460,29 @@ export default {
     // 开启请求
     mock.onGet('/RelationShip/openrelation').reply(config => {
       let {supermarket_id} = config.params
+      console.log('mock_close', supermarket_id)
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
             code: 0,
             codeInfo: '成功'
           }])
+        }, 1000)
+      })
+    })
+    // /RelationShip/remove
+    mock.onGet('/RelationShip/remove').reply(config => {
+      // 获取请求体
+      let {supermarket_id} = config.params
+      //
+      console.log('mock_delete', supermarket_id)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
         }, 1000)
       })
     })

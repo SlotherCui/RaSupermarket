@@ -410,7 +410,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
-        let para = { commodity_barcode: [row.commodity_barcode]}
+        let para = {commodity_barcode: [row.commodity_barcode]}
         removeMyGoods(para).then((res) => {
           this.listLoading = false
           this.$message({

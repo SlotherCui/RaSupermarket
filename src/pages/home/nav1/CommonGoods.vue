@@ -187,7 +187,7 @@
 <script>
 import util from '../../../common/js/util'
 // import NProgress from 'nprogress'
-import { getGoodListPage, editGood, addGood } from '../../../api/api'
+import { getGoodListPage } from '../../../api/api'
 
 export default {
   data () {

@@ -151,7 +151,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
-        let para = { supermarket_id: row.supermarket_id }
+        let para = { supermarket_id: [row.supermarket_id] }
         removeRelation(para).then((res) => {
           this.listLoading = false
           this.$message({
@@ -172,7 +172,7 @@ export default {
         this.listLoading = true
         // NProgress.start();
         let para = { supermarket_id: id }
-        batchRemoveRelation(para).then((res) => {
+        removeRelation(para).then((res) => {
           this.listLoading = false
           // NProgress.done();
           this.$message({
