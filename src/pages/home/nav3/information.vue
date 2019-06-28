@@ -6,12 +6,14 @@
         <!--<template slot-scope="scope" >-->
           <!--<img src="/static/good.jpg" width="100px"/>-->
         <!--</template>-->
+        <!--上传地址action-->
         <el-upload
+          action=""
           class="avatar-uploader"
           :show-file-list="false"
           :on-success="uploadSuccess"
           :before-upload="onBeforeUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <img v-if="supermarket_piclink" :src="supermarket_piclink" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -32,28 +34,28 @@
 
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_name')" label-width="150px">
-      <el-input v-model="form.name" :disabled="inputDisabled" style="width: 300px"></el-input>
+      <el-input v-model="form.supermarket_name" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_manager_name')" label-width="150px">
-      <el-input v-model="form.mnama" :disabled="inputDisabled" style="width: 300px"></el-input>
+      <el-input v-model="form.supermarket_manager_name" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <!--<el-form-item :label="$t('message.supermarket_piclink')" label-width="150px">-->
       <!--<el-input v-model="form.piclink" :disabled="inputDisabled"></el-input>-->
     <!--</el-form-item>-->
     <el-form-item :label="$t('message.supermarket_address')" label-width="150px">
-      <el-input v-model="form.addr" :disabled="inputDisabled" style="width: 300px"></el-input>
+      <el-input v-model="form.supermarket_address" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_tel')" label-width="150px">
-      <el-input v-model="form.tel" :disabled="inputDisabled" style="width: 300px"></el-input>
+      <el-input v-model="form.supermarket_tel" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_tax')" label-width="150px">
-      <el-input v-model="form.tax" :disabled="inputDisabled" style="width: 300px"></el-input>
+      <el-input v-model="form.supermarket_tax" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_email')" label-width="150px">
-      <el-input v-model="form.email" :disabled="inputDisabled" style="width: 300px"></el-input>
+      <el-input v-model="form.supermarket_email" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_decription')" label-width="150px">
-      <el-input type="textarea" v-model="form.desc" :disabled="inputDisabled" style="width: 300px"></el-input>
+      <el-input type="textarea" v-model="form.supermarket_decription" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button @click.native.prevent type="primary" v-show="editVisible" :visible.sync="editVisible" @click="edit">{{$t('message.edit')}}</el-button>
@@ -114,20 +116,30 @@
   }
 </style>
 <script>
-import { getInfo } from '../../../api/api'
+import { requestInformation, postInformation ,postPassword} from '../../../api/api'
 export default {
   data () {
     return {
-      imageUrl: '/static/Avator.jpg',
+      supermarket_piclink: '/static/Avator.jpg',
+      // form: {
+      //   name: '德玛西亚超市',
+      //   tax: '110',
+      //   tel: '110',
+      //   mnama: '盖伦',
+      //   piclink: '/static/',
+      //   addr: '召唤师峡谷301号',
+      //   email: '110@163.com',
+      //   desc: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
+      // },
       form: {
-        name: '德玛西亚超市',
-        tax: '110',
-        tel: '110',
-        mnama: '盖伦',
-        piclink: '/static/',
-        addr: '召唤师峡谷301号',
-        email: '110@163.com',
-        desc: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
+        supermarket_name: '',
+        supermarket_tax: '',
+        supermarket_tel: '',
+        supermarket_manager_name: '',
+        // supermarket_piclink: '',
+        supermarket_address: '',
+        supermarket_email: '',
+        supermarket_decription: ''
       },
       changepasswdFormVisible: false, // 修改密码界面是否显示
       changepasswdLoading: false,
@@ -157,27 +169,43 @@ export default {
   methods: {
     // 获取商家信息
     getInfo () {
-      let para = {
-        page: this.page
-      }
-      getInfo(para).then((res) => {
-        this.name = res.data.total
-        this.tax = res.data.tax
-        this.tel = res.data.tel
-        this.mnama = res.data.mnama
-        this.email = res.data.email
-        this.piclink = res.data.piclink
-        this.desc = res.data.desc
-        this.addr = res.data.addr
+      let para = {}
+      // 网络请求
+      requestInformation(para).then((res) => {
+        if (res.code === 0) {
+          this.form = res.data
+        }
         // NProgress.done();
       })
     },
+    // 保存修改文本信息
     Save (ev) {
-      alert('保存成功')
-      this.getInfo()
+      // alert('保存成功')
+      // this.$message({message: '保存成功', type: 'success'})
       this.editVisible = true
       this.inputDisabled = true
       this.setvisible = false
+      postInformation(this.form).then((res) => {
+        if (res.code === 0) {
+          this.$message({message: '保存成功', type: 'success'})
+        } else {
+          this.$message({message: '保存失败', type: 'fail'})
+        }
+        this.getInfo()
+        // NProgress.done();
+      })
+    },
+    // 提交密码修改
+    PasswdChange () {
+      postPassword(this.changepasswdForm).then((res) => {
+        if (res.code === 0) {
+          this.$message({message: '修改成功', type: 'success'})
+        } else {
+          this.$message({message: '修改失败', type: 'fail'})
+        }
+        this.changepasswdFormVisible = false
+        // NProgress.done();
+      })
     },
     PasswdChangeForm: function () {
       this.changepasswdFormVisible = true
@@ -185,8 +213,6 @@ export default {
         oldpasswd: '',
         newpasswd: ''
       }
-    },
-    PasswdChange (ev) {
     },
     // 判断渲染，true:暗文显示，false:明文显示
     changePass (value) {
@@ -202,6 +228,15 @@ export default {
       this.inputDisabled = true
       this.setvisible = false
     }
+  },
+  mounted () {
+    this.getInfo()
+    // 加载头像
+    // var user = sessionStorage.getItem('user')
+    // if (user) {
+    //   user = JSON.parse(user)
+    //   this.supermarket_piclink = user.headpic
+    // }
   }
 }
 </script>

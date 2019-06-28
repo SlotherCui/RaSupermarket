@@ -7,10 +7,10 @@
           <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="searchcommodity">{{$t('message.query')}}</el-button>
+          <el-button type="primary" @click="searchCommodity">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="addGoods">{{$t('message.add')}}</el-button>
+          <el-button type="primary" @click="addGoods" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -34,8 +34,6 @@
             <el-col :span="9">
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_brand')}}</span><span>{{props.row.commodity_brand}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_producer')}}</span><span>{{props.row.commodity_producer}}</span></div>
-<!--              <div style="line-height: 25px"><span class="goodsItem">供应商ID</span><span>{{props.row.goods_ID}}</span></div>-->
-<!--              <div style="line-height: 25px"><span class="goodsItem">供应价格</span><span>{{props.row.goods_inprice}}</span></div>-->
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_description')}}</span><span>{{props.row.commodity_description}}</span></div>
             </el-col>
           </el-row>
@@ -51,10 +49,6 @@
       </el-table-column>
       <el-table-column prop="commodity_price" :label="$t('message.goods_price')" width=" 100" sortable>
       </el-table-column>
-<!--      <el-table-column prop="goods_ID" :label="$t('message.goods_supplier_id')" width=" 130" sortable>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column prop="goods_inprice" label="进价" width=" 100" sortable>-->
-<!--      </el-table-column>-->
       <el-table-column prop="commodity_description" :label="$t('message.commodity_description')" min-width=" 180" sortable>
       </el-table-column>
       <el-table-column :label="$t('message.operation')"  width=" 150">
@@ -108,106 +102,100 @@
         <el-button type="primary" @click.native="createcommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
-<!--    <el-dialog :title="$t('message.edit')" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">-->
-<!--      <el-form :model="editForm1" label-width="80px" :rules="editFormRules" ref="editForm1">-->
-<!--        <el-form-item label="商品名称" prop="goods">-->
-<!--          <el-input v-model="editForm1.goods" autocomplete="off" class="addinput"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="条码" prop="barcode">-->
-<!--          <el-input v-model="editForm1.barcode" autocomplete="off" class="addinput"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="价格" prop="price">-->
-<!--          <el-input v-model="editForm1.price" autocomplete="off" class="addinput"></el-input>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--      <div slot="footer" class="dialog-footer">-->
-<!--        <el-button @click.native="editFormVisible = false">取消</el-button>-->
-<!--        <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>-->
-<!--      </div>-->
-<!--    </el-dialog>-->
-
-    <!--新增界面 外层输入条码-->
-    <el-dialog title="添加商品" :close-on-click-modal="false" width="30%" :visible.sync="addFormVisible" :before-close="addFormClose">
-      <el-form :model="addForm1"  label-position="left" ref="addForm1" :rules="addForm1Rules" :visible.sync="addFormVisible" label-width="100px" size="small">
-        <el-form-item label="搜索商品" prop="commodity_barcode">
-          <el-input v-model="addForm1.commodity_barcode" autocomplete="off" class="addinput"></el-input>
-        </el-form-item>
-
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click.native="clearValidate('addForm1');addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addCommodity" :loading="addLoading">确认</el-button>
-      </div>
-      <!--        内层添加商品表-->
-      <el-dialog width="50%" title="选择添加商品" :visible.sync="hascommodity" append-to-body>
-        <el-table :data="commoditytoadd" max-height="300" highlight-current-row>
-          <el-table-column property="commodity_barcode" label="条码号" width="150"></el-table-column>
-          <el-table-column property="commodity_name" label="名称" width="150"></el-table-column>
-          <el-table-column property="commodity_specification" label="规格" width="100"></el-table-column>
-          <el-table-column property="supplier_min_price" label="参考价" width="100"></el-table-column>
-          <el-table-column property="suggest_price" label="建议价"></el-table-column>
-          <el-table-column :label="$t('message.operation')"  width=" 100">
-            <template scope="scope">
-              <!--          添加-->
-              <el-button type="" size="small" @click="alert(scope.$index, scope.row)">添加</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-dialog>
-<!--   内层   提示创建商品-->
-      <el-dialog width="35%" title="提示" :visible.sync="hasnotcommodity" append-to-body>
-        <span>暂无在售信息，可以添加一条</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="hasnotcommodity = false">取 消</el-button>
-          <el-button type="primary" @click="hasnotcommodity = false ;createcommodity=true">确 定</el-button>
-        </span>
-      </el-dialog>
-<!--      内层新建产品表单-->
-      <el-dialog width="40%" title="新建" :visible.sync="createcommodity" append-to-body>
-        <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="createcommodity" >
-          <el-form-item :label="$t('message.commodity_piclink')" prop="img">
-            <el-upload
-              accept="image/jpeg,image/gif,image/png"
-              multiple
-              :limit="3">
-              <el-button size="small" type="primary">点击上传</el-button>
-              <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
-            </el-upload>
-          </el-form-item>
-          <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
-            <el-input v-model="createcommodityForm.commodity_name"  class="addinput" size="small" ></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
-            <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" ></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('message.commodity_brand')" prop="commodity_brand">
-            <el-input v-model="createcommodityForm.commodity_brand"  class="addinput" size="small" ></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('message.commodity_price')" prop="commodity_price">
-            <el-input v-model="createcommodityForm.commodity_price" autocomplete="off" class="addinput" size="small"></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('message.commodity_specification')" prop="commodity_specification">
-            <el-input v-model="createcommodityForm.commodity_specification" autocomplete="off" class="addinput" size="small"></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('message.commodity_producer')" prop="commodity_producer">
-            <el-input v-model="createcommodityForm.commodity_producer"  class="addinput" size="small"></el-input>
-          </el-form-item>
-          <el-form-item :label="$t('message.commodity_description')" prop="commodity_description">
-            <el-input type="textarea" v-model="createcommodityForm.commodity_description" autocomplete="off" :autosize="{ minRows: 2, maxRows: 4}" class="addinput"></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click.native="createcommodity = false">取消</el-button>
-          <el-button type="primary" @click.native="createcommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
-        </div>
+      <!--        添加商品表-->
+    <el-dialog width="50%" title="选择添加商品" :visible.sync="hascommodity" :before-close="addFormClose">
+      <el-table :data="commoditytoadd" max-height="300">
+        <el-table-column property="commodity_barcode" label="条码号" width="150"></el-table-column>
+        <el-table-column property="commodity_name" label="名称" width="150"></el-table-column>
+        <el-table-column property="commodity_specification" label="规格" width="100"></el-table-column>
+        <el-table-column property="supplier_min_price" label="参考价" width="100"></el-table-column>
+        <el-table-column property="suggest_price" label="建议价"></el-table-column>
+        <el-table-column :label="$t('message.operation')"  width=" 100">
+          <template scope="scope">
+<!--                      添加-->
+            <el-button  size="mini" v-show="showbutton[scope.$index]" :loading="!rollbutton[scope.$index]" @click="doaddcommodity(scope.$index, scope.row)">添加</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-dialog width="35%" title="添加您的价格" :visible.sync="addprice" append-to-body :before-close="canceladd">
+          <!--商品基本信息-->
+          <el-row>
+            <el-col :span="6">
+              <img :src="addpriceform.commodity_piclink" width="90px"/>
+            </el-col>
+            <el-col :span="18">
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_barcode')}}</span><span>{{addpriceform.commodity_barcode}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_name')}}</span><span>{{addpriceform.commodity_name}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_specification')}}</span><span>{{addpriceform.commodity_specification}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_description')}}</span><span>{{addpriceform.commodity_description}}</span></div>
+            </el-col>
+          </el-row>
+          <!--商品四种价格-->
+          <div style="margin-top: 15px;">
+            <el-tag class="my_tag" type="info">{{$t('message.supplier_min_price')}} {{addpriceform.supplier_min_price}}</el-tag>
+            <el-tag class="my_tag" type="info">{{$t('message.suggest_price')}} {{addpriceform.suggest_price}}</el-tag>
+            <el-input style="margin-top: 15px" v-model="addpriceform.new_price" placeholder="请输入新价格"></el-input>
+          </div>
+          <el-row style="margin-top: 20px; text-align: right">
+            <el-button size="small" @click.native='canceladd'>取消</el-button>
+            <el-button type="primary" size="small" :loading="changeLoading" v-on:click="addPrice"> 确认修改</el-button>
+          </el-row>
       </el-dialog>
     </el-dialog>
+<!--   内层   提示创建商品-->
+    <el-dialog width="35%" title="提示" :visible.sync="hasnotcommodity">
+      <span>暂无在售信息，可以添加一条</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="hasnotcommodity = false">取 消</el-button>
+        <el-button type="primary" @click="hasnotcommodity = false ;createcommodity=true">确 定</el-button>
+      </span>
+    </el-dialog>
+<!--      内层新建产品表单-->
+    <el-dialog width="40%" title="新建" :visible.sync="createcommodity">
+      <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="createcommodity" >
+        <el-form-item :label="$t('message.commodity_piclink')" prop="img">
+          <el-upload
+            accept="image/jpeg,image/gif,image/png"
+            multiple
+            :limit="3">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
+          <el-input v-model="createcommodityForm.commodity_name"  class="addinput" size="small" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
+          <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_brand')" prop="commodity_brand">
+          <el-input v-model="createcommodityForm.commodity_brand"  class="addinput" size="small" ></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_price')" prop="commodity_price">
+          <el-input v-model="createcommodityForm.commodity_price" autocomplete="off" class="addinput" size="small"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_specification')" prop="commodity_specification">
+          <el-input v-model="createcommodityForm.commodity_specification" autocomplete="off" class="addinput" size="small"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_producer')" prop="commodity_producer">
+          <el-input v-model="createcommodityForm.commodity_producer"  class="addinput" size="small"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('message.commodity_description')" prop="commodity_description">
+          <el-input type="textarea" v-model="createcommodityForm.commodity_description" autocomplete="off" :autosize="{ minRows: 2, maxRows: 4}" class="addinput"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="createcommodity = false">取消</el-button>
+        <el-button type="primary" @click.native="createcommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
+      </div>
+    </el-dialog>
+<!--    </el-dialog>-->
 <!--    修改信息-->
   </section>
 </template>
 
 <script>
-import {getMyGoodListPage, editGoods, removeMyGoods, batchRemoveMyGoods, searchAddCommodity} from '../../../api/api'
+import {getMyGoodListPage, editGoods, removeMyGoods, batchRemoveMyGoods, searchAddCommodity, requestSingleChange} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
@@ -223,14 +211,29 @@ export default {
       hascommodity: false, // 查询时，已有条目，显示的内层表
       hasnotcommodity: false, // 查询时，没有条目，显示的内层提示添加
       createcommodity: false, // 新建商品
+      addprice: false,
       addLoading: false,
       editLoading: false,
+      changeLoading: false, // 添加商品时，按钮loading
+      addbuttonLoading: false, // toolbar新增按钮loading
+      addindex: -1, // 记录添加商品的位置，取消时按钮停止loading
       goodslist: [],
-      showbutton: [{showb: true}, {showb: true}, {showb: true}, {showb: true}],
+      rollbutton: [],
+      showbutton: [],
       commoditytoadd: [],
       editFormVisible: false,
       addForm1: {
         commodity_barcode: ''
+      },
+      addpriceform: {
+        commodity_piclink: '',
+        commodity_barcode: '',
+        commodity_name: '',
+        commodity_specification: '',
+        commodity_description: '',
+        suggest_price: '',
+        supplier_min_price: '',
+        new_price: ''
       },
       createcommodityForm: {
         commodity_name: '',
@@ -288,54 +291,18 @@ export default {
     }
   },
   methods: {
-    // toolbar   搜 索   +   新 增
-    searchcommodity () {
-      var searchstring = this.mygoodsfilters.barcode
-      // 条码搜索
-      // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
-      let para = {
-        page: 1,
-        commodity_barcode: searchstring
-      }
-      this.listLoading = true
-      getMyGoodListPage(para).then((res) => {
-        this.total = res.data.total
-        this.goodslist = res.data.Commodity
-        this.listLoading = false
-      })
-      // } else {
-      //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
-      // }
+    // ********************************************************   清空表单的验证提示
+    clearValidate (formName) {
+      this.$refs[formName].resetFields()
     },
-    addGoods () {
-      this.addFormVisible = true
-    },
-    //
-    //
-    //
-    // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示 true显示hascommodity 添加列表
-    addCommodity () {
-      // 清除外层表单提
-      let para = { commodity_barcode: this.addForm1.commodity_barcode }
-
-      searchAddCommodity(para).then((res) => {
-        var has = res.data.has
-        this.commoditytoadd = res.data.Commodity
-        this.hascommodity = has
-        this.hasnotcommodity = !has
-      })
-    },
-    addFormClose () {
-      this.addFormVisible = false
-      this.clearValidate('addForm1')
-    },
+    // ********************************************************   获取商品表
+    // 获取第几个页面 条码固定0
     regetGoods () {
       let para = {
         page: this.page,
         commodity_barcode: 0
       }
       this.listLoading = true
-      // getMyGoodListPage
       getMyGoodListPage(para).then((res) => {
         console.log(
           res
@@ -345,13 +312,150 @@ export default {
         this.listLoading = false
       })
     },
-    clearValidate (formName) {
-      this.$refs[formName].resetFields()
-    },
+    // ******************************************************************页面操作
+    // 翻页  设置页码后，reget
     handleCurrentChange (val) {
       this.page = val
       this.regetGoods()
     },
+    // ***** toolbar   搜 索   +   新 增
+    // 搜索
+    searchCommodity () {
+      let para = {
+        page: 1,
+        commodity_barcode: this.mygoodsfilters.barcode
+      }
+      this.listLoading = true
+      getMyGoodListPage(para).then((res) => {
+        this.total = res.data.total
+        this.goodslist = res.data.Commodity
+        this.listLoading = false
+      })
+      // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
+      // } else {
+      //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
+      // }
+    },
+    // 添加商品，有没有，有-> 列表，没有-> 提示新增
+    addGoods () {
+      this.addbuttonLoading = true
+      let para = { commodity_barcode: this.mygoodsfilters.barcode }
+      searchAddCommodity(para).then((res) => {
+        var has = res.data.has
+        this.commoditytoadd = res.data.Commodity
+        for (var i = 0; i < this.commoditytoadd.length; i++) {
+          this.rollbutton.push(true)
+          this.showbutton.push(true)
+        }
+        this.addbuttonLoading = false
+        this.hascommodity = has
+        this.hasnotcommodity = !has
+      })
+    },
+    // ******************************************************************** 有-> 列表 ， 新增结果是公共商品库已有所查询内容
+    // 新增dialog列表 右上关闭方法
+    addFormClose () {
+      this.rollbutton = []
+      this.showbutton = []
+      this.commoditytoadd = []
+      this.hascommodity = false
+    },
+    // 新增dialog列表 右侧添加按钮 按钮转动 显示内层dialog
+    doaddcommodity (index, row) {
+      this.addindex = index
+      this.$set(this.rollbutton, index, false)
+      this.addprice = true
+      this.addpriceform = Object.assign({}, row)
+    },
+    // 内层dialog下方取消添加以及右上关闭  内层消失 按钮停转
+    canceladd () {
+      this.addprice = false
+      this.$set(this.rollbutton, this.addindex, true)
+      this.addindex = -1
+    },
+    // 内层dialog右下确认了修改价格，按钮旋转，post进行提交 框消失 添加按钮消失 使用了改价中的接口
+    addPrice () {
+      this.changeLoading = true
+      var price = this.addpriceform.new_price
+      if (/^[0-9]+$/.test(price)) {
+        let para = {
+          commodity_barcod: this.addpriceform.commodity_barcode,
+          new_price: this.addpriceform.new_price
+        }
+        requestSingleChange(para).then((res) => {
+          if (res.code === 0) {
+            this.$message({message: '增加成功', type: 'success'})
+          } else {
+            this.$message({message: '增加失败' + res.code, type: 'fail'})
+          }
+          this.changeLoading = false
+          this.addprice = false
+          this.$set(this.showbutton, this.addindex, false)
+        })
+      } else {
+        this.$alert('请输入数字', '提示', {confirmButtonText: '确定'})
+        this.changeLoading = false
+      }
+    },
+    handleEdit (index, row) {
+      this.editFormVisible = true
+      this.editForm1 = Object.assign({}, row)
+    },
+    // ************************************************************** 删除 + 批量删除 同一接口
+    // 右侧删除按钮
+    handleDel (index, row) {
+      this.$confirm('确认删除该商品吗?', '提示', {
+        type: 'warning'
+      }).then(() => {
+        this.listLoading = true
+        let para = { commodity_barcode: row.commodity_barcode }
+        removeMyGoods(para).then((res) => {
+          this.listLoading = false
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          this.regetGoods()
+        })
+      }).catch(() => {
+      })
+    },
+    // 左侧选中
+    selsChange (sels) {
+      this.sels = sels
+    },
+    // 批量删除
+    batchRemove () {
+      var commodityBarcode = this.sels.map(item => item.commodity_barcode).toString()
+      this.$confirm('确认删除选中记录吗？', '提示', {
+        type: 'warning'
+      }).then(() => {
+        this.listLoading = true
+        let para = { commodity_barcode: commodityBarcode }
+        removeMyGoods(para).then((res) => {
+          this.listLoading = false
+          this.$message({
+            message: '删除成功',
+            type: 'success'
+          })
+          this.regetGoods()
+        })
+      }).catch(() => {
+      })
+    },
+    // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示 true显示hascommodity 添加列表
+    // addCommodity () {
+    //   // 清除外层表单提
+    //   let para = { commodity_barcode: this.addForm1.commodity_barcode }
+    //
+    //   searchAddCommodity(para).then((res) => {
+    //     var has = res.data.has
+    //     this.commoditytoadd = res.data.Commodity
+    //     this.hascommodity = has
+    //     this.hasnotcommodity = !has
+    //   })
+    // },
+
     // 新增商品填写完成后提交
     createcommoditySubmit () {
       this.createcommodity = false
@@ -374,53 +478,8 @@ export default {
       // });
       // this.$message.error('错了哦，这是一条错误消息');
     },
-    handleEdit (index, row) {
-      this.editFormVisible = true
-      this.editForm1 = Object.assign({}, row)
-    },
-    // 删除
-    handleDel (index, row) {
-      this.$confirm('确认删除该商品吗?', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        let para = { barcode: row.barcode }
-        removeMyGoods(para).then((res) => {
-          this.listLoading = false
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.regetGoods()
-        })
-      }).catch(() => {
-      })
-    },
-    selsChange (sels) {
-      this.sels = sels
-    },
-    batchRemove () {
-      var barcodes = this.sels.map(item => item.barcode).toString()
-      this.$confirm('确认删除选中记录吗？', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        // NProgress.start();
-        let para = { barcodes: barcodes }
-        batchRemoveMyGoods(para).then((res) => {
-          this.listLoading = false
-          // NProgress.done();
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.regetGoods()
-        })
-      }).catch(() => {
 
-      })
-    },
-
+    // ************************************************************ 编 辑 + 新 建
     // 提交新增商品
     // addSubmit () {
     //   this.$refs.addForm1.validate((valid) => {
@@ -479,14 +538,6 @@ export default {
     width: 130px;
     height: 130px;
   }
-  /*div img{*/
-  /*  z-index: 100;*/
-  /*  cursor: pointer;*/
-  /*  transition: all 1s;*/
-  /*}*/
-  /*div img:hover{*/
-  /*  transform: scale(2,2);*/
-  /*}*/
   .demo-table-expand {
     font-size: 0;
   }
