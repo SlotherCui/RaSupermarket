@@ -124,6 +124,22 @@ export default {
       })
     })
 
+    mock.onPost('/Commodity/edit').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let parma = JSON.parse(config.data)
+      console.log(parma)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
+
     // 获取销售记录列表
     mock.onGet('/Sell/OrderList').reply(config => {
       // 获取请求体

@@ -70,36 +70,49 @@
     <el-dialog :title="$t('message.edit')" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">
       <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="editFormVisible" >
         <el-form-item :label="$t('message.commodity_piclink')" prop="img">
+          <!--<el-upload-->
+            <!--v-if="!editPic"-->
+            <!--accept="image/jpeg,image/gif,image/png"-->
+            <!--multiple-->
+            <!--:limit="3">-->
+            <!--<el-button size="small" type="primary">点击上传</el-button>-->
+            <!--<div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>-->
+          <!--</el-upload>-->
           <el-upload
+            action=""
+            class="avatar-uploader"
             accept="image/jpeg,image/gif,image/png"
-            multiple
-            :limit="3">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
+            :data="editForm.commodity_barcod"
+            :show-file-list="false"
+            :on-success="uploadSuccess"
+            :disabled="editPic"
+            :before-upload="onBeforeUpload">
+            <img v-if="editPic" :src="editPic" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
         <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
-          <el-input v-model="createcommodityForm.commodity_name"  class="addinput" size="small" ></el-input>
+          <el-input v-model="editForm.commodity_name"  class="addinput" size="small"  :disabled="!editAbles[0]" ></el-input>
         </el-form-item>
-        <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
-          <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" ></el-input>
-        </el-form-item>
+        <!--<el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">-->
+          <!--<el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" ></el-input>-->
+        <!--</el-form-item>-->
         <el-form-item :label="$t('message.commodity_brand')" prop="commodity_brand">
-          <el-input v-model="createcommodityForm.commodity_brand"  class="addinput" size="small" ></el-input>
+          <el-input v-model="editForm.commodity_brand"  class="addinput" size="small"  :disabled="!editAbles[1]" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.commodity_specification')" prop="commodity_specification">
-          <el-input v-model="createcommodityForm.commodity_specification" autocomplete="off" class="addinput" size="small"></el-input>
+          <el-input v-model="editForm.commodity_specification" autocomplete="off" class="addinput"  size="small" :disabled="!editAbles[2]"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('message.commodity_producer')" prop="commodity_producer">
-          <el-input v-model="createcommodityForm.commodity_producer"  class="addinput" size="small"></el-input>
+        <el-form-item :label="$t('message.commodity_producer')" prop="commodity_producer" >
+          <el-input v-model="editForm.commodity_producer"  class="addinput" size="small" :disabled="!editAbles[3]"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('message.commodity_description')" prop="commodity_description">
-          <el-input type="textarea" v-model="createcommodityForm.commodity_description" autocomplete="off" :autosize="{ minRows: 2, maxRows: 4}" class="addinput"></el-input>
+        <el-form-item :label="$t('message.commodity_description')" prop="commodity_description" >
+          <el-input type="textarea" v-model="editForm.commodity_description" autocomplete="off" :autosize="{ minRows: 2, maxRows: 4}" class="addinput" :disabled="!editAbles[4]"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="createcommodity = false">取消</el-button>
-        <el-button type="primary" @click.native="createcommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
+        <el-button @click.native="editFormVisible = false" :loading="editLoading">取消</el-button>
+        <el-button type="primary" @click.native="editSubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
       <!--        添加商品表-->
@@ -244,11 +257,6 @@ export default {
         commodity_producer: '',
         commodity_description: ''
       },
-      editForm1: {
-        barcode: '',
-        goods: '',
-        price: ''
-      },
       createcommodityFormRules: {
         commodity_barcode: [
           { required: true, message: '请输入商品条码号', trigger: 'blur' }
@@ -277,6 +285,7 @@ export default {
           { required: true, message: '请输入商品条码号', trigger: 'blur' }
         ]
       },
+      // 编辑相关变量
       editFormRules: {
         goods: [
           { required: true, message: '输入商品名称', trigger: 'blur' }
@@ -287,6 +296,17 @@ export default {
         barcode: [
           { required: true, message: '输入条码', trigger: 'blur' }
         ]
+      },
+      editPic: null,
+      // 五种编辑选项
+      editAbles: [false, false, false, false, false],
+      editForm: {
+        commodity_barcod: '',
+        commodity_name: '',
+        commodity_brand: '',
+        commodity_specification: '',
+        commodity_producer: '',
+        commodity_description: ''
       }
     }
   },
@@ -397,10 +417,6 @@ export default {
         this.changeLoading = false
       }
     },
-    handleEdit (index, row) {
-      this.editFormVisible = true
-      this.editForm1 = Object.assign({}, row)
-    },
     // ************************************************************** 删除 + 批量删除 同一接口
     // 右侧删除按钮
     handleDel (index, row) {
@@ -503,28 +519,55 @@ export default {
     //     }
     //   })
     // },
-    // 编辑
+    // *************************************************************编辑
+    // 编辑界面
+    handleEdit (index, row) {
+      this.editFormVisible = true
+      this.editForm1 = Object.assign({}, row)
+      console.log(this.goodslist[index])
+      this.editPic = this.goodslist[index].commodity_piclink
+      this.editForm.commodity_barcod = this.goodslist[index].commodity_barcod
+      // 将已有值填充
+      this.editForm.commodity_name = this.goodslist[index].commodity_name
+      this.editForm.commodity_brand = this.goodslist[index].commodity_brand
+      this.editForm.commodity_specification = this.goodslist[index].commodity_specification
+      this.editForm.commodity_producer = this.goodslist[index].commodity_producer
+      this.editForm.commodity_description = this.goodslist[index].commodity_description
+      // 设置界面是否可以编辑
+      this.$set(this.editAbles, 0, this.goodslist[index].commodity_name === null)
+      // this.editAbles[0] = this.goodslist[index].commodity_name === null
+      this.editAbles[1] = this.goodslist[index].commodity_brand === null
+      this.editAbles[2] = this.goodslist[index].commodity_specification === null
+      this.editAbles[3] = this.goodslist[index].commodity_producer === null
+      this.editAbles[4] = this.goodslist[index].commodity_description === null
+    },
+    // 提交编辑
     editSubmit () {
-      this.$refs.editForm1.validate((valid) => {
-        if (valid) {
-          this.$confirm('确认提交吗？', '提示', {}).then(() => {
-            this.editLoading = true
-            // NProgress.start();
-            let para = Object.assign({}, this.editForm1)
-            editGoods(para).then((res) => {
-              this.editLoading = false
-              // NProgress.done();
-              this.$message({
-                message: '提交成功',
-                type: 'success'
-              })
-              this.$refs['editForm1'].resetFields()
-              this.editFormVisible = false
-              this.regetGoods()
-            })
-          })
-        }
+      // this.$refs.editForm1.validate((valid) => {
+      //   if (valid) {
+      this.$confirm('确认提交吗？', '提示', {}).then(() => {
+        this.editLoading = true
+        // NProgress.start();
+        let para = Object.assign({}, this.editForm)
+        // console.log(para)
+        // console.log( this.editForm)
+        editGoods(para).then((res) => {
+          if (res.code === 0) {
+            this.editLoading = false
+            this.editFormVisible = false
+            this.$message({message: '提交成功', type: 'success'})
+            this.$refs['editForm'].resetFields()
+            this.regetGoods()
+          } else {
+            this.editLoading = false
+            this.$message({message: '提交失败', type: 'fail'})
+          }
+
+          // NProgress.done();
+        })
       })
+      //   }
+      // })
     }
   },
   mounted () {
@@ -577,5 +620,28 @@ export default {
   }
   .el-form-item {
     margin-bottom: 10px;
+  }
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 128px;
+    height: 128px;
+    display: block;
   }
 </style>
