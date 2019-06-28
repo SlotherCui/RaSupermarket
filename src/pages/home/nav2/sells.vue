@@ -165,6 +165,7 @@ export default {
       // this.$alert(this.addGoodsList, 'fsdhkjaf')
       this.addLoading = true
       let para = {commodity_list: this.addGoodsList}
+      console.log('para')
       console.log(para)
       postOrder(para).then((res) => {
         if (res.code === 0) {

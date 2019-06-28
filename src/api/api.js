@@ -1,8 +1,10 @@
 import axios from 'axios'
 import qs from 'qs'
-axios.defaults.baseURL = '/api'
-// axios.defaults.baseURL = 'http://localhost:8080'
+// axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'http://211.87.230.15:8080'
 axios.defaults.withCredentials = true
+// axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.headers['Content-Type'] = 'application/json'
 
 // export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { params: params }) }
 // export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchremove`, { params: params }) }
@@ -161,7 +163,8 @@ export const requestPriceByBarcode = params => { return axios.get(`/Sell/getPric
 //        commodity_current_price： 17
 
 // 提交所有销售商品/ 提交销售记录
-export const postOrder = params => { return axios.post(`/Sell/postOrder`, { params: params }).then(res => res.data) }
+// export const postOrder = params => { return axios.post(`/Sell/postOrder`, { params: params }, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(res => res.data) }
+export const postOrder = params => { return axios.post(`/Sell/postOrder`, qs.stringify(params), {headers: {'Content-Type': 'application/json'}}).then(res => res.data) }
 // 请求方法 post /Sell/postOrder
 // 请求体 commodityList:
 //       [{commodity_barcode

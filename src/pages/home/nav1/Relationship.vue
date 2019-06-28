@@ -1,3 +1,4 @@
+<script src="../../../api/api.js"></script>
 <template>
   <section>
     <!--工具条-->
@@ -45,7 +46,7 @@
            <!--v-model="openVisible"-->
            <!--v-text="magic(users[scope.$index].has_related)"-->
           <!--:type="magic2(users[scope.$index].has_related)"></el-button>-->
-          <el-switch v-model="users[scope.$index].has_related" active-color="#13ce66"  @change="handleOpen(scope.$index, scope.row)"></el-switch>
+          <el-switch v-model="users[scope.$index].has_related" active-value="1" inactive-value="0" active-color="#13ce66" @change="handleOpen(scope.$index, scope.row)"></el-switch>
           <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>-->
         </template>
       </el-table-column>
@@ -202,8 +203,8 @@ export default {
     },
     // 关联关系开启方法
     handleOpen (index, row) {
-      console.log(index)
-      let para = { supermarket_id: row.supermarket_id, has_related: this.users[index].has_related}
+      console.log('kaiguan', this.users[index].has_related)
+      let para = {supermarket_id: row.supermarket_id, has_related: this.users[index].has_related}
       // index.openLoading = true
       openRelation(para).then((res) => {
         if (res.code === 0) {
