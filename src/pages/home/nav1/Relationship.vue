@@ -34,8 +34,9 @@
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->
       <el-table-column :label="$t('message.operation')" width="150">
+        <!--magic(){{$t('message.open')}}-->
         <template scope="scope">
-          <el-button size="small" @click="handleOpen(scope.$index, scope.row)" :loading="openLoading" v-model="openVisible">{{$t('message.open')}}</el-button>
+          <el-button size="small" @click="handleOpen(scope.$index, scope.row)" :loading="openLoading" v-model="openVisible" v-text="magic(users[scope.$index].has_related)"></el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
@@ -80,6 +81,7 @@ export default {
         supermarket_id: ''
       },
       users: [],
+      // 页码 页数
       total: 0,
       page: 1,
       listLoading: false,
@@ -93,6 +95,7 @@ export default {
           { required: true, message: '请输入超市编号', trigger: 'blur' }
         ]
       },
+      OpenStauts: [{text: '关闭', color: 'success'}],
       // 新增界面数据
       addForm: {
         supermarket_id: ''
@@ -101,6 +104,14 @@ export default {
     }
   },
   methods: {
+    magic (val) {
+      console.log(this.users)
+      if (val) {
+        return '开启'
+      } else {
+        return '关闭2'
+      }
+    },
     handleOpenVisible () {
       this.openVisible = false
     },
