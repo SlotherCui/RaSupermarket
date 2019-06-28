@@ -90,6 +90,22 @@ export default {
         }, 1000)
       })
     })
+    // /Commodity/remove
+    mock.onGet('/Commodity/remove').reply(config => {
+      // 获取请求体
+      let {commodity_barcode} = config.params
+      //
+      console.log('mock_delete', commodity_barcode)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
     mock.onGet('/Commodity/searchAddCommodity').reply(config => {
       // 获取请求体
       let {commodity_barcode} = config.params
