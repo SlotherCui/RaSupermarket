@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import {requestRelation, requestRelationByID, postRelation, removeRelation, batchRemoveRelation, openRelation} from '../../../api/api'
+import {requestRelation, requestRelationByID, postRelation, removeRelation, openRelation} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
@@ -101,7 +101,9 @@ export default {
     }
   },
   methods: {
-
+    handleOpenVisible () {
+      this.openVisible = false
+    },
     handleAdd () {
       this.addFormVisible = true
     },
@@ -149,7 +151,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
-        let para = { supermarket_id: row.supermarket_id }
+        let para = { supermarket_id: [row.supermarket_id] }
         removeRelation(para).then((res) => {
           this.listLoading = false
           this.$message({
@@ -170,7 +172,7 @@ export default {
         this.listLoading = true
         // NProgress.start();
         let para = { supermarket_id: id }
-        batchRemoveRelation(para).then((res) => {
+        removeRelation(para).then((res) => {
           this.listLoading = false
           // NProgress.done();
           this.$message({
@@ -190,6 +192,7 @@ export default {
       openRelation(para).then((res) => {
         if (res.code === 0) {
           // 开启按钮变为关闭
+          this.handleOpenVisible()
         }
         // 关闭加载
         this.addLoading = false
@@ -219,7 +222,6 @@ export default {
         }
         this.listLoading = false
       })
-
     }
   },
   mounted () {

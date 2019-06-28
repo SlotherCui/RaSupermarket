@@ -53,7 +53,7 @@ export const searchAddCommodity = params => { return axios.get(`/Commodity/searc
 //           }]
 export const removeMyGoods = params => { return axios.get(`/Commodity/remove`, { params: params }).then(res => res.data) }
 // 请求方法 get /Commodity/remove
-// 请求体  commodity_barcode   数组例commodity_barcode:"1234,1234"
+// 请求体  commodity_barcode
 // 商家商品删除
 // 返回结果
 //      code     错误码
@@ -299,6 +299,14 @@ export const requestRelation = params => {
 //      code     错误码
 //      codeInfo 错误信息
 //      data     数据
+//        Relation  [
+//           { supermarket_id
+//            supermarket_name
+//            supermarket_address
+//            supermarket_tel
+//            supermarket_decription
+//            }
+//              ]
 // 通过编号查找商家
 export const requestRelationByID = params => {
   return axios.get('/RelationShip/query', { params }).then(res => res.data)
@@ -328,8 +336,13 @@ export const postRelation = params => {
 //
 // 删除/批量删除关联关系
 export const removeRelation = params => { return axios.get(`/RelationShip/remove`, { params: params }).then(res => res.data) }
-
-export const batchRemoveRelation = params => { return axios.get(`/RelationShip/batchremove`, { params: params }).then(res => res.data) }
+// 请求方法 get /Commodity/remove
+// 请求体  commodity_barcode   数组例commodity_barcode:"1234,1234"
+// 商家商品删除
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data
 // 关联关系开启
 export const openRelation = params => { return axios.get(`/RelationShip/openrelation`, { params: params }).then(res => res.data) }
 // 请求方法 post /RelationShip/openrelation
