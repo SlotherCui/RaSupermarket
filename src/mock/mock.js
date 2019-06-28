@@ -63,8 +63,23 @@ export default {
     mock.onPost('/Commodity/AddNewPrice').reply(config => {
       // 获取请求体
       // let {commodity_list} = config.params
-      let parma = JSON.parse(config.data)
+      let para = JSON.parse(config.data)
       console.log(parma)
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+            }}])
+        }, 1000)
+      })
+    })
+    mock.onPost('/Commodity/add').reply(config => {
+      // 获取请求体
+      // let {commodity_list} = config.params
+      let para = JSON.parse(config.data)
+      console.log(para)
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
@@ -92,7 +107,7 @@ export default {
             code: 0,
             codeInfo: '成功',
             data: {
-              has: has,
+              has: !has,
               Commodity: mockCommodity
             }}])
         }, 1000)
@@ -433,10 +448,7 @@ export default {
         setTimeout(() => {
           resolve([200, {
             code: 0,
-            codeInfo: '成功',
-            data: {
-              supermarket_name: '德玛西亚超市'
-            }
+            codeInfo: '成功'
           }])
         }, 1000)
       })

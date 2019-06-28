@@ -67,7 +67,7 @@
       </el-pagination>
     </el-col>
     <!--编辑界面-->
-    <el-dialog :title="$t('message.edit')" v-model="editFormVisible" :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">
+    <el-dialog :title="$t('message.edit')"  :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">
       <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="editFormVisible" >
         <el-form-item :label="$t('message.commodity_piclink')" prop="img">
           <!--<el-upload-->
@@ -143,7 +143,6 @@
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_description')}}</span><span>{{addpriceform.commodity_description}}</span></div>
             </el-col>
           </el-row>
-          <!--商品四种价格-->
           <div style="margin-top: 15px;">
             <el-tag class="my_tag" type="info">{{$t('message.supplier_min_price')}} {{addpriceform.supplier_min_price}}</el-tag>
             <el-tag class="my_tag" type="info">{{$t('message.suggest_price')}} {{addpriceform.suggest_price}}</el-tag>
@@ -164,25 +163,28 @@
       </span>
     </el-dialog>
 <!--      内层新建产品表单-->
-    <el-dialog width="40%" title="新建" :visible.sync="createcommodity">
+    <el-dialog width="40%" title="新建" :visible.sync="createcommodity" :before-close="createCommodityCancle">
       <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="createcommodity" >
-        <el-form-item :label="$t('message.commodity_piclink')" prop="img">
-          <el-upload
-            accept="image/jpeg,image/gif,image/png"
-            multiple
-            :limit="3">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
-          <el-input v-model="createcommodityForm.commodity_name"  class="addinput" size="small" ></el-input>
-        </el-form-item>
+<!--        <el-form-item :label="$t('message.commodity_piclink')" prop="img">-->
+<!--          <el-upload-->
+<!--            action=""-->
+<!--            class="avatar-uploader"-->
+<!--            :show-file-list="false"-->
+<!--            accept="image/jpeg,image/gif,image/png"-->
+<!--            multiple-->
+<!--            :limit="3">-->
+<!--            <el-button size="small" type="primary">点击上传</el-button>-->
+<!--            <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>-->
+<!--          </el-upload>-->
+<!--        </el-form-item>-->
         <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
           <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" ></el-input>
         </el-form-item>
+        <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
+          <el-input v-model="createcommodityForm.commodity_name"  autocomplete="off" class="addinput" size="small" ></el-input>
+        </el-form-item>
         <el-form-item :label="$t('message.commodity_brand')" prop="commodity_brand">
-          <el-input v-model="createcommodityForm.commodity_brand"  class="addinput" size="small" ></el-input>
+          <el-input v-model="createcommodityForm.commodity_brand"  autocomplete="off" class="addinput" size="small" ></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.commodity_price')" prop="commodity_price">
           <el-input v-model="createcommodityForm.commodity_price" autocomplete="off" class="addinput" size="small"></el-input>
@@ -191,15 +193,15 @@
           <el-input v-model="createcommodityForm.commodity_specification" autocomplete="off" class="addinput" size="small"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.commodity_producer')" prop="commodity_producer">
-          <el-input v-model="createcommodityForm.commodity_producer"  class="addinput" size="small"></el-input>
+          <el-input v-model="createcommodityForm.commodity_producer"  autocomplete="off" class="addinput" size="small"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.commodity_description')" prop="commodity_description">
           <el-input type="textarea" v-model="createcommodityForm.commodity_description" autocomplete="off" :autosize="{ minRows: 2, maxRows: 4}" class="addinput"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="createcommodity = false">取消</el-button>
-        <el-button type="primary" @click.native="createcommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
+        <el-button @click.native="createCommodityCancle">取消</el-button>
+        <el-button type="primary" @click.native="createCommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
 <!--    </el-dialog>-->
@@ -208,7 +210,7 @@
 </template>
 
 <script>
-import {getMyGoodListPage, editGoods, removeMyGoods, batchRemoveMyGoods, searchAddCommodity, requestSingleChange} from '../../../api/api'
+import {getMyGoodListPage, editGoods, removeMyGoods, searchAddCommodity, requestSingleChange, addMyGoods} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
@@ -260,24 +262,6 @@ export default {
       createcommodityFormRules: {
         commodity_barcode: [
           { required: true, message: '请输入商品条码号', trigger: 'blur' }
-        ],
-        commodity_name: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' }
-        ],
-        commodity_brand: [
-          { required: true, message: '请输入商品商标', trigger: 'blur' }
-        ],
-        commodity_price: [
-          { required: true, message: '请输入商品价格', trigger: 'blur' }
-        ],
-        commodity_specification: [
-          { required: true, message: '请输入商品规格', trigger: 'blur' }
-        ],
-        commodity_producer: [
-          { required: true, message: '请输入商品厂家', trigger: 'blur' }
-        ],
-        commodity_description: [
-          { required: true, message: '请输入商品描述', trigger: 'blur' }
         ]
       },
       addForm1Rules: {
@@ -459,42 +443,37 @@ export default {
       }).catch(() => {
       })
     },
-    // 提交添加商品时的搜索条目，根据返回结果，显示不同内层提示 true显示hascommodity 添加列表
-    // addCommodity () {
-    //   // 清除外层表单提
-    //   let para = { commodity_barcode: this.addForm1.commodity_barcode }
-    //
-    //   searchAddCommodity(para).then((res) => {
-    //     var has = res.data.has
-    //     this.commoditytoadd = res.data.Commodity
-    //     this.hascommodity = has
-    //     this.hasnotcommodity = !has
-    //   })
-    // },
 
     // 新增商品填写完成后提交
-    createcommoditySubmit () {
-      this.createcommodity = false
-      this.clearValidate('createcommodityForm')
-      this.createcommodityForm.commodity_name = ''
-      this.createcommodityForm.commodity_barcode = ''
-      this.createcommodityForm.commodity_brand = ''
-      this.createcommodityForm.commodity_price = ''
-      this.createcommodityForm.commodity_specification = ''
-      this.createcommodityForm.commodity_producer = ''
-      this.createcommodityForm.commodity_description = ''
-      this.$message({
-        message: '恭喜你，这是一条成功消息',
-        type: 'success',
-        length: '50%'
-      })
-      // this.$message({
-      //   message: '警告哦，这是一条警告消息',
-      //   type: 'warning'
-      // });
-      // this.$message.error('错了哦，这是一条错误消息');
+    createCommoditySubmit () {
+      this.addLoading = true
+      let barcode = this.createcommodityForm.commodity_barcode
+      if (/^[0-9]+$/.test(barcode) && barcode.length === 13) {
+        let para = Object.assign({}, this.createcommodityForm)
+        console.log(para)
+        addMyGoods(para).then((res) => {
+          if (res.code === 0) {
+            this.$message({message: '上传成功', type: 'success'})
+            this.addLoading = false
+            this.clearValidate('createcommodityForm')
+            this.createcommodity = false
+          } else {
+            this.$message({message: '上传失败', type: 'fail'})
+            this.addLoading = false
+          }
+        })
+      } else {
+        this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'}).then(() => {
+          this.addLoading = false
+        }
+        )
+      }
     },
-
+    createCommodityCancle () {
+      this.clearValidate('createcommodityForm')
+      this.addLoading = false
+      this.createcommodity = false
+    },
     // ************************************************************ 编 辑 + 新 建
     // 提交新增商品
     // addSubmit () {
