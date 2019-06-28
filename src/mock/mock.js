@@ -414,6 +414,11 @@ export default {
         return true
       })
       let total = mockRelation.length
+      // if (Relation.supermarket_state === 1) {
+      //   // Relation.supermarket_state = '开启'
+      // } else {
+      //   // Relation.supermarket_state = '关闭'
+      // }
       mockRelation = mockRelation.filter((u, index) => index < 20 * page && index >= 20 * (page - 1))
       return new Promise((resolve, reject) => {
         setTimeout(() => {
