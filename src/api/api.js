@@ -17,7 +17,9 @@ export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`,
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
-//      data[{
+//      data
+//           total
+//           [{
 //           commodity_barcode
 //           commodity_name
 //           commodity_specification
@@ -56,7 +58,24 @@ export const removeMyGoods = params => { return axios.get(`/Commodity/remove`, {
 //      codeInfo 错误信息
 //      data
 
-export const addMyGoods = params => { return axios.get(`/MyGoods/add`, { params: params }).then(res => res.data) }
+export const addMyGoods = params => { return axios.post(`/Commodity/add`, { params: params }).then(res => res.data) }
+// 请求方法 post /Commodity/add
+// 请求体
+//              {
+//                 commodity_name
+//                 commodity_barcode
+//                 commodity_brand
+//                 commodity_price
+//                 commodity_specification
+//                 commodity_producer
+//                 commodity_description
+//              }
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//
 
 export const editGoods = params => { return axios.get(`/MyGoods/edit`, { params: params }).then(res => res.data) }
 
