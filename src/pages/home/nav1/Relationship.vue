@@ -38,14 +38,15 @@
       <el-table-column :label="$t('message.operation')" width="150">
         <!--magic(){{$t('message.open')}}-->
         <template scope="scope">
-          <el-button
-            size="small"
-           @click="handleOpen(scope.$index, scope.row)"
-           :loading="openLoading"
-           v-model="openVisible"
-           v-text="magic(users[scope.$index].has_related)"
-          :type="magic2(users[scope.$index].has_related)"></el-button>
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
+          <!--<el-button-->
+            <!--size="small"-->
+           <!--@click="handleOpen(scope.$index, scope.row)"-->
+           <!--:loading="openLoading"-->
+           <!--v-model="openVisible"-->
+           <!--v-text="magic(users[scope.$index].has_related)"-->
+          <!--:type="magic2(users[scope.$index].has_related)"></el-button>-->
+          <el-switch v-model="users[scope.$index].has_related" active-color="#13ce66"  @change="handleOpen(scope.$index, scope.row)"></el-switch>
+          <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -115,23 +116,6 @@ export default {
     }
   },
   methods: {
-    // 处理开启关闭状态
-    magic (val) {
-      console.log(this.users)
-      if (val === '0') {
-        return '开启'
-      } else {
-        return '关闭'
-      }
-    },
-    magic2 (val) {
-      console.log(this.users)
-      if (val === '0') {
-        return 'success'
-      } else {
-        return 'info'
-      }
-    },
     handleOpenVisible () {
       this.openVisible = false
     },
@@ -218,8 +202,9 @@ export default {
     },
     // 关联关系开启方法
     handleOpen (index, row) {
-      let para = { supermarket_id: row.supermarket_id }
-      index.openLoading = true
+      console.log(index)
+      let para = { supermarket_id: row.supermarket_id, has_related: this.users[index].has_related}
+      // index.openLoading = true
       openRelation(para).then((res) => {
         if (res.code === 0) {
           // 开启按钮变为关闭
@@ -229,7 +214,7 @@ export default {
           })
         }
         // 关闭加载
-        this.openLoading = false
+        // this.openLoading = false
       })
     },
     // 查询方法
