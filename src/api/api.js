@@ -53,7 +53,7 @@ export const searchAddCommodity = params => { return axios.get(`/Commodity/searc
 //           }]
 export const removeMyGoods = params => { return axios.get(`/Commodity/remove`, { params: params }).then(res => res.data) }
 // 请求方法 get /Commodity/remove
-// 请求体  commodity_barcode   数组例commodity_barcode:"1234,1234"
+// 请求体  commodity_barcode
 // 商家商品删除
 // 返回结果
 //      code     错误码

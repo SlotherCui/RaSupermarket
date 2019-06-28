@@ -210,7 +210,7 @@
 </template>
 
 <script>
-import {getMyGoodListPage, editGoods, removeMyGoods, searchAddCommodity, requestSingleChange, addMyGoods} from '../../../api/api'
+import {getMyGoodListPage, editGoods, removeMyGoods, searchAddCommodity, addMyGoods} from '../../../api/api'
 export default {
   name: 'Find',
   data () {
@@ -410,7 +410,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
-        let para = { commodity_barcode: row.commodity_barcode }
+        let para = { commodity_barcode: [row.commodity_barcode]}
         removeMyGoods(para).then((res) => {
           this.listLoading = false
           this.$message({
@@ -428,7 +428,7 @@ export default {
     },
     // 批量删除
     batchRemove () {
-      var commodityBarcode = this.sels.map(item => item.commodity_barcode).toString()
+      var commodityBarcode = this.sels.map(item => item.commodity_barcode)
       this.$confirm('确认删除选中记录吗？', '提示', {
         type: 'warning'
       }).then(() => {
@@ -533,6 +533,21 @@ export default {
 
       // 提交按钮是否可以点击  如果均已上传则不可点击
       this.editSubmitAble = this.editAbles[0] || this.editAbles[1] || this.editAbles[2] || this.editAbles[3] || this.editAbles[4]
+    },
+    uploadSuccess () {
+      this.$message({message: '上传成功', type: 'success'})
+    },
+    onBeforeUpload (file) {
+      const isIMAGE = file.type === 'image/jpeg' || 'image/gif' || 'image/png'
+      const isLt1M = file.size / 1024 / 1024 < 1
+
+      if (!isIMAGE) {
+        this.$message.error('上传文件只能是图片格式!')
+      }
+      if (!isLt1M) {
+        this.$message.error('上传文件大小不能超过 1MB!')
+      }
+      return isIMAGE && isLt1M
     },
     // 提交编辑
     editSubmit () {
