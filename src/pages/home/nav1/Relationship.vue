@@ -31,14 +31,20 @@
       </el-table-column>
       <el-table-column prop="supermarket_decription" :label="$t('message.supermarket_decription')" min-width="180" sortable>
       </el-table-column>
-      <el-table-column prop="supermarket_state" :label="$t('message.supermarket_state')" min-width="180" sortable>
-      </el-table-column>
+      <!--<el-table-column prop="supermarket_state" :label="$t('message.supermarket_state')" min-width="180" sortable>-->
+      <!--</el-table-column>-->
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->
       <el-table-column :label="$t('message.operation')" width="150">
         <!--magic(){{$t('message.open')}}-->
         <template scope="scope">
-          <el-button size="small" @click="handleOpen(scope.$index, scope.row)" :loading="openLoading" v-model="openVisible" v-text="magic(users[scope.$index].has_related)"></el-button>
+          <el-button
+            size="small"
+           @click="handleOpen(scope.$index, scope.row)"
+           :loading="openLoading"
+           v-model="openVisible"
+           v-text="magic(users[scope.$index].has_related)"
+          :type="magic2(users[scope.$index].has_related)"></el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
@@ -109,12 +115,21 @@ export default {
     }
   },
   methods: {
+    // 处理开启关闭状态
     magic (val) {
       console.log(this.users)
-      if (val) {
+      if (val === '0') {
         return '开启'
       } else {
-        return '关闭2'
+        return '关闭'
+      }
+    },
+    magic2 (val) {
+      console.log(this.users)
+      if (val === '0') {
+        return 'success'
+      } else {
+        return 'info'
       }
     },
     handleOpenVisible () {

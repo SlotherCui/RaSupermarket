@@ -135,6 +135,8 @@ export default {
     // 新增方法
     handleAdd () {
       this.addFormVisible = true
+      this.addLoading = false
+      this.addGoodsList = []
     },
     // 增加一个商品
     addGood () {

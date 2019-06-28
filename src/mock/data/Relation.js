@@ -8,7 +8,7 @@ for (let i = 0; i < 86; i++) {
     supermarket_address: Mock.Random.cword(3, 5),
     supermarket_tel: Mock.Random.integer(1, 1000),
     supermarket_decription: Mock.Random.csentence(),
-    supermarket_state: Mock.Random.integer(0, 1).toString()
+    has_related: Mock.Random.integer(0, 1).toString()
   }))
 }
 export { Relation }
