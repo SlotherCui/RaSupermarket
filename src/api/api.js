@@ -333,10 +333,8 @@ export const batchRemoveRelation = params => { return axios.get(`/RelationShip/b
 // 关联关系开启
 export const openRelation = params => { return axios.get(`/RelationShip/openrelation`, { params: params }).then(res => res.data) }
 // 请求方法 post /RelationShip/openrelation
-// 请求体 supermarket_list:
-//       [{
+// 请求体
 //       supermarket_id
-//       }]
 //
 // 返回结果
 //      code     错误码
