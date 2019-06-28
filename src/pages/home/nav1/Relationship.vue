@@ -31,12 +31,18 @@
       </el-table-column>
       <el-table-column prop="supermarket_decription" :label="$t('message.supermarket_decription')" min-width="180" sortable>
       </el-table-column>
+      <el-table-column prop="supermarket_state" :label="$t('message.supermarket_state')" min-width="180" sortable>
+      </el-table-column>
       <!--<el-table-column prop="addr" label="地址" min-width="180" sortable>-->
       <!--</el-table-column>-->
       <el-table-column :label="$t('message.operation')" width="150">
         <!--magic(){{$t('message.open')}}-->
         <template scope="scope">
+<<<<<<< HEAD
           <el-button size="small" @click="handleOpen(scope.$index, scope.row)" :loading="openLoading" v-model="openVisible" v-text="magic(users[scope.$index].has_related)"></el-button>
+=======
+          <el-button size="small" @click="handleOpen(scope.$index, scope.row)"  v-model="openVisible">{{$t('message.open')}}</el-button>
+>>>>>>> 1e96bef8d0c0227ef4673208a0e179e2c2257812
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
@@ -80,8 +86,11 @@ export default {
       filters: {
         supermarket_id: ''
       },
+      // Loading: [],
       users: [],
+
       // 页码 页数
+
       total: 0,
       page: 1,
       listLoading: false,
@@ -199,14 +208,17 @@ export default {
     // 关联关系开启方法
     handleOpen (index, row) {
       let para = { supermarket_id: row.supermarket_id }
-      this.openLoading = true
+      index.openLoading = true
       openRelation(para).then((res) => {
         if (res.code === 0) {
           // 开启按钮变为关闭
-          this.handleOpenVisible()
+          this.$message({
+            message: '开启成功',
+            type: 'success'
+          })
         }
         // 关闭加载
-        this.addLoading = false
+        this.openLoading = false
       })
     },
     // 查询方法

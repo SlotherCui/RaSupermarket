@@ -66,6 +66,7 @@ const cn = {
     'supermarket_tax': '超市税号',
     'supermarket_email': '超市邮箱',
     'supermarket_decription': '超市描述',
+    'supermarket_state': '超市关联状态',
     // 操作
     'query': '查询',
     'add': '新增',
