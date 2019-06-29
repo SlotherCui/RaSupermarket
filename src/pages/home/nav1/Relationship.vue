@@ -80,7 +80,6 @@
     </el-dialog>
   </section>
 </template>
-
 <script>
 import {requestRelation, requestRelationByID, postRelation, removeRelation, openRelation} from '../../../api/api'
 export default {
