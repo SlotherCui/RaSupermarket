@@ -22,17 +22,20 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      // 登录页面路由
       path: '/login',
       name: 'Login',
       component: Login
     },
     {
+      // 未定义路由
       path: '/404',
       component: NotFound,
       name: '404',
       hidden: true
     },
     {
+      // 导航栏1路由
       path: '/',
       name: '导航1',
       component: Home,

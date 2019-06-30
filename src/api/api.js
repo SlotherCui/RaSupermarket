@@ -141,6 +141,18 @@ export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, 
 //             order_all_price
 //             order_create_time
 //             order_commodity_sum
+//             infors: []  // 空数组 带着就行 方便前端编写代码
+//           ],
+//          total:   5    总页数方便显示
+
+// 根据销售号查询销售具体条目：
+export const requestOrderItem = params => { return axios.get(`/Sell/OrderItems`, { params: params }).then(res => res.data) }
+// 请求方法 get /Sell/OrderItems
+// 请求体  order_id  销售记录
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
 //             infors: [{
 //             commodity_barcode
 //             commodity_name
@@ -148,8 +160,6 @@ export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, 
 //             commodity_each_count
 //             commodity_current_price
 //             }]
-//           ],
-//          total:   5    总页数方便显示
 
 // 根据条码号获取价格
 export const requestPriceByBarcode = params => { return axios.get(`/Sell/getPrice`, { params: params }).then(res => res.data) }
@@ -180,7 +190,9 @@ export const postOrder = params => { return axios.post(`/Sell/postOrder`, params
 
 // **********************************改价页面相关接口
 // 根据条码查询需要改价的列表，要包含建议价，原价, 参考价
-export const requestPriceChangeList = params => { return axios.get(`/Price/PriceChangeList`, { params: params }).then(res => res.data) }
+export const requestPriceChangeList = params => {
+  return axios.get(`/Price/PriceChangeList`, { params: params }).then(res => res.data)
+}
 // 请求方法 get /Price/PriceChangeList
 // 请求体  page 页号
 //         commodity_barcode  销售记录

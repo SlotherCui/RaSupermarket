@@ -15,10 +15,19 @@
       </el-form>
     </el-col>
     <!--列表-->
-    <el-table :data="sells"  highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;">
+    <el-table
+      :data="sells"
+      highlight-current-row
+      v-loading="listLoading"
+      @selection-change="selsChange"
+      @expand-change="expandSell"
+      @row-click="rowclick"
+      style="width: 100%;">
       <!--销售项-->
       <el-table-column type="expand" width="55">
         <template slot-scope="props">
+          <!--sellInfos[props.$index]-->
+          <!--props.row.infors-->
           <el-row v-for="infor in props.row.infors" :key="infor.barcode" style="margin-left: 1%">
             <el-col :span="6" >
               <div style="line-height: 25px"><span class="goodsItem" >{{$t('message.commodity_barcode')}}</span><span>{{infor.commodity_barcode}}</span></div>
@@ -132,6 +141,24 @@ export default {
       }
       return !isNaN(val)
     },
+    // rowclick(row, val, index) {
+    //   console.log(row)
+    //   console.log(val)
+    //   console.log(index)
+    // },
+    // 展开销售记录
+    expandSell (row, val) {
+      // console.log(row)
+      // console.log(val)
+      let para = {order_id: row.order_id}
+      requestOrderList(para).then((res) => {
+        // this.editLoading = false
+        // NProgress.done(
+        if (res.code === 0) {
+          row.infors = res.data.infors
+        }
+      })
+    },
     // 新增方法
     handleAdd () {
       this.addFormVisible = true
@@ -198,6 +225,7 @@ export default {
         // NProgress.done(
         if (res.code === 0) {
           this.sells = res.data.orders
+          this.sellInfos = new Array(this.sells.length)
           this.total = res.data.total
         }
         this.listLoading = false

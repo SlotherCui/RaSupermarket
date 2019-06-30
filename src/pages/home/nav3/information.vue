@@ -8,8 +8,9 @@
         <!--</template>-->
         <!--上传地址action-->
         <el-upload
-          action=""
+          action="http://10.26.58.60:8080/uploadUserImg"
           class="avatar-uploader"
+          name="file"
           :show-file-list="false"
           :on-success="uploadSuccess"
           :before-upload="onBeforeUpload">
