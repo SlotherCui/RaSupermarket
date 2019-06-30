@@ -79,9 +79,10 @@
             <!--<div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>-->
           <!--</el-upload>-->
           <el-upload
-            action=""
+            action="http://10.26.58.60:8080/uploadCommodityImg"
             class="avatar-uploader"
             accept="image/jpeg,image/gif,image/png"
+            :http-request="myUpload"
             :data="editForm.commodity_barcod"
             :show-file-list="false"
             :on-success="uploadSuccess"
@@ -211,6 +212,7 @@
 
 <script>
 import {getMyGoodListPage, editGoods, removeMyGoods, searchAddCommodity, addMyGoods} from '../../../api/api'
+import axios from 'axios'
 export default {
   name: 'Find',
   data () {
@@ -296,6 +298,28 @@ export default {
     }
   },
   methods: {
+
+    myUpload (content) {
+      var form = new FormData()
+      form.append('file', content.file)
+      form.append('barcode', this.createcommodityForm.commodity_barcode)
+      axios.defaults.withCredentials = true
+      axios.post(content.action, form).then(res => {
+        if (res.data.code !== 0) {
+          content.onError('文件上传失败, code:' + res.data.code)
+        } else {
+          content.onSuccess('文件上传成功！')
+        }
+      }).catch(error => {
+        if (error.response) {
+          content.onError('文件上传失败,' + error.response.data)
+        } else if (error.request) {
+          content.onError('文件上传失败，服务器端无响应')
+        } else {
+          content.onError('文件上传失败，请求封装失败')
+        }
+      })
+    },
     // ********************************************************   清空表单的验证提示
     clearValidate (formName) {
       this.$refs[formName].resetFields()

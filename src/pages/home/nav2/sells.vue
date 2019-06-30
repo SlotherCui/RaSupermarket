@@ -16,6 +16,7 @@
     </el-col>
     <!--列表-->
     <el-table
+      ref = "table"
       :data="sells"
       highlight-current-row
       v-loading="listLoading"
@@ -99,7 +100,9 @@
 </template>
 
 <script>
-import {requestOrderList, requestPriceByBarcode, postOrder} from '../../../api/api'
+import {requestOrderList, requestPriceByBarcode, postOrder, requestOrderItem} from '../../../api/api'
+import util from '../../../common/js/util'
+// import {formatDate}
 export default {
   name: 'page1',
   data () {
@@ -151,11 +154,22 @@ export default {
       // console.log(row)
       // console.log(val)
       let para = {order_id: row.order_id}
-      requestOrderList(para).then((res) => {
+      requestOrderItem(para).then((res) => {
         // this.editLoading = false
         // NProgress.done(
+        console.log(res)
         if (res.code === 0) {
-          row.infors = res.data.infors
+          // console.log(row.infors)
+          // console.log(res.data)
+          // row.infors = res.data
+          // console.log(row.infors)
+          // this.$set(row.infors, res.data)
+          this.$set(row, 'infors', res.data)
+          this.$refs['table'].setCurrentRow(row)
+          // for (let i = 0; i < res.data.length; i++) {
+          //   this.$set(row.infors, i, res.data[i])
+          //   console.log('jhe')
+          // }
         }
       })
     },
@@ -170,11 +184,28 @@ export default {
       // 获取商品单价
       let para = {commodity_barcode: this.addForm.commodity_barcode}
       this.addLoading = true
+
+      // 相同物品合并
+      for (var i = 0; i < this.addGoodsList.length; i++) {
+        if (this.addGoodsList[i].commodity_barcode === this.addForm.commodity_barcode) {
+          var price = this.addGoodsList[i].commodity_price / this.addGoodsList[i].commodity_each_count
+          this.addGoodsList[i].commodity_each_count += this.addForm.commodity_each_count
+          this.addGoodsList[i].commodity_price += price * this.addForm.commodity_each_count
+          // 输入表单重置
+          this.addForm.commodity_barcode = ''
+          this.addForm.commodity_each_count = 1
+          // 关闭加载
+          this.addLoading = false
+          return
+        }
+      }
+      // 请求
       requestPriceByBarcode(para).then((res) => {
         if (res.code === 0) {
           var price = res.data.commodity_current_price
           console.log(price)
           // 加入到购买表
+
           this.addGoodsList.push({commodity_barcode: this.addForm.commodity_barcode,
             commodity_each_count: this.addForm.commodity_each_count,
             commodity_price: price * this.addForm.commodity_each_count
@@ -182,6 +213,10 @@ export default {
           // 输入表单重置
           this.addForm.commodity_barcode = ''
           this.addForm.commodity_each_count = 1
+        } else if (res.code === 200) {
+          this.$message({message: '该商品不在售', type: 'fail'})
+        } else {
+          this.$message({message: '未知错误', type: 'fail'})
         }
         // 关闭加载
         this.addLoading = false
@@ -223,9 +258,15 @@ export default {
       requestOrderList(para).then((res) => {
         // this.editLoading = false
         // NProgress.done(
+        console.log(res)
         if (res.code === 0) {
           this.sells = res.data.orders
-          this.sellInfos = new Array(this.sells.length)
+          // 转换时间戳
+          for (let i = 0; i < this.sells.length; i++) {
+            this.sells[i].order_create_time = util.formatDate.format(new Date(this.sells[i].order_create_time), 'yyyy-MM-dd hh:mm:ss')
+            this.sells[i].infors = []
+          }
+          console.log(this.sells)
           this.total = res.data.total
         }
         this.listLoading = false
