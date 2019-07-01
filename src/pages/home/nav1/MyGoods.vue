@@ -29,7 +29,6 @@
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_name')}}</span><span>{{props.row.commodity_name}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_specification')}}</span><span>{{props.row.commodity_specification}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_price')}}</span><span>{{props.row.commodity_current_price}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.create_time')}}</span><span>{{props.row.create_time}}</span></div>
             </el-col>
             <el-col :span="9">
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_brand')}}</span><span>{{props.row.commodity_brand}}</span></div>
@@ -43,7 +42,7 @@
       </el-table-column>
       <el-table-column prop="commodity_barcode" :label="$t('message.goods_barcode')" width="150" sortable>
       </el-table-column>
-      <el-table-column prop="commodity_name" :label="$t('message.goods_name')" width="130"  sortable>
+      <el-table-column prop="commodity_name" :label="$t('message.goods_name')" width="200"  sortable>
       </el-table-column>
       <el-table-column prop="commodity_specification" :label="$t('message.goods_model')" width=" 120" sortable>
       </el-table-column>
