@@ -27,7 +27,7 @@
           <el-input class="input" auto-complete="off" placeholder="用户名" prefix-icon="el-icon-user" v-model="form.UserName" clearable></el-input>
         </el-form-item>
         <el-form-item prop="Password">
-          <el-input class="input" auto-complete="off" placeholder="密码" prefix-icon="el-icon-key" v-model="form.Password" show-password></el-input>
+          <el-input class="input" auto-complete="off" placeholder="密码" prefix-icon="el-icon-key" v-model="form.Password" @keyup.enter.native="Logincheck" show-password ></el-input>
         </el-form-item>
         <el-form-item class="remeber">
           <el-checkbox label="记住密码" v-model="form.Remember"></el-checkbox>

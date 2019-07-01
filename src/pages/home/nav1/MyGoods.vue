@@ -28,8 +28,7 @@
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_barcode')}}</span><span>{{props.row.commodity_barcode}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_name')}}</span><span>{{props.row.commodity_name}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_specification')}}</span><span>{{props.row.commodity_specification}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_price')}}</span><span>{{props.row.commodity_price}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.create_time')}}</span><span>{{props.row.create_time}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_price')}}</span><span>{{props.row.commodity_current_price}}</span></div>
             </el-col>
             <el-col :span="9">
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_brand')}}</span><span>{{props.row.commodity_brand}}</span></div>
@@ -43,11 +42,11 @@
       </el-table-column>
       <el-table-column prop="commodity_barcode" :label="$t('message.goods_barcode')" width="150" sortable>
       </el-table-column>
-      <el-table-column prop="commodity_name" :label="$t('message.goods_name')" width="130"  sortable>
+      <el-table-column prop="commodity_name" :label="$t('message.goods_name')" width="200"  sortable>
       </el-table-column>
       <el-table-column prop="commodity_specification" :label="$t('message.goods_model')" width=" 120" sortable>
       </el-table-column>
-      <el-table-column prop="commodity_price" :label="$t('message.goods_price')" width=" 100" sortable>
+      <el-table-column prop="commodity_current_price" :label="$t('message.goods_price')" width=" 100" sortable>
       </el-table-column>
       <el-table-column prop="commodity_description" :label="$t('message.commodity_description')" min-width=" 180" sortable>
       </el-table-column>
@@ -68,7 +67,7 @@
     </el-col>
     <!--编辑界面-->
     <el-dialog :title="$t('message.edit')"  :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">
-      <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="editFormVisible" >
+      <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="editForm" :visible.sync="editFormVisible" >
         <el-form-item :label="$t('message.commodity_piclink')" prop="img">
           <!--<el-upload-->
             <!--v-if="!editPic"-->
@@ -287,7 +286,7 @@ export default {
       // 五种编辑选项
       editAbles: [false, false, false, false, false],
       editForm: {
-        commodity_barcod: '',
+        commodity_barcode: '',
         commodity_name: '',
         commodity_brand: '',
         commodity_specification: '',
@@ -333,11 +332,9 @@ export default {
       }
       this.listLoading = true
       getMyGoodListPage(para).then((res) => {
-        console.log(
-          res
-        )
+        console.log(res)
         this.total = res.data.total
-        this.goodslist = res.data.Commodity
+        this.goodslist = res.data.commodity_list
         this.listLoading = false
       })
     },
@@ -357,7 +354,7 @@ export default {
       this.listLoading = true
       getMyGoodListPage(para).then((res) => {
         this.total = res.data.total
-        this.goodslist = res.data.Commodity
+        this.goodslist = res.data.commodity_list
         this.listLoading = false
       })
       // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
@@ -365,21 +362,49 @@ export default {
       //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
       // }
     },
+    checkin (commodityBarcode) {
+      let para = {
+        page: 1,
+        commodity_barcode: commodityBarcode
+      }
+      getMyGoodListPage(para).then((res) => {
+        const checklist = res.data.commodity_list
+        for (let i = 0; i < checklist.length; i++) {
+          if (checklist[i].commodity_barcode === commodityBarcode + ' ') {
+            console.log('here', checklist[i].commodity_barcode)
+            return true
+          }
+        }
+        return false
+      })
+    },
     // 添加商品，有没有，有-> 列表，没有-> 提示新增
     addGoods () {
       this.addbuttonLoading = true
-      let para = { commodity_barcode: this.mygoodsfilters.barcode }
-      searchAddCommodity(para).then((res) => {
-        var has = res.data.has
-        this.commoditytoadd = res.data.Commodity
-        for (var i = 0; i < this.commoditytoadd.length; i++) {
-          this.rollbutton.push(true)
-          this.showbutton.push(true)
-        }
+      if (this.mygoodsfilters.barcode.toString() === '') {
+        this.$alert('搜索不能为空', '提示', {confirmButtonText: '确定'})
         this.addbuttonLoading = false
-        this.hascommodity = has
-        this.hasnotcommodity = !has
-      })
+      } else {
+        if (this.checkin(this.mygoodsfilters.barcode)) {
+          this.$alert('所加商品已在商品库', '提示', {confirmButtonText: '确定'})
+        } else {
+          let para = { commodity_barcode: this.mygoodsfilters.barcode }
+          searchAddCommodity(para).then((res) => {
+            console.log(res)
+            var has = res.data.has
+            if (has) {
+              this.commoditytoadd = res.data.commodity
+              for (var i = 0; i < this.commoditytoadd.length; i++) {
+                this.rollbutton.push(true)
+                this.showbutton.push(true)
+              }
+            }
+            this.addbuttonLoading = false
+            this.hascommodity = has
+            this.hasnotcommodity = !has
+          })
+        }
+      }
     },
     // ******************************************************************** 有-> 列表 ， 新增结果是公共商品库已有所查询内容
     // 新增dialog列表 右上关闭方法
@@ -410,17 +435,20 @@ export default {
         let para = {
           commodity_barcode: this.addpriceform.commodity_barcode,
           commodity_price: this.addpriceform.new_price,
-          commodity: {}
+          commodity: null
         }
+        console.log('addprice', para)
         addMyGoods(para).then((res) => {
+          console.log('addprice', res)
           if (res.code === 0) {
             this.$message({message: '增加成功', type: 'success'})
+            this.$set(this.showbutton, this.addindex, false)
           } else {
             this.$message({message: '增加失败' + res.code, type: 'fail'})
+            this.$set(this.rollbutton, this.addindex, true)
           }
           this.changeLoading = false
           this.addprice = false
-          this.$set(this.showbutton, this.addindex, false)
         })
       } else {
         this.$alert('请输入数字', '提示', {confirmButtonText: '确定'})
@@ -541,7 +569,7 @@ export default {
       this.editForm1 = Object.assign({}, row)
       console.log(this.goodslist[index])
       this.editPic = this.goodslist[index].commodity_piclink
-      this.editForm.commodity_barcod = this.goodslist[index].commodity_barcod
+      this.editForm.commodity_barcode = this.goodslist[index].commodity_barcode
       // 将已有值填充
       this.editForm.commodity_name = this.goodslist[index].commodity_name
       this.editForm.commodity_brand = this.goodslist[index].commodity_brand
@@ -584,6 +612,7 @@ export default {
         // console.log(para)
         // console.log( this.editForm)
         editGoods(para).then((res) => {
+          console.log(res)
           if (res.code === 0) {
             this.editLoading = false
             this.editFormVisible = false

@@ -24,7 +24,7 @@
             <img :src="carditem.commodity_piclink" width="90px"/>
           </el-col>
           <el-col :span="18">
-            <div>{{index*3+cardindex}}</div>
+<!--            <div>{{index*3+cardindex}}</div>-->
             <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_barcode')}}</span><span>{{carditem.commodity_barcode}}</span></div>
             <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_name')}}</span><span>{{carditem.commodity_name}}</span></div>
             <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_specification')}}</span><span>{{carditem.commodity_specification}}</span></div>
@@ -33,7 +33,7 @@
         </el-row>
         <!--商品四种价格-->
         <div style="margin-top: 15px">
-          <el-tag class="my_tag" type="suss">{{$t('message.commodity_price_before')}} {{carditem.commodity_price}}</el-tag>
+          <el-tag class="my_tag" type="suss">{{$t('message.commodity_price_before')}} {{carditem.commodity_current_price}}</el-tag>
           <el-tag class="my_tag" type="info">{{$t('message.suggest_price')}} {{carditem.suggest_price}}</el-tag>
           <el-tag class="my_tag" type="info">{{$t('message.supplier_min_price')}} {{carditem.supplier_min_price}}</el-tag>
           <el-input style="margin-top: 15px" v-model="new_price[index*3+cardindex]" placeholder="请输入新价格"></el-input>
@@ -75,9 +75,15 @@ export default {
     getGoods () {
       this.listLoading = true
       let para = {page: 1, commodity_barcode: this.filters.commodity_barcode}
+      console.log(para)
       requestPriceChangeList(para).then((res) => {
+        console.log(res)
         if (res.code === 0) {
-          this.GoodsList = res.data.Commodity
+          this.GoodsList = res.data.commodity
+        }
+        console.log(res.data.length)
+        if (res.data.length === undefined) {
+          this.$message({message: '此商品不在售'})
         }
         this.listLoading = false
       })
