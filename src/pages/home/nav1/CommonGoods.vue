@@ -546,7 +546,6 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-
   .toolbar
     background: #f2f2f2;
     padding: 10px;

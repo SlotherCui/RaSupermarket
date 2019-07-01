@@ -80,8 +80,11 @@ const cn = {
     'relation_price_change': '联动改价',
     'put_in': '添加到商品库',
     'apply': '应用',
+    'cancel': '取消',
+    'commit': '确认',
     // 其他占位符等...
-    'please_input_bar': '请输入条码号'
+    'please_input_bar': '请输入条码号',
+    'please_input_sid_bar': '请输入商家编号'
   },
   ...zhLocale
 }
