@@ -120,10 +120,11 @@ export default {
   },
   mounted () {
     var user = sessionStorage.getItem('user')
+    console.log(user)
     if (user) {
       user = JSON.parse(user)
-      this.UserName = user.name
-      this.UserAvatar = user.headpic
+      this.UserName = user.supermarket_name
+      this.UserAvatar = user.supermarket_piclink
     }
   }
 }

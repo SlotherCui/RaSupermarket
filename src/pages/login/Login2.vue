@@ -76,6 +76,7 @@ export default {
         center: true,
         type: 'error'
       })
+      this.loading = false
     },
     Logincheck () {
       if ((this.form.Password.length !== 0) && (this.form.UserName.length !== 0)) {
@@ -103,9 +104,11 @@ export default {
           sessionStorage.setItem('user', JSON.stringify(user))
           this.$router.push({path: '/Mygoods'})
         } else if (data.code === 100) {
-          messageUtil('用户名未注册')
+          this.messageUtil('用户名未注册')
         } else if (data.code === 201) {
-          messageUtil('密码不正确')
+          this.messageUtil('密码不正确')
+        } else {
+          this.messageUtil('用户名未注册')
         }
       })
     },
