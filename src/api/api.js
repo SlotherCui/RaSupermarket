@@ -352,9 +352,8 @@ export const postRelation = params => {
 //
 // 删除/批量删除关联关系
 export const removeRelation = params => { return axios.get(`/RelationShip/remove`, { params: params }).then(res => res.data) }
-// 请求方法 get /Commodity/remove
-// // 请求体  commodity_barcode   数组例commodity_barcode:"1234,1234"
-// 商家商品删除
+// 请求方法 get /RelationShip/remove
+// // 请求体  supermarket_id   supermarket_id:"124121241212"
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息

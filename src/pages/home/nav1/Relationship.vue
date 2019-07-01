@@ -1,11 +1,10 @@
-<script src="../../../api/api.js"></script>
 <template>
   <section>
     <!--工具条-->
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.supermarket_id" placeholder="请输入商家编号" @input="change" @change="change"></el-input>
+          <el-input v-model="filters.supermarket_id" :placeholder="$t('message.please_input_sid_bar')" @input="change" @change="change"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSearch">{{$t('message.query')}}</el-button>
@@ -74,8 +73,8 @@
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+        <el-button @click.native="addFormVisible = false">{{$t('message.cancel')}}</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">{{$t('message.commit')}}</el-button>
       </div>
     </el-dialog>
   </section>
@@ -92,9 +91,7 @@ export default {
       },
       // Loading: [],
       users: [],
-
       // 页码 页数
-
       total: 0,
       page: 1,
       listLoading: false,
@@ -208,9 +205,9 @@ export default {
       // index.openLoading = true
       openRelation(para).then((res) => {
         if (res.code === 0) {
-          // 开启按钮变为关闭
+          // 按钮转换关闭开启
           this.$message({
-            message: '开启成功',
+            message: '关系切换成功',
             type: 'success'
           })
         }

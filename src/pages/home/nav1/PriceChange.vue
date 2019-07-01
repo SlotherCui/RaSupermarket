@@ -33,7 +33,7 @@
         </el-row>
         <!--商品四种价格-->
         <div style="margin-top: 15px">
-          <el-tag class="my_tag" type="suss">{{$t('message.commodity_price_before')}} {{carditem.commodity_price}}</el-tag>
+          <el-tag class="my_tag" type="suss">{{$t('message.commodity_price_before')}} {{carditem.commodity_current_price}}</el-tag>
           <el-tag class="my_tag" type="info">{{$t('message.suggest_price')}} {{carditem.suggest_price}}</el-tag>
           <el-tag class="my_tag" type="info">{{$t('message.supplier_min_price')}} {{carditem.supplier_min_price}}</el-tag>
           <el-input style="margin-top: 15px" v-model="new_price[index*3+cardindex]" placeholder="请输入新价格"></el-input>
@@ -79,7 +79,7 @@ export default {
       requestPriceChangeList(para).then((res) => {
         console.log(res)
         if (res.code === 0) {
-          this.GoodsList = res.data
+          this.GoodsList = res.data.commodity
         }
         console.log(res.data.length)
         if (res.data.length === undefined) {
