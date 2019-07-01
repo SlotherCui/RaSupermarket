@@ -14,7 +14,7 @@ axios.defaults.withCredentials = true
 
 // *************************  我的商品维护相关接口
 // 根据条码号分页获取商品 & 搜索自身商品库商品
-export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`, { params: params }).then(res => res.data) }
+export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`, { params: params }).then(res => res.data) } // OK
 // 请求方法 get /Commodity/list
 // 请求体  page 页号
 //         commodity_barcode  商品条码号   空是查询全部
@@ -34,7 +34,7 @@ export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`,
 //           commodity_piclink
 //           }]
 // toolbar 搜索公共库是否已有目标商品
-export const searchAddCommodity = params => { return axios.get(`/Commodity/searchAddCommodity`, { params: params }).then(res => res.data) }
+export const searchAddCommodity = params => { return axios.get(`/Commodity/searchAddCommodity`, { params: params }).then(res => res.data) } // OK
 // 请求方法 get /Commodity/searchAddCommodity
 // 请求体  commodity_barcode 输入的搜索商品
 // 公共商品浏览接口
@@ -81,7 +81,7 @@ export const addMyGoods = params => { return axios.post(`/Commodity/add`, params
 //
 
 // 编辑商品
-export const editGoods = params => { return axios.post(`/Commodity/edit`, params).then(res => res.data) }
+export const editGoods = params => { return axios.post(`/Commodity/edit`, params).then(res => res.data) } // OK
 // 请求方法 post /Commodity/edit
 // 请求体
 //         commodity_barcode
@@ -104,11 +104,11 @@ export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpa
 // *********************************************登录页面相关接口
 // 登录接口
 export const requestLogin = params => {
-  return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+  return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}   // OK
   ).then(res => res.data)
 }
 // 注销登录接口
-export const requestLogout = params => {
+export const requestLogout = params => {    // OK
   return axios.post('/logout', { params }).then(res => res.data)
 }
 
@@ -127,7 +127,7 @@ export const requestMock = params => {
 }
 
 // ***************************************** 销售相关接口
-// 根据销售号查询销售记录/ 返回所有销售记录
+// 根据销售号查询销售记录/ 返回所有销售记录            // ok
 export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, { params: params }).then(res => res.data) }
 // 请求方法 get /Sell/OrderList
 // 请求体  page 页号
@@ -145,7 +145,7 @@ export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, 
 //           ],
 //          total:   5    总页数方便显示
 
-// 根据销售号查询销售具体条目：
+// 根据销售号查询销售具体条目：   //ok
 export const requestOrderItem = params => { return axios.get(`/Sell/OrderItems`, { params: params }).then(res => res.data) }
 // 请求方法 get /Sell/OrderItems
 // 请求体  order_id  销售记录
@@ -161,7 +161,7 @@ export const requestOrderItem = params => { return axios.get(`/Sell/OrderItems`,
 //             commodity_current_price
 //             }]
 
-// 根据条码号获取价格
+// 根据条码号获取价格   // ok
 export const requestPriceByBarcode = params => { return axios.get(`/Sell/getPrice`, { params: params }).then(res => res.data) }
 // 请求方法 get /Sell/getPrice
 // 请求体   commodity_barcode  商品条码
@@ -172,7 +172,7 @@ export const requestPriceByBarcode = params => { return axios.get(`/Sell/getPric
 //      data     数据
 //        commodity_current_price： 17
 
-// 提交所有销售商品/ 提交销售记录
+// 提交所有销售商品/ 提交销售记录  // ok
 // export const postOrder = params => { return axios.post(`/Sell/postOrder`, { params: params }, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).then(res => res.data) }
 export const postOrder = params => { return axios.post(`/Sell/postOrder`, params).then(res => res.data) }
 // 请求方法 post /Sell/postOrder
@@ -190,7 +190,7 @@ export const postOrder = params => { return axios.post(`/Sell/postOrder`, params
 
 // **********************************改价页面相关接口
 // 根据条码查询需要改价的列表，要包含建议价，原价, 参考价
-export const requestPriceChangeList = params => {
+export const requestPriceChangeList = params => {   //ok
   return axios.get(`/Price/PriceChangeList`, { params: params }).then(res => res.data)
 }
 // 请求方法 get /Price/PriceChangeList
@@ -213,7 +213,7 @@ export const requestPriceChangeList = params => {
 //          total:   5    总页数方便显示
 
 // 单一商品改价
-export const requestSingleChange = params => { return axios.post(`/Price/SingleChange`, params).then(res => res.data) }
+export const requestSingleChange = params => { return axios.post(`/Price/SingleChange`, params).then(res => res.data) }  //0k
 // 请求方法 post /Price/SingleChange
 // 请求体 commodity_barcode:
 //        new_price:
@@ -224,7 +224,7 @@ export const requestSingleChange = params => { return axios.post(`/Price/SingleC
 //      data     数据
 
 // 组改价
-export const requestGroupChange = params => { return axios.post(`/Price/GroupChange`, params).then(res => res.data) }
+export const requestGroupChange = params => { return axios.post(`/Price/GroupChange`, params).then(res => res.data) }  // ok
 // 请求方法 post /Price/GroupChange
 // 请求体 commodity_barcode:
 //        new_price:
