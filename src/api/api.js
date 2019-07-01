@@ -23,7 +23,7 @@ export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`,
 //      codeInfo 错误信息
 //      data
 //           total
-//           [{
+//            [{
 //           commodity_barcode
 //           commodity_name
 //           commodity_specification

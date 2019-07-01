@@ -28,7 +28,7 @@
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_barcode')}}</span><span>{{props.row.commodity_barcode}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_name')}}</span><span>{{props.row.commodity_name}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_specification')}}</span><span>{{props.row.commodity_specification}}</span></div>
-              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_price')}}</span><span>{{props.row.commodity_price}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_price')}}</span><span>{{props.row.commodity_current_price}}</span></div>
               <div style="line-height: 25px"><span class="goodsItem">{{$t('message.create_time')}}</span><span>{{props.row.create_time}}</span></div>
             </el-col>
             <el-col :span="9">
@@ -47,7 +47,7 @@
       </el-table-column>
       <el-table-column prop="commodity_specification" :label="$t('message.goods_model')" width=" 120" sortable>
       </el-table-column>
-      <el-table-column prop="commodity_price" :label="$t('message.goods_price')" width=" 100" sortable>
+      <el-table-column prop="commodity_current_price" :label="$t('message.goods_price')" width=" 100" sortable>
       </el-table-column>
       <el-table-column prop="commodity_description" :label="$t('message.commodity_description')" min-width=" 180" sortable>
       </el-table-column>
@@ -333,11 +333,9 @@ export default {
       }
       this.listLoading = true
       getMyGoodListPage(para).then((res) => {
-        console.log(
-          res
-        )
+        console.log(res)
         this.total = res.data.total
-        this.goodslist = res.data.Commodity
+        this.goodslist = res.data.commodity_list
         this.listLoading = false
       })
     },
@@ -357,7 +355,7 @@ export default {
       this.listLoading = true
       getMyGoodListPage(para).then((res) => {
         this.total = res.data.total
-        this.goodslist = res.data.Commodity
+        this.goodslist = res.data.commodity_list
         this.listLoading = false
       })
       // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {

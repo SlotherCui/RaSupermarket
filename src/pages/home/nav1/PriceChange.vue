@@ -75,9 +75,15 @@ export default {
     getGoods () {
       this.listLoading = true
       let para = {page: 1, commodity_barcode: this.filters.commodity_barcode}
+      console.log(para)
       requestPriceChangeList(para).then((res) => {
+        console.log(res)
         if (res.code === 0) {
-          this.GoodsList = res.data.Commodity
+          this.GoodsList = res.data
+        }
+        console.log(res.data.length)
+        if (res.data.length === undefined) {
+          this.$message({message: '此商品不在售'})
         }
         this.listLoading = false
       })
