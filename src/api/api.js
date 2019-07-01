@@ -104,7 +104,7 @@ export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpa
 // *********************************************登录页面相关接口
 // 登录接口
 export const requestLogin = params => {
-  return axios.post('/login ', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+  return axios.post('/login', qs.stringify(params), {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
   ).then(res => res.data)
 }
 // 注销登录接口

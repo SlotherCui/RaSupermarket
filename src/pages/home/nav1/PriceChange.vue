@@ -24,7 +24,7 @@
             <img :src="carditem.commodity_piclink" width="90px"/>
           </el-col>
           <el-col :span="18">
-            <div>{{index*3+cardindex}}</div>
+<!--            <div>{{index*3+cardindex}}</div>-->
             <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_barcode')}}</span><span>{{carditem.commodity_barcode}}</span></div>
             <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_name')}}</span><span>{{carditem.commodity_name}}</span></div>
             <div style="line-height: 25px"><span class="goodsItem">{{$t('message.commodity_specification')}}</span><span>{{carditem.commodity_specification}}</span></div>
