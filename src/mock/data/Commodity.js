@@ -38,4 +38,4 @@ for (let i = 0; i < 86; i++) {
   }))
 }
 
-export { Commodity, CommodityPrice, PublicCommodity}
+export {Commodity, CommodityPrice, PublicCommodity}
