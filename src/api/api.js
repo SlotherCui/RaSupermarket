@@ -278,7 +278,7 @@ export const requestInformation = params => { return axios.get(`/Setting/getInfo
 
 //  提交修改信息
 export const postInformation = params => { return axios.post(`/Setting/postInformation`, params).then(res => res.data) }
-// 请求方法 get /Setting/getInformation
+// 请求方法 post /Setting/postInformation
 // 请求体
 //             supermarket_name: '德玛西亚超市',
 //             supermarket_tax: '110',
@@ -294,7 +294,7 @@ export const postInformation = params => { return axios.post(`/Setting/postInfor
 
 // 提交修改密码
 export const postPassword = params => { return axios.post(`/Setting/postPassword`, params).then(res => res.data) }
-// 请求方法 get /Setting/getInformation
+// 请求方法 post /Setting/postPassword
 // 请求体
 //         oldpasswd
 //         newpasswd
