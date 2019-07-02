@@ -7,7 +7,7 @@ import { Relation } from './data/Relation'
 let _Commodity = Commodity
 let _CommodityPrice = CommodityPrice
 let _Orders = Orders
-let _Relation = Relation
+let _relation = relation
 let _PublicCommodity = PublicCommodity
 export default {
   /**
@@ -409,8 +409,8 @@ export default {
     // 获取列表
     mock.onGet('/RelationShip/list').reply(config => {
       let {page, supermarket_id} = config.params
-      let mockRelation = _Relation.filter(Relation => {
-        if (supermarket_id && Relation.supermarket_id.indexOf(supermarket_id) === -1) return false
+      let mockRelation = _relation.filter(relation => {
+        if (supermarket_id && relation.supermarket_id.indexOf(supermarket_id) === -1) return false
         return true
       })
       let total = mockRelation.length
