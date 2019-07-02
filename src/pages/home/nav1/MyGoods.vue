@@ -159,7 +159,7 @@
       <span>暂无在售信息，可以添加一条</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="hasnotcommodity = false">取 消</el-button>
-        <el-button type="primary" @click="hasnotcommodity = false ;createcommodity=true">确 定</el-button>
+        <el-button type="primary" @click="tocreate">确 定</el-button>
       </span>
     </el-dialog>
 <!--      内层新建产品表单-->
@@ -178,7 +178,7 @@
 <!--          </el-upload>-->
 <!--        </el-form-item>-->
         <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
-          <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" ></el-input>
+          <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" disabled="true"></el-input>
         </el-form-item>
         <el-form-item :label="$t('message.commodity_name')" prop="commodity_name">
           <el-input v-model="createcommodityForm.commodity_name"  autocomplete="off" class="addinput" size="small" ></el-input>
@@ -495,7 +495,11 @@ export default {
       }).catch(() => {
       })
     },
-
+    tocreate () {
+      this.hasnotcommodity = false
+      this.createcommodity = true
+      this.createcommodityForm.commodity_barcode = this.mygoodsfilters.barcode
+    },
     // 新增商品填写完成后提交
     createCommoditySubmit () {
       this.addLoading = true
@@ -512,8 +516,9 @@ export default {
             commodity_description: this.createcommodityForm.commodity_description
           }
         }
-        console.log(para)
+        console.log('createCommoditySubmit', para)
         addMyGoods(para).then((res) => {
+          console.log(res)
           if (res.code === 0) {
             this.$message({message: '上传成功', type: 'success'})
             this.addLoading = false
@@ -575,11 +580,11 @@ export default {
       this.editForm.commodity_producer = this.goodslist[index].commodity_producer
       this.editForm.commodity_description = this.goodslist[index].commodity_description
       // 设置界面是否可以编辑
-      this.$set(this.editAbles, 0, this.goodslist[index].commodity_name === null)
-      this.$set(this.editAbles, 1, this.goodslist[index].commodity_brand === null)
-      this.$set(this.editAbles, 2, this.goodslist[index].commodity_specification === null)
-      this.$set(this.editAbles, 3, this.goodslist[index].commodity_producer === null)
-      this.$set(this.editAbles, 4, this.goodslist[index].commodity_description === null)
+      this.$set(this.editAbles, 0, this.goodslist[index].commodity_name === null || this.goodslist[index].commodity_name === '')
+      this.$set(this.editAbles, 1, this.goodslist[index].commodity_brand === null || this.goodslist[index].commodity_brand === '')
+      this.$set(this.editAbles, 2, this.goodslist[index].commodity_specification === null || this.goodslist[index].commodity_specification === '')
+      this.$set(this.editAbles, 3, this.goodslist[index].commodity_producer === null || this.goodslist[index].commodity_producer === '')
+      this.$set(this.editAbles, 4, this.goodslist[index].commodity_description === null || this.goodslist[index].commodity_description === '')
 
       // 提交按钮是否可以点击  如果均已上传则不可点击
       this.editSubmitAble = this.editAbles[0] || this.editAbles[1] || this.editAbles[2] || this.editAbles[3] || this.editAbles[4]
