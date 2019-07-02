@@ -4,7 +4,7 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.supermarket_id" :placeholder="$t('message.please_input_sid_bar')" @input="change" @change="change"></el-input>
+          <el-input v-model="filters.supermarket_id" placeholder='请输入超市编号' @input="change" @change="change"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSearch">{{$t('message.query')}}</el-button>
@@ -21,7 +21,7 @@
       </el-table-column>
       <!--<el-table-column type="index" width="60">-->
       <!--</el-table-column>-->
-      <el-table-column prop="supermarket_id" :label="$t('message.supermarket_id')" width="150" sortable>
+      <el-table-column prop="supermarket_id_authority" :label="$t('message.supermarket_id')" width="150" sortable>
       </el-table-column>
       <el-table-column prop="supermarket_name" :label="$t('message.supermarket_name')"  width="150" sortable>
       </el-table-column>
@@ -45,7 +45,7 @@
            <!--v-model="openVisible"-->
            <!--v-text="magic(users[scope.$index].has_related)"-->
           <!--:type="magic2(users[scope.$index].has_related)"></el-button>-->
-          <el-switch v-model="users[scope.$index].has_related" active-value="1" inactive-value="0" active-color="#13ce66" @change="handleOpen(scope.$index, scope.row)"></el-switch>
+          <el-switch prop="has_related" v-model="users[scope.$index].has_related" active-value="1" inactive-value="0" active-color="#13ce66" @change="handleOpen(scope.$index, scope.row)"></el-switch>
           <!--<el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>-->
         </template>
       </el-table-column>
@@ -60,13 +60,13 @@
     <!--新增界面-->
     <el-dialog :title="$t('message.shop_change_relation')" v-model="addFormVisible" v-show="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
       <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :inline="true">
-        <el-form-item :label="$t('message.supermarket_id')" prop="supermarket_id">
+        <el-form-item label="超市编号" prop="supermarket_id">
           <el-input v-model="addForm.supermarket_id" auto-complete="off" style="width: 280px"></el-input>
         </el-form-item>
         <el-button type="primary" @click.native="addRelation" :loading="addLoading">{{$t('message.add')}}</el-button>
       </el-form>
       <!--新增关系列表-->
-      <el-table :data="addRelationList"  style="width: 100%;" >
+      <el-table ref="addList" :data="addlist" style="width: 100%;" >
         <el-table-column prop="supermarket_id" :label="$t('message.supermarket_id')" min-width="120" >
         </el-table-column>
         <el-table-column prop="supermarket_name" :label="$t('message.supermarket_name')" width="150" >
@@ -91,6 +91,7 @@ export default {
       },
       // Loading: [],
       users: [],
+      addlist: [],
       // 页码 页数
       total: 0,
       page: 1,
@@ -125,15 +126,16 @@ export default {
       // 获取超市名称
       let para = {supermarket_id: this.addForm.supermarket_id}
       this.addLoading = true
+      console.log(para)
       requestRelationByID(para).then((res) => {
+        console.log(res)
         if (res.code === 0) {
-          var name = res.data.supermarket_name
-          console.log(name)
+          var name = res.data
           // 加入到购买表
-          this.addRelationList.push({
-            supermarket_id: this.addForm.supermarket_id,
-            supermarket_name: name
-          })
+          console.log(name)
+          console.log(this.addForm.supermarket_id)
+          let wei = {supermarket_id: this.addForm.supermarket_id, supermarket_name: name}
+          this.addlist.push(wei)
           // 输入表单重置
           this.addForm.supermarket_id = ''
         }
@@ -145,22 +147,28 @@ export default {
     addSubmit () {
       // this.$alert(this.addGoodsList, 'fsdhkjaf')
       this.addLoading = true
-      let para = {supermarket_list: this.addRelationList}
+      let para = {supermarket_id: this.addlist[0].supermarket_id}
+      console.log('输入')
       console.log(para)
       postRelation(para).then((res) => {
+        console.log('输出')
+        console.log(res)
         if (res.code === 0) {
           this.$message({message: '上传成功', type: 'success'})
           this.addFormVisible = false
+          this.addLoading = false
           this.getRelationList(1)
+          this.addlist = null
         } else {
           this.$message({message: '上传失败', type: 'fail'})
           this.addLoading = false
+          this.addlist = null
         }
       })
     },
     // 删除方法
     handleDel (index, row) {
-      this.$confirm('确认删除该商品吗?', '提示', {
+      this.$confirm('确认删除该商户吗?', '提示', {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
@@ -179,7 +187,7 @@ export default {
     // 批量删除
     batchRemove () {
       var id = this.sels.map(item => item.supermarket_id).toString()
-      this.$confirm('确认删除选中记录吗？', '提示', {
+      this.$confirm('确认删除选中商户吗？', '提示', {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
@@ -200,10 +208,11 @@ export default {
     },
     // 关联关系开启方法
     handleOpen (index, row) {
-      console.log('kaiguan', this.users[index].has_related)
-      let para = {supermarket_id: row.supermarket_id, has_related: this.users[index].has_related}
+      let para = {supermarket_id_authority: row.supermarket_id_authority, has_related: this.users[index].has_related}
       // index.openLoading = true
+      console.log(para)
       openRelation(para).then((res) => {
+        console.log(res)
         if (res.code === 0) {
           // 按钮转换关闭开启
           this.$message({
@@ -230,9 +239,10 @@ export default {
     getRelationList (page) {
       this.listLoading = true
       let para = {page: page, supermarket_id: this.filters.supermarket_id}
+      console.log(para)
       requestRelation(para).then((res) => {
-        // this.editLoading = false
-        // NProgress.done(
+        console.log('list')
+        console.log(res)
         if (res.code === 0) {
           this.users = res.data.relation
           this.total = res.data.total

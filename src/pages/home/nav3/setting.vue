@@ -71,7 +71,9 @@ export default {
     // 意见反馈上传接口
     upFeedBack () {
       let para = {feedback: this.opinionForm.feedbcak}
+      console.log('输入', para)
       postFeedBack(para).then((res) => {
+        console.log('输出', res)
         if (res.code === 0) {
           this.$message({message: '上传成功', type: 'success'})
           this.opinionVisible = false

@@ -277,8 +277,8 @@ export const requestInformation = params => { return axios.get(`/Setting/getInfo
 //             supermarket_decription: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
 
 //  提交修改信息
-export const postInformation = params => { return axios.post(`/Setting/postInformation`, params).then(res => res.data) }  //0K
-// 请求方法 get /Setting/getInformation
+export const postInformation = params => { return axios.post(`/Setting/postInformation`, params).then(res => res.data) }
+// 请求方法 post /Setting/postInformation
 // 请求体
 //             supermarket_name: '德玛西亚超市',
 //             supermarket_tax: '110',
@@ -294,7 +294,7 @@ export const postInformation = params => { return axios.post(`/Setting/postInfor
 
 // 提交修改密码
 export const postPassword = params => { return axios.post(`/Setting/postPassword`, params).then(res => res.data) }
-// 请求方法 get /Setting/getInformation
+// 请求方法 post /Setting/postPassword
 // 请求体
 //         oldpasswd
 //         newpasswd
@@ -322,7 +322,7 @@ export const requestRelation = params => {    // 0K
 //            supermarket_address
 //            supermarket_tel
 //            supermarket_decription,
-//            has_related  true/false
+//            has_related  1/0
 //            }
 //              ]
 //
@@ -332,7 +332,7 @@ export const requestRelationByID = params => {    // 0K
   return axios.get('/RelationShip/query', { params }).then(res => res.data)
 }
 // 请求方法 get /RelationShip/query
-// 请求体   supermarket_id  商品条码
+// 请求体   supermarket_id  超市id
 //
 // 返回结果
 //      code     错误码
@@ -344,11 +344,8 @@ export const postRelation = params => {   // 0K
   return axios.post('/RelationShip/post', params).then(res => res.data)
 }
 // 请求方法 post /RelationShip/post
-// 请求体 supermarket_list:
-//       [{supermarket_id
-//         supermarket_name
-//       }]
-//
+// 请求体
+//       supermarket_id
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
@@ -363,7 +360,8 @@ export const removeRelation = params => { return axios.get(`/RelationShip/remove
 //      codeInfo 错误信息
 //      data
 // 关联关系开启
-export const openRelation = params => { return axios.get(`/RelationShip/openrelation`, { params: params }).then(res => res.data) }  // 0K
+
+export const openRelation = params => { return axios.post(`/RelationShip/openrelation`, params).then(res => res.data) }
 // 请求方法 post /RelationShip/openrelation
 // 请求体
 //       supermarket_id

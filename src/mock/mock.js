@@ -2,7 +2,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { Commodity, CommodityPrice, PublicCommodity} from './data/Commodity'
 import { Orders } from './data/Order'
-import { Relation } from './data/Relation'
+import { relation } from './data/Relation'
 
 let _Commodity = Commodity
 let _CommodityPrice = CommodityPrice
@@ -451,7 +451,6 @@ export default {
     mock.onPost('/RelationShip/post').reply(config => {
       // 获取请求体
       let supermarket_list = JSON.parse(config.data)
-      console.log(supermarket_list)
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
@@ -463,9 +462,10 @@ export default {
       })
     })
     // 开启请求
-    mock.onGet('/RelationShip/openrelation').reply(config => {
-      let {supermarket_id} = config.params
-      console.log('mock_close', supermarket_id)
+    mock.onPost('/RelationShip/openrelation').reply(config => {
+      let supermarket_list = JSON.parse(config.data)
+      console.log('mock_close', supermarket_list)
+      console.log(config.data)
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
