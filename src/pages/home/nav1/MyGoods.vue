@@ -10,7 +10,7 @@
           <el-button type="primary" @click="searchCommodity">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="addGoods" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>
+          <el-button type="primary" @click="checkin" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -362,49 +362,47 @@ export default {
       //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
       // }
     },
-    checkin (commodityBarcode) {
-      let para = {
-        page: 1,
-        commodity_barcode: commodityBarcode
-      }
-      getMyGoodListPage(para).then((res) => {
-        const checklist = res.data.commodity_list
-        for (let i = 0; i < checklist.length; i++) {
-          if (checklist[i].commodity_barcode === commodityBarcode + ' ') {
-            console.log('here', checklist[i].commodity_barcode)
-            return true
-          }
-        }
-        return false
-      })
-    },
-    // 添加商品，有没有，有-> 列表，没有-> 提示新增
-    addGoods () {
+    checkin () {
       this.addbuttonLoading = true
       if (this.mygoodsfilters.barcode.toString() === '') {
         this.$alert('搜索不能为空', '提示', {confirmButtonText: '确定'})
         this.addbuttonLoading = false
       } else {
-        if (this.checkin(this.mygoodsfilters.barcode)) {
-          this.$alert('所加商品已在商品库', '提示', {confirmButtonText: '确定'})
-        } else {
-          let para = { commodity_barcode: this.mygoodsfilters.barcode }
-          searchAddCommodity(para).then((res) => {
-            console.log(res)
-            var has = res.data.has
-            if (has) {
-              this.commoditytoadd = res.data.commodity
-              for (var i = 0; i < this.commoditytoadd.length; i++) {
-                this.rollbutton.push(true)
-                this.showbutton.push(true)
-              }
-            }
-            this.addbuttonLoading = false
-            this.hascommodity = has
-            this.hasnotcommodity = !has
-          })
+        let para = {
+          page: 1,
+          commodity_barcode: this.mygoodsfilters.barcode.toString()
         }
+        getMyGoodListPage(para).then((res) => {
+          const checklist = res.data.commodity_list
+          for (let i = 0; i < checklist.length; i++) {
+            if (checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString() + ' ') {
+              console.log('here', checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString() + ' ')
+              this.$alert('商品已在商品库', '提示', {confirmButtonText: '确定'})
+              this.addbuttonLoading = false
+              return
+            }
+          }
+          this.addGoods()
+        })
       }
+    },
+    // 添加商品，有没有，有-> 列表，没有-> 提示新增
+    addGoods () {
+      let para = { commodity_barcode: this.mygoodsfilters.barcode }
+      searchAddCommodity(para).then((res) => {
+        console.log(res)
+        var has = res.data.has
+        if (has) {
+          this.commoditytoadd = res.data.commodity
+          for (var i = 0; i < this.commoditytoadd.length; i++) {
+            this.rollbutton.push(true)
+            this.showbutton.push(true)
+          }
+        }
+        this.addbuttonLoading = false
+        this.hascommodity = has
+        this.hasnotcommodity = !has
+      })
     },
     // ******************************************************************** 有-> 列表 ， 新增结果是公共商品库已有所查询内容
     // 新增dialog列表 右上关闭方法
