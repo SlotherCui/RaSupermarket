@@ -316,7 +316,7 @@ export const requestRelation = params => {
 //      code     错误码
 //      codeInfo 错误信息
 //      data     数据
-//        Relation  [
+//        relation  [
 //           { supermarket_id
 //            supermarket_name
 //            supermarket_address
@@ -325,6 +325,8 @@ export const requestRelation = params => {
 //            has_related  true/false
 //            }
 //              ]
+//
+//            total
 // 通过编号查找商家
 export const requestRelationByID = params => {
   return axios.get('/RelationShip/query', { params }).then(res => res.data)
