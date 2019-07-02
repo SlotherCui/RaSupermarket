@@ -95,7 +95,6 @@ export const editGoods = params => { return axios.post(`/Commodity/edit`, params
 //      codeInfo 错误信息
 //      data
 
-export const batchRemoveMyGoods = params => { return axios.get(`/MyGoods/batchremove`, { params: params }).then(res => res.data) }
 
 // *********************************************公共商品库界面
 // 获取供应商商品列表
@@ -235,6 +234,9 @@ export const requestGroupChange = params => { return axios.post(`/Price/GroupCha
 //      data     数据
 // 设置界面相关接口
 
+
+
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // 联动改价
 export const requestRelationChange = params => { return axios.post(`/Price/RelationChange`, params).then(res => res.data) }
 // 请求方法 post /Price/RelationChange
