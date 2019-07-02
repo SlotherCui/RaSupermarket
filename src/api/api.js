@@ -250,7 +250,7 @@ export const requestRelationChange = params => { return axios.post(`/Price/Relat
 
 // **********************************  设置相关接口
 // 意见反馈接口
-export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, params).then(res => res.data) }
+export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, params).then(res => res.data) }    // 0K
 // 请求方法 POST /Setting/FeedBack
 // 请求体  feedback
 //
@@ -260,7 +260,7 @@ export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, p
 //      data     数据
 
 // 查询已有信息接口
-export const requestInformation = params => { return axios.get(`/Setting/getInformation`, { params: params }).then(res => res.data) }
+export const requestInformation = params => { return axios.get(`/Setting/getInformation`, { params: params }).then(res => res.data) }   // OK
 // 请求方法 get /Setting/getInformation
 // 请求体
 //
@@ -277,7 +277,7 @@ export const requestInformation = params => { return axios.get(`/Setting/getInfo
 //             supermarket_decription: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
 
 //  提交修改信息
-export const postInformation = params => { return axios.post(`/Setting/postInformation`, params).then(res => res.data) }
+export const postInformation = params => { return axios.post(`/Setting/postInformation`, params).then(res => res.data) }  //0K
 // 请求方法 get /Setting/getInformation
 // 请求体
 //             supermarket_name: '德玛西亚超市',
@@ -305,7 +305,7 @@ export const postPassword = params => { return axios.post(`/Setting/postPassword
 
 // ******************************************改价关系界面接口
 // 关系列表获取
-export const requestRelation = params => {
+export const requestRelation = params => {    // 0K
   return axios.get('/RelationShip/list', { params }).then(res => res.data)
 }
 // 请求方法 get /RelationShip/list
@@ -328,7 +328,7 @@ export const requestRelation = params => {
 //
 //            total
 // 通过编号查找商家
-export const requestRelationByID = params => {
+export const requestRelationByID = params => {    // 0K
   return axios.get('/RelationShip/query', { params }).then(res => res.data)
 }
 // 请求方法 get /RelationShip/query
@@ -340,7 +340,7 @@ export const requestRelationByID = params => {
 //      data     数据
 //        supermarket_name： 德玛西亚超市
 // 提交关联关系
-export const postRelation = params => {
+export const postRelation = params => {   // 0K
   return axios.post('/RelationShip/post', params).then(res => res.data)
 }
 // 请求方法 post /RelationShip/post
@@ -363,7 +363,7 @@ export const removeRelation = params => { return axios.get(`/RelationShip/remove
 //      codeInfo 错误信息
 //      data
 // 关联关系开启
-export const openRelation = params => { return axios.get(`/RelationShip/openrelation`, { params: params }).then(res => res.data) }
+export const openRelation = params => { return axios.get(`/RelationShip/openrelation`, { params: params }).then(res => res.data) }  // 0K
 // 请求方法 post /RelationShip/openrelation
 // 请求体
 //       supermarket_id
