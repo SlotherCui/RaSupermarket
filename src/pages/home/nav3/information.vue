@@ -120,7 +120,7 @@
   }
 </style>
 <script>
-import { requestInformation, postInformation, postPassword} from '../../../api/api'
+import {requestInformation, postInformation, postPassword} from '../../../api/api'
 import axios from 'axios'
 export default {
   data () {
@@ -211,7 +211,11 @@ export default {
       this.editVisible = true
       this.inputDisabled = true
       this.setvisible = false
+      console.log('输入')
+      console.log(this.form)
       postInformation(this.form).then((res) => {
+        console.log('输出')
+        console.log(res)
         if (res.code === 0) {
           this.$message({message: '保存成功', type: 'success'})
         } else {
