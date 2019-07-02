@@ -53,7 +53,7 @@
 
     <!--工具条-->
     <el-col :span="24" class="toolbar">
-      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length!==0">{{$t('message.batchDelete')}}</el-button>
+      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">{{$t('message.batchDelete')}}</el-button>
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" :current-page="page" style="float:right;">
       </el-pagination>
     </el-col>
@@ -167,33 +167,40 @@ export default {
       })
     },
     // 删除方法
-    handleDel (index, row) {
-      this.$confirm('确认删除该商户吗?', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        let para = { supermarket_id: [row.supermarket_id] }
-        removeRelation(para).then((res) => {
-          this.listLoading = false
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.getRelationList(1)
-        })
-      }).catch(() => {
-      })
+    // handleDel (index, row) {
+    //   this.$confirm('确认删除该商户吗?', '提示', {
+    //     type: 'warning'
+    //   }).then(() => {
+    //     this.listLoading = true
+    //     let para = { supermarket_id: [row.supermarket_id] }
+    //     removeRelation(para).then((res) => {
+    //       this.listLoading = false
+    //       this.$message({
+    //         message: '删除成功',
+    //         type: 'success'
+    //       })
+    //       this.getRelationList(1)
+    //     })
+    //   }).catch(() => {
+    //   })
+    // },
+    // 左侧选中
+    selsChange (sels) {
+      this.sels = sels
     },
     // 批量删除
     batchRemove () {
-      var id = this.sels.map(item => item.supermarket_id).toString()
+      console.log('sel', this.sels)
+      var id = this.sels.map(item => item.supermarket_id_authority)
       this.$confirm('确认删除选中商户吗？', '提示', {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
         // NProgress.start();
         let para = { supermarket_id: id }
+        console.log('输入', para)
         removeRelation(para).then((res) => {
+          console.log('输出', res)
           this.listLoading = false
           // NProgress.done();
           this.$message({
