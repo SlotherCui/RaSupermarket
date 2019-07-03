@@ -59,7 +59,7 @@
     </el-col>
     <!--新增界面-->
     <el-dialog :title="$t('message.shop_change_relation')" v-model="addFormVisible" v-show="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
-      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :inline="true">
+      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :inline="true" v-model="addVisible" v-show="addVisible" :visible.sync="addVisible">
         <el-form-item label="超市编号" prop="supermarket_id">
           <el-input v-model="addForm.supermarket_id" auto-complete="off" style="width: 280px"></el-input>
         </el-form-item>
@@ -73,7 +73,7 @@
         </el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addFormVisible = false">{{$t('message.cancel')}}</el-button>
+        <el-button  @click="clearAddForm">{{$t('message.cancel')}}</el-button>
         <el-button type="primary" @click.native="addSubmit" :loading="addLoading">{{$t('message.commit')}}</el-button>
       </div>
     </el-dialog>
@@ -101,6 +101,7 @@ export default {
       addLoading: false,
       openLoading: false,
       openVisible: true,
+      addVisible: true,
       addFormRules: {
         supermarket_id: [
           { required: true, message: '请输入超市编号', trigger: 'blur' }
@@ -119,29 +120,40 @@ export default {
       this.openVisible = false
     },
     handleAdd () {
+      this.addVisible = true
       this.addFormVisible = true
     },
     // 添加关联超市
     addRelation () {
       // 获取超市名称
-      let para = {supermarket_id: this.addForm.supermarket_id}
-      this.addLoading = true
-      console.log(para)
-      requestRelationByID(para).then((res) => {
-        console.log(res)
-        if (res.code === 0) {
-          var name = res.data
-          // 加入到购买表
-          console.log(name)
-          console.log(this.addForm.supermarket_id)
-          let wei = {supermarket_id: this.addForm.supermarket_id, supermarket_name: name}
-          this.addlist.push(wei)
-          // 输入表单重置
-          this.addForm.supermarket_id = ''
-        }
-        // 关闭加载
-        this.addLoading = false
-      })
+      if (this.addForm.supermarket_id === '') {
+        this.$message({message: '超市编号不能为空', type: 'fail'})
+      } else {
+        let para = {supermarket_id: this.addForm.supermarket_id}
+        this.addLoading = true
+        console.log(para)
+        requestRelationByID(para).then((res) => {
+          console.log(res)
+          if (res.code === 0) {
+            if (res.data === null) {
+              this.$message({message: '没有该商家，或已经添加关联关系', type: 'fail'})
+              this.addLoading = false
+              this.addForm.supermarket_id = ''
+            } else {
+              var name = res.data
+              // 加入到购买表
+              console.log(name)
+              console.log(this.addForm.supermarket_id)
+
+              let wei = {supermarket_id: this.addForm.supermarket_id, supermarket_name: name}
+              this.addlist.push(wei)
+              this.addVisible = false
+            }
+          }
+          // 关闭加载
+          this.addLoading = false
+        })
+      }
     },
     // 提交添加确认
     addSubmit () {
@@ -159,12 +171,20 @@ export default {
           this.addLoading = false
           this.getRelationList(1)
           this.addlist = null
+          this.addForm = ''
         } else {
           this.$message({message: '上传失败', type: 'fail'})
           this.addLoading = false
           this.addlist = null
+          this.addForm = ''
         }
       })
+
+    },
+    // 取消按钮点击后
+    clearAddForm () {
+      this.addlist = []
+      this.addFormVisible = false
     },
     // 删除方法
     // handleDel (index, row) {
