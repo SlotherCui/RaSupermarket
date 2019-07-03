@@ -26,6 +26,9 @@ import {requestColumnChart, requestLineChart} from '../../../api/api'
 export default {
   data () {
     return {
+      commodity_name: ['', '', '', '', '', '', '', '', '', ''],
+      sales_number: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      sales_volume: [0, 0, 0, 0, 0, 0, 0],
       chartColumn: null,
       // chartBar: null,
       chartLine: null,
@@ -35,28 +38,34 @@ export default {
 
   methods: {
     drawColumnChart () {
+      this.chartColumn = echarts.init(document.getElementById('chartColumn'))
+      this.chartColumn.setOption({
+        title: {text: '销售量TOP10'},
+        tooltip: {},
+        xAxis: {
+          type: 'category',
+          data: this.commodity_name
+          // 商品名称
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          // name: '销量',
+          type: 'bar',
+          data: this.sales_number
+          // 商品数目
+        }]
+      })
       let para = {}
       requestColumnChart(para).then((res) => {
         console.log('drawColumnChart', res)
-        this.chartColumn = echarts.init(document.getElementById('chartColumn'))
-        this.chartColumn.setOption({
-          title: { text: '销售量TOP10' },
-          tooltip: {},
-          xAxis: {
-            type: 'category',
-            data: res.data.commodity_name
-            // 商品名称
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [{
-            // name: '销量',
-            type: 'bar',
-            data: res.data.sales_number
-            // 商品数目
-          }]
-        })
+        if (res.code === 0) {
+          this.commodity_name = res.data.commodity_name
+          this.sales_number = res.data.sales_number
+        } else {
+          this.$message({message: '加载失败' + res.code, type: 'fail'})
+        }
       })
     },
     // drawBarChart () {
@@ -104,55 +113,61 @@ export default {
     //   })
     // },
     drawLineChart () {
+      this.chartLine = echarts.init(document.getElementById('chartLine'))
+      this.chartLine.setOption({
+        title: {
+          text: '销售额'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['销售额']
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '销售额',
+            type: 'line',
+            stack: '总量',
+            data: this.sales_volume
+          }
+          // {
+          //   name: '联盟广告',
+          //   type: 'line',
+          //   stack: '总量',
+          //   data: [220, 182, 191, 234, 290, 330, 310]
+          // },
+          // {
+          //   name: '搜索引擎',
+          //   type: 'line',
+          //   stack: '总量',
+          //   data: [820, 932, 901, 934, 1290, 1330, 1320]
+          // }
+        ]
+      })
       let para = {}
       requestLineChart(para).then((res) => {
         console.log('drawLineChart', res)
-        this.chartLine = echarts.init(document.getElementById('chartLine'))
-        this.chartLine.setOption({
-          title: {
-            text: '销售额'
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          legend: {
-            data: ['销售额']
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [
-            {
-              name: '销售额',
-              type: 'line',
-              stack: '总量',
-              data: res.data.sales_volume
-            }
-            // {
-            //   name: '联盟广告',
-            //   type: 'line',
-            //   stack: '总量',
-            //   data: [220, 182, 191, 234, 290, 330, 310]
-            // },
-            // {
-            //   name: '搜索引擎',
-            //   type: 'line',
-            //   stack: '总量',
-            //   data: [820, 932, 901, 934, 1290, 1330, 1320]
-            // }
-          ]
-        })
+        if (res.code === 0) {
+
+          this.sales_volume = res.data.sales_volume
+        } else {
+          this.$message({message: '加载失败' + res.code, type: 'fail'})
+        }
       })
     },
     // drawPieChart () {
