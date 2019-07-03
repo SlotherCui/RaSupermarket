@@ -456,44 +456,44 @@ export default {
     // ************************************************************** 删除 + 批量删除 同一接口
     // 右侧删除按钮
     handleDel (index, row) {
-      this.$confirm('确认删除该商品吗?', '提示', {
-        type: 'warning'
-      }).then(() => {
-        this.listLoading = true
-        let para = {commodity_barcode: [row.commodity_barcode]}
-        removeMyGoods(para).then((res) => {
-          this.listLoading = false
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
-          this.regetGoods()
-        })
-      }).catch(() => {
-      })
+      let para = {commodity_barcode: [row.commodity_barcode]}
+      this.doRemove(para)
     },
     // 左侧选中
     selsChange (sels) {
       this.sels = sels
     },
-    // 批量删除
-    batchRemove () {
-      var commodityBarcode = this.sels.map(item => item.commodity_barcode)
-      this.$confirm('确认删除选中记录吗？', '提示', {
+    doRemove (para) {
+      this.$confirm('确认删除该商品吗?', '提示', {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
-        let para = { commodity_barcode: commodityBarcode }
+
+        console.log(para)
         removeMyGoods(para).then((res) => {
+          console.log(res)
           this.listLoading = false
-          this.$message({
-            message: '删除成功',
-            type: 'success'
-          })
+          if (res.code === 0) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: '删除失败',
+              type: 'fail'
+            })
+          }
           this.regetGoods()
         })
       }).catch(() => {
       })
+    },
+    // 批量删除
+    batchRemove () {
+      var commodityBarcode = this.sels.map(item => item.commodity_barcode)
+      let para = {commodity_barcode: commodityBarcode}
+      this.doRemove(para)
     },
     tocreate () {
       this.hasnotcommodity = false

@@ -455,7 +455,7 @@ export default {
     getGoods () {
       let para = {
         page: this.page,
-        barcode: this.filters.barcode
+        commodity_barcode: this.filters.barcode
       }
       this.listLoading = true
       // NProgress.start();
