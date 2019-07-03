@@ -255,21 +255,19 @@ export default {
     getOrderList (page) {
       this.listLoading = true
       let para = {page: page, order_id: this.filters.order_id}
+      console.log(para)
       requestOrderList(para).then((res) => {
         // this.editLoading = false
         // NProgress.done(
         console.log('销售记录', res)
         if (res.code === 0) {
           this.sells = res.data.orders
+
+          // 转换时间戳
           for (let i = 0; i < this.sells.length; i++) {
-            this.sells[i].order_create_time = this.sells[i].order_create_time.substring(0, 19).replace('T', ' ')
+            this.sells[i].order_create_time = util.formatDate.format(new Date(this.sells[i].order_create_time), 'yyyy-MM-dd hh:mm:ss')
             this.sells[i].infors = []
           }
-          // 转换时间戳
-          // for (let i = 0; i < this.sells.length; i++) {
-          //   this.sells[i].order_create_time = util.formatDate.format(new Date(this.sells[i].order_create_time), 'yyyy-MM-dd hh:mm:ss')
-          //   this.sells[i].infors = []
-          // }
           console.log(this.sells)
           this.total = res.data.total
         }

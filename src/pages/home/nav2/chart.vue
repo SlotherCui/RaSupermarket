@@ -105,7 +105,8 @@ export default {
     // },
     drawLineChart () {
       let para = {}
-      requestColumnChart(para).then((res) => {
+      requestLineChart(para).then((res) => {
+        console.log('drawLineChart', res)
         this.chartLine = echarts.init(document.getElementById('chartLine'))
         this.chartLine.setOption({
           title: {

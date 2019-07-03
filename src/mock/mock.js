@@ -500,7 +500,22 @@ export default {
             code: 0,
             codeInfo: '成功',
             data: {
-              commodity_name: '德玛西亚超市'
+              commodity_name: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
+              sales_number: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+            }}])
+        }, 1000)
+      })
+    })
+    // chart
+    mock.onGet('/chart/linechart').reply(config => {
+      // 获取请求体
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              sales_volume: [10, 9, 8, 7, 6, 5, 4]
             }}])
         }, 1000)
       })
