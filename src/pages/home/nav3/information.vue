@@ -227,7 +227,9 @@ export default {
     },
     // 提交密码修改
     PasswdChange () {
+      console.log('请求', this.changepasswdForm)
       postPassword(this.changepasswdForm).then((res) => {
+        console.log('返回', res)
         if (res.code === 0) {
           this.$message({message: '修改成功', type: 'success'})
         } else {

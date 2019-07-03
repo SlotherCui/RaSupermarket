@@ -53,8 +53,8 @@ export const searchAddCommodity = params => { return axios.get(`/Commodity/searc
 //           commodity_piclink
 //           commodity_description
 //           }]
-export const removeMyGoods = params => { return axios.get(`/Commodity/remove`, { params: params }).then(res => res.data) }
-// 请求方法 get /Commodity/remove
+export const removeMyGoods = params => { return axios.post(`/Commodity/remove`,  params ).then(res => res.data) }
+// 请求方法 post /Commodity/remove
 // 请求体  commodity_barcode
 // 商家商品删除
 // 返回结果
@@ -98,7 +98,16 @@ export const editGoods = params => { return axios.post(`/Commodity/edit`, params
 
 // *********************************************公共商品库界面
 // 获取供应商商品列表
-export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }).then(res => res.data) }
+
+export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }) }
+// 请求方法 post /Commodity/edit
+// 请求体
+//         commodity_barcode
+//         page
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data
 
 // *********************************************登录页面相关接口
 // 登录接口
@@ -250,7 +259,7 @@ export const requestRelationChange = params => { return axios.post(`/Price/Relat
 
 // **********************************  设置相关接口
 // 意见反馈接口
-export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, params).then(res => res.data) }
+export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, params).then(res => res.data) }    // 0K
 // 请求方法 POST /Setting/FeedBack
 // 请求体  feedback
 //
@@ -260,7 +269,7 @@ export const postFeedBack = params => { return axios.post(`/Setting/FeedBack`, p
 //      data     数据
 
 // 查询已有信息接口
-export const requestInformation = params => { return axios.get(`/Setting/getInformation`, { params: params }).then(res => res.data) }
+export const requestInformation = params => { return axios.get(`/Setting/getInformation`, { params: params }).then(res => res.data) }   // OK
 // 请求方法 get /Setting/getInformation
 // 请求体
 //
@@ -305,7 +314,7 @@ export const postPassword = params => { return axios.post(`/Setting/postPassword
 
 // ******************************************改价关系界面接口
 // 关系列表获取
-export const requestRelation = params => {
+export const requestRelation = params => {    // 0K
   return axios.get('/RelationShip/list', { params }).then(res => res.data)
 }
 // 请求方法 get /RelationShip/list
@@ -328,7 +337,7 @@ export const requestRelation = params => {
 //
 //            total
 // 通过编号查找商家
-export const requestRelationByID = params => {
+export const requestRelationByID = params => {    // 0K
   return axios.get('/RelationShip/query', { params }).then(res => res.data)
 }
 // 请求方法 get /RelationShip/query
@@ -340,7 +349,7 @@ export const requestRelationByID = params => {
 //      data     数据
 //        supermarket_name： 德玛西亚超市
 // 提交关联关系
-export const postRelation = params => {
+export const postRelation = params => {   // 0K
   return axios.post('/RelationShip/post', params).then(res => res.data)
 }
 // 请求方法 post /RelationShip/post
@@ -352,17 +361,15 @@ export const postRelation = params => {
 //      data     数据
 //
 // 删除/批量删除关联关系
-export const removeRelation = params => { return axios.get(`/RelationShip/remove`, { params: params }).then(res => res.data) }
-// 请求方法 get /RelationShip/remove
-// // 请求体  supermarket_id  {  supermarket_id:"124121241212"
-//                               supermarket_id:"124121241212"
-//                               supermarket_id:"124121241212"
-//                                                            }
+
+export const removeRelation = params => { return axios.post(`/RelationShip/remove`, params).then(res => res.data) }
+// 请求方法 post /RelationShip/remove
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
 //      data
 // 关联关系开启
+
 export const openRelation = params => { return axios.post(`/RelationShip/openrelation`, params).then(res => res.data) }
 // 请求方法 post /RelationShip/openrelation
 // 请求体
