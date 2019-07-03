@@ -378,3 +378,25 @@ export const openRelation = params => { return axios.post(`/RelationShip/openrel
 //      code     错误码
 //      codeInfo 错误信息
 //      data     数据
+
+// chart  ColumnChart
+export const requestColumnChart = params => { return axios.get(`/chart/columnchart`, { pacrams: params }).then(res => res.data) }
+// 请求方法 get /chart/columnchart
+// 请求体
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//        commodity_name []  商品名称
+//        sales_number []     销售量
+// chart  LineChart
+export const requestLineChart = params => { return axios.get(`/chart/linechart`, { pacrams: params }).then(res => res.data) }
+// 请求方法 get /chart/linechart
+// 请求体
+//
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//        sales_volume [] 销售额

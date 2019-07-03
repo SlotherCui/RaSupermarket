@@ -375,8 +375,8 @@ export default {
         getMyGoodListPage(para).then((res) => {
           const checklist = res.data.commodity_list
           for (let i = 0; i < checklist.length; i++) {
-            if (checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString() + ' ') {
-              console.log('here', checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString() + ' ')
+            if (checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString()) {
+              console.log('here', checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString())
               this.$alert('商品已在商品库', '提示', {confirmButtonText: '确定'})
               this.addbuttonLoading = false
               return
