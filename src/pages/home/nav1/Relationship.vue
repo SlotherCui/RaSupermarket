@@ -116,9 +116,6 @@ export default {
     }
   },
   methods: {
-    handleOpenVisible () {
-      this.openVisible = false
-    },
     handleAdd () {
       this.addVisible = true
       this.addFormVisible = true
@@ -144,7 +141,6 @@ export default {
               // 加入到购买表
               console.log(name)
               console.log(this.addForm.supermarket_id)
-
               let wei = {supermarket_id: this.addForm.supermarket_id, supermarket_name: name}
               this.addlist.push(wei)
               this.addVisible = false
@@ -171,20 +167,20 @@ export default {
           this.addLoading = false
           this.getRelationList(1)
           this.addlist = null
-          this.addForm = ''
+          this.addForm.supermarket_id = ''
         } else {
           this.$message({message: '上传失败', type: 'fail'})
           this.addLoading = false
           this.addlist = null
-          this.addForm = ''
+          this.addForm.supermarket_id = ''
         }
       })
-
     },
     // 取消按钮点击后
     clearAddForm () {
       this.addlist = []
       this.addFormVisible = false
+      this.addForm.supermarket_id = ''
     },
     // 删除方法
     // handleDel (index, row) {
@@ -246,6 +242,11 @@ export default {
             message: '关系切换成功',
             type: 'success'
           })
+        } else {
+          this.$message({
+            message: '关系切换失败',
+            type: 'fail'
+          })
         }
         // 关闭加载
         // this.openLoading = false
@@ -258,7 +259,7 @@ export default {
       this.filters.supermarket_id = ''
     },
     // 翻页方法
-    handleCurrentChange (val) {
+    handleCurrentChange () {
       this.listLoading = true
       this.getRelationList(this.page)
     },
