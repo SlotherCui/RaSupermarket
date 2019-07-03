@@ -18,7 +18,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="goodslist"  style="width: 100%;" >
+    <el-table :data="goods"  style="width: 100%;" >
       <el-table-column type="expand" width="50">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">

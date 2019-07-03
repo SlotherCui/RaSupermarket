@@ -98,6 +98,7 @@ export const editGoods = params => { return axios.post(`/Commodity/edit`, params
 
 // *********************************************公共商品库界面
 // 获取供应商商品列表
+
 export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }) }
 // 请求方法 post /Commodity/edit
 // 请求体
@@ -107,7 +108,6 @@ export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpa
 //      code     错误码
 //      codeInfo 错误信息
 //      data
-
 
 // *********************************************登录页面相关接口
 // 登录接口
@@ -361,9 +361,9 @@ export const postRelation = params => {   // 0K
 //      data     数据
 //
 // 删除/批量删除关联关系
+
 export const removeRelation = params => { return axios.post(`/RelationShip/remove`, params).then(res => res.data) }
 // 请求方法 post /RelationShip/remove
-// // 请求体  supermarket_id   supermarket_id:"124121241212"
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
