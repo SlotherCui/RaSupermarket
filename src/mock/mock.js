@@ -491,5 +491,19 @@ export default {
         }, 1000)
       })
     })
+    // chart
+    mock.onGet('/chart/columnchart').reply(config => {
+      // 获取请求体
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 0,
+            codeInfo: '成功',
+            data: {
+              commodity_name: '德玛西亚超市'
+            }}])
+        }, 1000)
+      })
+    })
   }
 }
