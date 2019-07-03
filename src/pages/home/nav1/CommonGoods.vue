@@ -18,7 +18,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="goodslist"  style="width: 100%;" >
+    <el-table :data="goods"  style="width: 100%;" >
       <el-table-column type="expand" width="50">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -455,7 +455,7 @@ export default {
     getGoods () {
       let para = {
         page: this.page,
-        barcode: this.filters.barcode
+        commodity_barcode: this.filters.barcode
       }
       this.listLoading = true
       // NProgress.start();
