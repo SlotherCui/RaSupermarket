@@ -63,6 +63,7 @@ export default {
         commodity_barcode: ''
       },
       GoodsList: [],
+      GoodsListTest: [],
       // 输入的新价格
       new_price: ['', '', '', '', '', '', '', '', ''],
 
@@ -81,8 +82,10 @@ export default {
         if (res.code === 0) {
           this.GoodsList = res.data.commodity
         }
-        console.log(res.data.length)
-        if (res.data.length === undefined) {
+        this.GoodsListTest = res.data.commodity
+        console.log('here')
+        console.log(this.GoodsListTest)
+        if (this.GoodsListTest.length === 0) {
           this.$message({message: '此商品不在售'})
         }
         this.listLoading = false
@@ -123,7 +126,9 @@ export default {
       this.changeLoading = true
       console.log(commodity_barcode)
       let para = {commodity_barcode: commodity_barcode, new_price: this.new_price[index]}
+      console.log(para)
       requestRelationChange(para).then((res) => {
+        console.log(res)
         if (res.code === 0) {
           this.$message({message: '修改成功', type: 'success'})
           this.getGoods()

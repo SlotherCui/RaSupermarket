@@ -26,47 +26,47 @@
                 <img src="/static/good.jpg" width="100px"/>
             </el-form-item>
             <el-form-item :label="$t('message.commodity_barcode')" >
-              <span>{{ props.row.barcode }}</span>
+              <span>{{ goods.commodity_barcode }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.commodity_name')" >
-              <span>{{ props.row.name }}</span>
+              <span>{{ goods.commodity_name }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.commodity_price')">
-              <span>{{ props.row.price }}</span>
+              <span>{{ goods.commodity_price }}</span>
               <span>元</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_brand')" >
-              <span>{{ props.row.brand }}</span>
+              <span>{{ goods.goods_brand }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_supplier_id')" >
-              <span>{{ props.row.supplier }}</span>
+              <span>{{ goods.commodity_producer }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_model')">
-              <span>{{ props.row.model }}</span>
+              <span>{{ goods.commodity_specification }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_producer')" >
-              <span>{{ props.row.producer }}</span>
+              <span>{{ goods.commodity_producer }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_update_time')">
-              <span>{{ props.row.date }}</span>
+              <span>{{ goods.commodity_barcode }}</span>
             </el-form-item>
             <el-form-item :label="$t('message.goods_describe')" >
-              <span>{{ props.row.desc }}</span>
+              <span>{{ goods.commodity_description }}</span>
             </el-form-item>
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column prop="barcode" :label="$t('message.goods_barcode')" width="120" sortable>
+      <el-table-column prop="commodity_barcode" :label="$t('message.goods_barcode')" width="120" sortable>
       </el-table-column>
-      <el-table-column prop="supplier" :label="$t('message.goods_supplier_id')" width="130" sortable>
+      <el-table-column prop="commodity_producer" :label="$t('message.goods_supplier_id')" width="130" sortable>
       </el-table-column>
-      <el-table-column prop="name" :label="$t('message.goods_name')" width="150"  sortable>
+      <el-table-column prop="commodity_name" :label="$t('message.goods_name')" width="150"  sortable>
       </el-table-column>
-      <el-table-column prop="model" :label="$t('message.goods_model')" width="100"  sortable>
+      <el-table-column prop="commodity_specification" :label="$t('message.goods_model')" width="100"  sortable>
       </el-table-column>
-      <el-table-column prop="price" :label="$t('message.goods_price')" width="80" sortable>
+      <el-table-column prop="commodity_current_price" :label="$t('message.goods_price')" width="80" sortable>
       </el-table-column>
-      <el-table-column prop="desc" :label="$t('message.goods_describe')" min_width="200" sortable>
+      <el-table-column prop="commodity_description" :label="$t('message.goods_describe')" min_width="200" sortable>
       </el-table-column>
       <!--  <el-table-column :label="$t('message.operation')" width="250">
           <template slot-scope="scope">
@@ -194,176 +194,13 @@ export default {
     return {
       imageUrl: '/static/good.jpg',
       filters: {
-        baocode: ''
+        barcode: ''
       },
       goods: [],
       total: 0,
       page: 1,
       listLoading: false,
       sels: [], // 列表选中列
-      goodslist: [{
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }, {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      },
-      {
-        barcode: 12987122,
-        name: '好滋好味鸡蛋仔',
-        price: 5,
-        date: '2011-11-11',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        brand: '蟑螂恶霸',
-        model: '20',
-        producer: '恶霸蟑螂',
-        supplier: '2178268741'
-      }
-      ],
       editFormVisible: false, // 编辑界面是否显示
       editLoading: false,
       editFormRules: {
@@ -457,9 +294,11 @@ export default {
         page: this.page,
         commodity_barcode: this.filters.barcode
       }
+      console.log(para)
       this.listLoading = true
       // NProgress.start();
       getGoodListPage(para).then((res) => {
+        console.log(res)
         this.total = res.data.total
         this.goods = res.data.goods
         this.listLoading = false
