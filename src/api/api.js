@@ -99,7 +99,7 @@ export const editGoods = params => { return axios.post(`/Commodity/edit`, params
 // *********************************************公共商品库界面
 // 获取供应商商品列表
 
-export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }) }
+export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }).then(res => res.data)}
 // 请求方法 post /Commodity/edit
 // 请求体
 //         commodity_barcode
@@ -108,7 +108,6 @@ export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpa
 //      code     错误码
 //      codeInfo 错误信息
 //      data
-
 // *********************************************登录页面相关接口
 // 登录接口
 export const requestLogin = params => {
