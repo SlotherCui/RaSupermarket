@@ -17,17 +17,17 @@
     <!--工具条-->
     <el-col :span="24" class="toolbar">
       <el-form :inline="true" :model="mygoodsfilters">
-        <el-form-item label="条码号">
-          <el-input v-model="mygoodsfilters.barcode" placeholder=""></el-input>
+        <el-form-item label="">
+          <el-input v-model="mygoodsfilters.barcode" prefix-icon="el-icon-c-scale-to-original" placeholder="条码号"></el-input>
         </el-form-item>
-        <el-form-item label="商品名称">
-          <el-input v-model="mygoodsfilters.barcode" placeholder=""></el-input>
+        <el-form-item label="">
+          <el-input v-model="mygoodsfilters.commodity_name" prefix-icon="el-icon-goods" placeholder="商品名称" ></el-input>
         </el-form-item>
-        <el-form-item label="价格">
-          <el-input v-model="mygoodsfilters.barcode" placeholder=""></el-input>
+        <el-form-item label="">
+          <el-input v-model="mygoodsfilters.current_price" prefix-icon="el-icon-price-tag" placeholder="价格"></el-input>
         </el-form-item>
-        <el-form-item label="商品描述">
-          <el-input v-model="mygoodsfilters.barcode" placeholder=""></el-input>
+        <el-form-item label="">
+          <el-input v-model="mygoodsfilters.commodity_description" prefix-icon="el-icon-edit-outline" placeholder="商品描述"></el-input>
         </el-form-item>
         <el-form-item style="float:right">
           <el-button type="primary" @click="checkin" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>
@@ -233,14 +233,17 @@
 </template>
 
 <script>
-import {getMyGoodListPage, editGoods, removeMyGoods, searchAddCommodity, addMyGoods} from '../../../api/api'
+import {getMyGoodListPage, editGoods, removeMyGoods, searchAddCommodity, addMyGoods, getMyGoodListPage2} from '../../../api/api'
 import axios from 'axios'
 export default {
   name: 'Find',
   data () {
     return {
       mygoodsfilters: {
-        barcode: ''
+        barcode: '',
+        commodity_name: '',
+        current_price: '',
+        commodity_description: ''
       },
       sels: [],
       page: 1,
@@ -351,7 +354,7 @@ export default {
     regetGoods () {
       let para = {
         page: this.page,
-        commodity_barcode: 0
+        commodity_barcode: ''
       }
       this.listLoading = true
       getMyGoodListPage(para).then((res) => {
@@ -372,10 +375,13 @@ export default {
     searchCommodity () {
       let para = {
         page: 1,
-        commodity_barcode: this.mygoodsfilters.barcode
+        commodity_barcode: this.mygoodsfilters.barcode,
+        commodity_name: this.mygoodsfilters.commodity_name,
+        current_price: this.mygoodsfilters.current_price,
+        commodity_description: this.mygoodsfilters.commodity_description
       }
       this.listLoading = true
-      getMyGoodListPage(para).then((res) => {
+      getMyGoodListPage2(para).then((res) => {
         this.total = res.data.total
         this.goodslist = res.data.commodity_list
         this.listLoading = false
@@ -385,21 +391,37 @@ export default {
       //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
       // }
     },
+    // searchCommodity () {
+    //   let para = {
+    //     page: 1,
+    //     commodity_barcode: this.mygoodsfilters.barcode
+    //   }
+    //   this.listLoading = true
+    //   getMyGoodListPage(para).then((res) => {
+    //     this.total = res.data.total
+    //     this.goodslist = res.data.commodity_list
+    //     this.listLoading = false
+    //   })
+    //   // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
+    //   // } else {
+    //   //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
+    //   // }
+    // },
     checkin () {
       this.addbuttonLoading = true
-      if (this.mygoodsfilters.barcode.toString() === '') {
-        this.$alert('填写相关信息', '提示', {confirmButtonText: '确定'})
+      if (this.mygoodsfilters.barcode === '') {
+        this.$alert('填写条码号', '提示', {confirmButtonText: '确定'})
         this.addbuttonLoading = false
       } else {
         let para = {
           page: 1,
-          commodity_barcode: this.mygoodsfilters.barcode.toString()
+          commodity_barcode: this.mygoodsfilters.barcode
         }
         getMyGoodListPage(para).then((res) => {
           const checklist = res.data.commodity_list
           for (let i = 0; i < checklist.length; i++) {
-            if (checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString()) {
-              console.log('here', checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString())
+            if (checklist[i].commodity_barcode === this.mygoodsfilters.barcode) {
+              console.log('here', checklist[i].commodity_barcode === this.mygoodsfilters.barcode)
               this.$alert('商品已在商品库', '提示', {confirmButtonText: '确定'})
               this.addbuttonLoading = false
               return
@@ -409,6 +431,30 @@ export default {
         })
       }
     },
+    // checkin () {
+    //   this.addbuttonLoading = true
+    //   if (this.mygoodsfilters.barcode.toString() === '') {
+    //     this.$alert('填写相关信息', '提示', {confirmButtonText: '确定'})
+    //     this.addbuttonLoading = false
+    //   } else {
+    //     let para = {
+    //       page: 1,
+    //       commodity_barcode: this.mygoodsfilters.barcode.toString()
+    //     }
+    //     getMyGoodListPage(para).then((res) => {
+    //       const checklist = res.data.commodity_list
+    //       for (let i = 0; i < checklist.length; i++) {
+    //         if (checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString()) {
+    //           console.log('here', checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString())
+    //           this.$alert('商品已在商品库', '提示', {confirmButtonText: '确定'})
+    //           this.addbuttonLoading = false
+    //           return
+    //         }
+    //       }
+    //       this.addGoods()
+    //     })
+    //   }
+    // },
     // 添加商品，有没有，有-> 列表，没有-> 提示新增
     addGoods () {
       let para = { commodity_barcode: this.mygoodsfilters.barcode }

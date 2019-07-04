@@ -33,6 +33,30 @@ export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`,
 //           commodity_producer
 //           commodity_piclink
 //           }]
+// 根据条码号分页获取商品 & 搜索自身商品库商品 新接口
+export const getMyGoodListPage2 = params => { return axios.get(`/Commodity/list`, { params: params }).then(res => res.data) } // OK
+// 请求方法 get /Commodity/list
+// 请求体  page 页号
+//         commodity_barcode  商品条码号   空是查询全部
+//         commodity_barcode
+//         commodity_name
+//         current_price
+//         commodity_description
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data
+//           total
+//            [{
+//           commodity_barcode
+//           commodity_name
+//           commodity_specification
+//           commodity_price
+//           commodity_description
+//           commodity_brand
+//           commodity_producer
+//           commodity_piclink
+//           }]
 // toolbar 搜索公共库是否已有目标商品
 export const searchAddCommodity = params => { return axios.get(`/Commodity/searchAddCommodity`, { params: params }).then(res => res.data) } // OK
 // 请求方法 get /Commodity/searchAddCommodity
@@ -135,6 +159,24 @@ export const requestMock = params => {
 // ***************************************** 销售相关接口
 // 根据销售号查询销售记录/ 返回所有销售记录            // ok
 export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, { params: params }).then(res => res.data) }
+// 请求方法 get /Sell/OrderList
+// 请求体  page 页号
+//         order_id  销售记录
+// 返回结果
+//      code     错误码
+//      codeInfo 错误信息
+//      data     数据
+//           orders:[
+//             order_id
+//             order_all_price
+//             order_create_time
+//             order_commodity_sum
+//             infors: []  // 空数组 带着就行 方便前端编写代码
+//           ],
+//          total:   5    总页数方便显示
+
+// 根据销售号起止日期查询销售具体条目：   //ok
+export const requestOrderListnew = params => { return axios.get(`/Sell/OrderList`, { params: params }).then(res => res.data) }
 // 请求方法 get /Sell/OrderList
 // 请求体  page 页号
 //         order_id  销售记录
