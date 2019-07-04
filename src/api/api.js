@@ -151,11 +151,13 @@ export const requestOrderList = params => { return axios.get(`/Sell/OrderList`, 
 //           ],
 //          total:   5    总页数方便显示
 
-// 根据销售号起止日期查询销售具体条目：   //ok
-export const requestOrderListnew = params => { return axios.get(`/Sell/OrderList`, { params: params }).then(res => res.data) }
-// 请求方法 get /Sell/OrderList
-// 请求体  page 页号
-//         order_id  销售记录
+// 根据销售号起止日期销售金额区间查询销售具体条目
+export const requestOrderListnew = params => { return axios.get(`/Sell/OrderListNew`, { params: params }).then(res => res.data) }
+// 请求方法 get /Sell/OrderListNew
+// 请求体 page 页号
+//        order_id  销售记录
+//        order_create_time_space 销售记录时间区间  array size 2
+//        order_price_space  销售金额区间 array size 2
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
@@ -167,7 +169,7 @@ export const requestOrderListnew = params => { return axios.get(`/Sell/OrderList
 //             order_commodity_sum
 //             infors: []  // 空数组 带着就行 方便前端编写代码
 //           ],
-//          total:   5    总页数方便显示
+//          total:      总页数方便显示
 
 // 根据销售号查询销售具体条目：   //ok
 export const requestOrderItem = params => { return axios.get(`/Sell/OrderItems`, { params: params }).then(res => res.data) }
