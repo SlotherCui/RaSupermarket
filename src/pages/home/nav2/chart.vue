@@ -61,8 +61,23 @@ export default {
       requestColumnChart(para).then((res) => {
         console.log('drawColumnChart', res)
         if (res.code === 0) {
-          this.commodity_name = res.data.commodity_name
           this.sales_number = res.data.sales_number
+          this.commodity_name = res.data.commodity_name
+          this.chartColumn.setOption({
+            xAxis: {
+              type: 'category',
+              data: this.commodity_name
+              // 商品名称
+            },
+            series: [{
+              // name: '销量',
+              type: 'bar',
+              data: this.sales_number
+              // 商品数目
+            }]
+          })
+          // this.commodity_name = res.data.commodity_name
+          // this.sales_number = res.data.sales_number
         } else {
           this.$message({message: '加载失败' + res.code, type: 'fail'})
         }
@@ -163,8 +178,17 @@ export default {
       requestLineChart(para).then((res) => {
         console.log('drawLineChart', res)
         if (res.code === 0) {
-
           this.sales_volume = res.data.sales_volume
+          this.chartLine.setOption({
+            series: [
+              {
+                name: '销售额',
+                type: 'line',
+                stack: '总量',
+                data: this.sales_volume
+              }
+            ]
+          })
         } else {
           this.$message({message: '加载失败' + res.code, type: 'fail'})
         }
