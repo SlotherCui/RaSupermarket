@@ -303,7 +303,6 @@ export default {
         console.log('销售记录', res)
         if (res.code === 0) {
           this.sells = res.data.orders
-
           // 转换时间戳
           for (let i = 0; i < this.sells.length; i++) {
             this.sells[i].order_create_time = util.formatDate.format(new Date(this.sells[i].order_create_time), 'yyyy-MM-dd hh:mm:ss')
@@ -324,6 +323,8 @@ export default {
       if (this.filters.price[1] === '') {
         this.filters.price[1] = 999999
       }
+      this.filters.order_create_time_start = util.formatDate.format(new Date(this.filters.order_create_time_start), 'yyyy-MM-dd')
+      this.filters.order_create_time_end = util.formatDate.format(new Date(this.filters.order_create_time_end), 'yyyy-MM-dd')
       let para = {
         page: page,
         order_id: this.filters.order_id,
@@ -332,6 +333,8 @@ export default {
         order_price_min: this.filters.price[0],
         order_price_max: this.filters.price[1]
       }
+      this.filters.price[1] = ''
+      this.filters.price[0] = ''
       console.log(para)
       requestOrderListnew(para).then((res) => {
         // this.editLoading = false
