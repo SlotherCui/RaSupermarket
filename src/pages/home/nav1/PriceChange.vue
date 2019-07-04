@@ -8,6 +8,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" v-on:click="getGoods">查询</el-button>
+            <el-button type="primary" v-on:click="getData">下载</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -54,7 +55,7 @@
 </template>
 
 <script>
-import {requestPriceChangeList, requestSingleChange, requestGroupChange, requestRelationChange} from '../../../api/api'
+import {requestPriceChangeList, requestSingleChange, requestGroupChange, requestRelationChange,requestData} from '../../../api/api'
 export default {
   name: 'SellsManager',
   data () {
@@ -90,6 +91,9 @@ export default {
         }
         this.listLoading = false
       })
+    },
+    getData () {
+      requestData().then((res) => {})
     },
     // 单个修改
     SingleChange (index, commodity_barcode) {

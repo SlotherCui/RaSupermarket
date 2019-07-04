@@ -7,6 +7,15 @@
           <el-input v-model="filters.order_id" placeholder="请输入销售号"></el-input>
         </el-form-item>
         <el-form-item>
+          <el-date-picker
+            v-model="filters.time"
+            type="datetimerange"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :default-time="['12:00:00']">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" v-on:click="handleSearch">{{$t('message.query')}}</el-button>
         </el-form-item>
         <el-form-item>
@@ -109,7 +118,8 @@ export default {
     return {
       // 查询变量
       filters: {
-        order_id: ''
+        order_id: '',
+        time: ''
       },
       sells: [],
       // 页表项
@@ -132,7 +142,6 @@ export default {
         commodity_price: 0
       },
       addGoodsList: []
-
     }
   },
   methods: {
@@ -242,6 +251,7 @@ export default {
     // 查询方法
     handleSearch () {
       this.listLoading = true
+      console.log(this.filters)
       // var order_id = this.filters.order_id
       this.getOrderList(1)
     },
