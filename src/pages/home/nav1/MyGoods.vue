@@ -30,10 +30,10 @@
           <el-input v-model="mygoodsfilters.commodity_description" prefix-icon="el-icon-edit-outline" placeholder="商品描述"></el-input>
         </el-form-item>
         <el-form-item style="float:right">
-          <el-button type="primary" @click="checkin" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>
+          <el-button type="primary" @click="checkin" :loading="addbuttonLoading" icon="el-icon-plus">{{$t('message.add')}}</el-button>
         </el-form-item>
         <el-form-item style="float:right">
-          <el-button type="primary" @click="searchCommodity">{{$t('message.query')}}</el-button>
+          <el-button type="primary" @click="searchCommodity" icon="el-icon-search">{{$t('message.query')}}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
