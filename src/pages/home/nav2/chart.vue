@@ -8,7 +8,7 @@
         <!--<div id="chartBar" style="width:100%; height:400px;"></div>-->
       <!--</el-col>-->
       <el-col :span="12">
-        <div id="chartLine" style="width:100%; height:400px;"></div>
+        <div id="chartLine" style="width:100%; height:380px;"></div>
       </el-col>
       <!--<el-col :span="12">-->
         <!--<div id="chartPie" style="width:100%; height:400px;"></div>-->
@@ -127,6 +127,23 @@ export default {
     //     ]
     //   })
     // },
+    getDay (day) {
+      var today = new Date()
+      var targetdayMilliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day
+      today.setTime(targetdayMilliseconds)
+      var tMonth = today.getMonth()
+      var tDate = today.getDate()
+      tMonth = this.doHandleMonth(tMonth + 1)
+      tDate = this.doHandleMonth(tDate)
+      return tMonth + '-' + tDate
+    },
+    doHandleMonth (month) {
+      var m = month
+      if (month.toString().length === 1) {
+        m = '0' + month
+      }
+      return m
+    },
     drawLineChart () {
       this.chartLine = echarts.init(document.getElementById('chartLine'))
       this.chartLine.setOption({
@@ -148,7 +165,7 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+          data: [this.getDay(-7), this.getDay(-6), this.getDay(-5), this.getDay(-4), this.getDay(-3), this.getDay(-2), this.getDay(-1)]
         },
         yAxis: {
           type: 'value'
