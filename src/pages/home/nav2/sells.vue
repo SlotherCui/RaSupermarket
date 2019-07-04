@@ -141,8 +141,6 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      value1: '',
-      value2: '',
       // 查询变量
       filters: {
         order_id: '',
@@ -280,10 +278,10 @@ export default {
     handleSearch () {
       console.log('搜索')
       this.listLoading = true
+
       // console.log(this.filters)
-      // console.log(this.filters.time)
-      // console.log(this.filters.time[0])
-      // console.log(this.filters.time[1])
+      // console.log(this.filters.order_create_time_start)
+      // console.log(this.filters.order_create_time_end)
       // var order_id = this.filters.order_id
       this.getOrderListNew(1)
     },
@@ -305,7 +303,6 @@ export default {
         console.log('销售记录', res)
         if (res.code === 0) {
           this.sells = res.data.orders
-
           // 转换时间戳
           for (let i = 0; i < this.sells.length; i++) {
             this.sells[i].order_create_time = util.formatDate.format(new Date(this.sells[i].order_create_time), 'yyyy-MM-dd hh:mm:ss')
@@ -327,15 +324,21 @@ export default {
       if (this.filters.price[1] === '') {
         this.filters.price[1] = 999999
       }
+      this.filters.order_create_time_start = util.formatDate.format(new Date(this.filters.order_create_time_start), 'yyyy-MM-dd')
+      this.filters.order_create_time_end = util.formatDate.format(new Date(this.filters.order_create_time_end), 'yyyy-MM-dd')
       let para = {
         page: page,
         order_id: this.filters.order_id,
+
         order_create_time_start: util.formatDate.format(this.filters.time[0], 'yyyy-MM-dd'),
         order_create_time_end: util.formatDate.format(this.filters.time[1], 'yyyy-MM-dd'),
         order_price_min: this.filters.price[0],
         order_price_max: this.filters.price[1]
       }
       console.log('输入', para)
+
+      this.filters.price[1] = ''
+      this.filters.price[0] = ''
       requestOrderListnew(para).then((res) => {
         console.log('销售记录', res)
         if (res.code === 0) {
