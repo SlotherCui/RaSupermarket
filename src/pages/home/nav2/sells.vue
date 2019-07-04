@@ -6,29 +6,28 @@
         <el-form-item>
           <el-input v-model="filters.order_id" placeholder="请输入销售号" prefix-icon="el-icon-search"></el-input>
         </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="filters.time"
+            type="daterange"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
+        </el-form-item>
         <!--<el-form-item>-->
           <!--<el-date-picker-->
-            <!--v-model="filters.time"-->
-            <!--type="datetimerange"-->
-            <!--start-placeholder="开始日期"-->
-            <!--end-placeholder="结束日期"-->
-            <!--:default-time="['12:00:00']">-->
+            <!--v-model="filters.order_create_time_start"-->
+            <!--type="date"-->
+            <!--placeholder="选择起始日期">-->
           <!--</el-date-picker>-->
         <!--</el-form-item>-->
-        <el-form-item>
-          <el-date-picker
-            v-model="filters.order_create_time_start"
-            type="date"
-            placeholder="选择起始日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-date-picker
-            v-model="filters.order_create_time_end"
-            type="date"
-            placeholder="选择截止日期">
-          </el-date-picker>
-        </el-form-item>
+        <!--<el-form-item>-->
+          <!--<el-date-picker-->
+            <!--v-model="filters.order_create_time_end"-->
+            <!--type="date"-->
+            <!--placeholder="选择截止日期">-->
+          <!--</el-date-picker>-->
+        <!--</el-form-item>-->
         <el-form-item>
           <el-input  v-model="filters.price[0]" placeholder="请输入价格" prefix-icon="el-icon-search" style="width: 160px"></el-input>
         </el-form-item>
@@ -147,8 +146,7 @@ export default {
       // 查询变量
       filters: {
         order_id: '',
-        order_create_time_start: '',
-        order_create_time_end: '',
+        time: [],
         price: ['', '']
       },
       sells: [],
@@ -280,11 +278,12 @@ export default {
     },
     // 查询方法
     handleSearch () {
+      console.log('搜索')
       this.listLoading = true
-      console.log(this.filters)
-      console.log(this.filters.time)
-      console.log(this.filters.time[0])
-      console.log(this.filters.time[1])
+      // console.log(this.filters)
+      // console.log(this.filters.time)
+      // console.log(this.filters.time[0])
+      // console.log(this.filters.time[1])
       // var order_id = this.filters.order_id
       this.getOrderListNew(1)
     },
@@ -320,6 +319,7 @@ export default {
     },
     // 请求销售记录升级版
     getOrderListNew (page) {
+      console.log('输入here')
       this.listLoading = true
       if (this.filters.price[0] === '') {
         this.filters.price[0] = 0
@@ -330,19 +330,16 @@ export default {
       let para = {
         page: page,
         order_id: this.filters.order_id,
-        order_create_time_start: this.filters.time[0],
-        order_create_time_end: this.filters.time[1],
+        order_create_time_start: util.formatDate.format(this.filters.time[0], 'yyyy-MM-dd'),
+        order_create_time_end: util.formatDate.format(this.filters.time[1], 'yyyy-MM-dd'),
         order_price_min: this.filters.price[0],
         order_price_max: this.filters.price[1]
       }
-      console.log(para)
+      console.log('输入', para)
       requestOrderListnew(para).then((res) => {
-        // this.editLoading = false
-        // NProgress.done(
         console.log('销售记录', res)
         if (res.code === 0) {
           this.sells = res.data.orders
-
           // 转换时间戳
           for (let i = 0; i < this.sells.length; i++) {
             this.sells[i].order_create_time = util.formatDate.format(new Date(this.sells[i].order_create_time), 'yyyy-MM-dd hh:mm:ss')
