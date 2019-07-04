@@ -260,6 +260,9 @@ export default {
     handleSearch () {
       this.listLoading = true
       console.log(this.filters)
+      console.log(this.filters.time)
+      console.log(this.filters.time[0])
+      console.log(this.filters.time[1])
       // var order_id = this.filters.order_id
       this.getOrderListNew(1)
     },
@@ -274,6 +277,7 @@ export default {
       this.listLoading = true
       let para = {page: page, order_id: this.filters.order_id}
       console.log(para)
+
       requestOrderList(para).then((res) => {
         // this.editLoading = false
         // NProgress.done(
