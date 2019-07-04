@@ -2,9 +2,9 @@
   <section>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
-      <el-form :inline="true" :model="filters">
+      <el-form :inline="true" :model="filters" style="display: flex">
         <el-form-item>
-          <el-input v-model="filters.order_id" placeholder="请输入销售号"></el-input>
+          <el-input v-model="filters.order_id" placeholder="请输入销售号" prefix-icon="el-icon-search"></el-input>
         </el-form-item>
         <el-form-item>
           <el-date-picker
@@ -14,6 +14,13 @@
             end-placeholder="结束日期"
             :default-time="['12:00:00']">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-input  v-model="filters.price[0]" placeholder="请输入价格" prefix-icon="el-icon-search" style="width: 160px"></el-input>
+        </el-form-item>
+        <span style="margin:auto">-</span>
+        <el-form-item>
+          <el-input v-model="filters.price[1]" placeholder="请输入价格" prefix-icon="el-icon-search"  style="width: 160px"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="handleSearch">{{$t('message.query')}}</el-button>
@@ -119,7 +126,8 @@ export default {
       // 查询变量
       filters: {
         order_id: '',
-        time: ''
+        time: '',
+        price: ['','']
       },
       sells: [],
       // 页表项
@@ -253,7 +261,7 @@ export default {
       this.listLoading = true
       console.log(this.filters)
       // var order_id = this.filters.order_id
-      this.getOrderList(1)
+      this.getOrderListNew(1)
     },
     // 翻页方法
     handleCurrentChange (val) {
@@ -283,7 +291,31 @@ export default {
         }
         this.listLoading = false
       })
+    },
+    // 请求销售记录升级版
+    getOrderListNew (page) {
+      this.listLoading = true
+      let para = {page: page, order_id: this.filters.order_id, order_create_time_space: this.filters.time}
+      console.log(para)
+      requestOrderList(para).then((res) => {
+        // this.editLoading = false
+        // NProgress.done(
+        console.log('销售记录', res)
+        if (res.code === 0) {
+          this.sells = res.data.orders
+
+          // 转换时间戳
+          for (let i = 0; i < this.sells.length; i++) {
+            this.sells[i].order_create_time = util.formatDate.format(new Date(this.sells[i].order_create_time), 'yyyy-MM-dd hh:mm:ss')
+            this.sells[i].infors = []
+          }
+          console.log(this.sells)
+          this.total = res.data.total
+        }
+        this.listLoading = false
+      })
     }
+
   },
   // 生命周期初始函数
   mounted () {
