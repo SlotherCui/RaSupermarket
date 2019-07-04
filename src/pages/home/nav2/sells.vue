@@ -2,9 +2,9 @@
   <section>
     <!--工具条-->
     <el-col :span="24" class="toolbar">
-      <el-form :inline="true" :model="filters">
+      <el-form :inline="true" :model="filters" style="display: flex">
         <el-form-item>
-          <el-input v-model="filters.order_id" placeholder="请输入销售号"></el-input>
+          <el-input v-model="filters.order_id" placeholder="请输入销售号" prefix-icon="el-icon-search"></el-input>
         </el-form-item>
         <el-form-item>
           <el-date-picker
@@ -14,6 +14,13 @@
             end-placeholder="结束日期"
             :default-time="['12:00:00']">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-input  v-model="filters.price[0]" placeholder="请输入价格" prefix-icon="el-icon-search" style="width: 160px"></el-input>
+        </el-form-item>
+        <span style="margin:auto">-</span>
+        <el-form-item>
+          <el-input v-model="filters.price[1]" placeholder="请输入价格" prefix-icon="el-icon-search"  style="width: 160px"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="handleSearch">{{$t('message.query')}}</el-button>
@@ -119,7 +126,8 @@ export default {
       // 查询变量
       filters: {
         order_id: '',
-        time: ''
+        time: '',
+        price: ['','']
       },
       sells: [],
       // 页表项
