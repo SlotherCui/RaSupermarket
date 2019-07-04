@@ -324,12 +324,9 @@ export default {
       if (this.filters.price[1] === '') {
         this.filters.price[1] = 999999
       }
-      this.filters.order_create_time_start = util.formatDate.format(new Date(this.filters.order_create_time_start), 'yyyy-MM-dd')
-      this.filters.order_create_time_end = util.formatDate.format(new Date(this.filters.order_create_time_end), 'yyyy-MM-dd')
       let para = {
         page: page,
         order_id: this.filters.order_id,
-
         order_create_time_start: util.formatDate.format(this.filters.time[0], 'yyyy-MM-dd'),
         order_create_time_end: util.formatDate.format(this.filters.time[1], 'yyyy-MM-dd'),
         order_price_min: this.filters.price[0],
