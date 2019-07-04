@@ -10,7 +10,8 @@ import VueAxios from 'vue-axios'
 import VueI18n from 'vue-i18n'
 import messages from './common/lang'
 import ElementLocale from 'element-ui/lib/locale'
-
+var VueCookie = require('vue-cookie')
+Vue.use(VueCookie)
 // import Mock from './mock'
 // Mock.bootstrap()
 Vue.config.productionTip = false

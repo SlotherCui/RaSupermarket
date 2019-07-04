@@ -7,8 +7,10 @@
             <el-input v-model="filters.commodity_barcode" placeholder="请输入商品条码"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-on:click="getGoods">查询</el-button>
-            <el-button type="primary" v-on:click="getData">下载</el-button>
+            <el-button type="primary" v-on:click="getGoods" icon="el-icon-search">查询</el-button>
+          </el-form-item>
+          <el-form-item style="float: right">
+              <el-button type="primary" v-on:click="getData" icon="el-icon-download"> 下载</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -55,7 +57,7 @@
 </template>
 
 <script>
-import {requestPriceChangeList, requestSingleChange, requestGroupChange, requestRelationChange,requestData} from '../../../api/api'
+import {requestPriceChangeList, requestSingleChange, requestGroupChange, requestRelationChange, requestData} from '../../../api/api'
 export default {
   name: 'SellsManager',
   data () {
@@ -93,7 +95,9 @@ export default {
       })
     },
     getData () {
-      requestData().then((res) => {})
+      // console.log("fjdaskllfj")
+      // console.log(this.$cookie.get('user_id'))
+      window.open('http://10.27.193.222:8080/Price/GetData?user_id=' + this.$cookie.get('user_id'))
     },
     // 单个修改
     SingleChange (index, commodity_barcode) {

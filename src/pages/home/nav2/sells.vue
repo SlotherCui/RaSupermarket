@@ -18,7 +18,7 @@
         <el-form-item>
           <el-input  v-model="filters.price[0]" placeholder="请输入价格" prefix-icon="el-icon-search" style="width: 160px"></el-input>
         </el-form-item>
-        <span style="margin:auto">-</span>
+        <span >___</span>
         <el-form-item>
           <el-input v-model="filters.price[1]" placeholder="请输入价格" prefix-icon="el-icon-search"  style="width: 160px"></el-input>
         </el-form-item>
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import {requestOrderList, requestPriceByBarcode, postOrder, requestOrderItem} from '../../../api/api'
+import {requestOrderList, requestPriceByBarcode, postOrder, requestOrderItem, requestOrderListnew} from '../../../api/api'
 import util from '../../../common/js/util'
 // import {formatDate}
 export default {
@@ -127,7 +127,7 @@ export default {
       filters: {
         order_id: '',
         time: '',
-        price: ['','']
+        price: ['', '']
       },
       sells: [],
       // 页表项
@@ -295,9 +295,19 @@ export default {
     // 请求销售记录升级版
     getOrderListNew (page) {
       this.listLoading = true
-      let para = {page: page, order_id: this.filters.order_id, order_create_time_space: this.filters.time}
+      if (this.filters.price[0] === '') {
+        this.filters.price[0] = 0
+      } else if (this.filters.price[1] === '') {
+        this.filters.price[1] = 999999
+      }
+      let para = {
+        page: page,
+        order_id: this.filters.order_id,
+        order_create_time_space: this.filters.time,
+        order_price_space: this.filters.price
+      }
       console.log(para)
-      requestOrderList(para).then((res) => {
+      requestOrderListnew(para).then((res) => {
         // this.editLoading = false
         // NProgress.done(
         console.log('销售记录', res)
@@ -315,7 +325,6 @@ export default {
         this.listLoading = false
       })
     }
-
   },
   // 生命周期初始函数
   mounted () {
