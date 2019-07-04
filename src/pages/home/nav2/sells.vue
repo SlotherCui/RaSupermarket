@@ -6,13 +6,27 @@
         <el-form-item>
           <el-input v-model="filters.order_id" placeholder="请输入销售号" prefix-icon="el-icon-search"></el-input>
         </el-form-item>
+        <!--<el-form-item>-->
+          <!--<el-date-picker-->
+            <!--v-model="filters.time"-->
+            <!--type="datetimerange"-->
+            <!--start-placeholder="开始日期"-->
+            <!--end-placeholder="结束日期"-->
+            <!--:default-time="['12:00:00']">-->
+          <!--</el-date-picker>-->
+        <!--</el-form-item>-->
         <el-form-item>
           <el-date-picker
-            v-model="filters.time"
-            type="datetimerange"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :default-time="['12:00:00']">
+            v-model="filters.order_create_time_start"
+            type="date"
+            placeholder="选择起始日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="filters.order_create_time_end"
+            type="date"
+            placeholder="选择截止日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item>
@@ -123,10 +137,18 @@ export default {
   name: 'page1',
   data () {
     return {
+      pickerOptions: {
+        disabledDate (time) {
+          return time.getTime() > Date.now()
+        }
+      },
+      value1: '',
+      value2: '',
       // 查询变量
       filters: {
         order_id: '',
-        time: '',
+        order_create_time_start: '',
+        order_create_time_end: '',
         price: ['', '']
       },
       sells: [],
@@ -304,8 +326,10 @@ export default {
       let para = {
         page: page,
         order_id: this.filters.order_id,
-        order_create_time_space: this.filters.time,
-        order_price_space: this.filters.price
+        order_create_time_start: this.filters.time[0],
+        order_create_time_end: this.filters.time[1],
+        order_price_min: this.filters.price[0],
+        order_price_max: this.filters.price[1]
       }
       console.log(para)
       requestOrderListnew(para).then((res) => {
