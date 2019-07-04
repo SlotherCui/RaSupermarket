@@ -297,7 +297,8 @@ export default {
       this.listLoading = true
       if (this.filters.price[0] === '') {
         this.filters.price[0] = 0
-      } else if (this.filters.price[1] === '') {
+      }
+      if (this.filters.price[1] === '') {
         this.filters.price[1] = 999999
       }
       let para = {
@@ -328,7 +329,7 @@ export default {
   },
   // 生命周期初始函数
   mounted () {
-    this.getOrderListNew(this.page)
+    this.getOrderList(this.page)
   }
 }
 </script>
