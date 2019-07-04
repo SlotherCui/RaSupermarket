@@ -1,16 +1,39 @@
 <template>
   <section>
     <!--工具条-->
-    <el-col :span="24" class="toolbar" >
+<!--    <el-col :span="24" class="toolbar" >-->
+<!--      <el-form :inline="true" :model="mygoodsfilters">-->
+<!--        <el-form-item>-->
+<!--          <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item>-->
+<!--          <el-button type="primary" @click="searchCommodity">{{$t('message.query')}}</el-button>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item>-->
+<!--          <el-button type="primary" @click="checkin" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>-->
+<!--        </el-form-item>-->
+<!--      </el-form>-->
+<!--    </el-col>-->
+    <!--工具条-->
+    <el-col :span="24" class="toolbar">
       <el-form :inline="true" :model="mygoodsfilters">
-        <el-form-item>
-          <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>
+        <el-form-item label="条码号">
+          <el-input v-model="mygoodsfilters.barcode" placeholder=""></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="searchCommodity">{{$t('message.query')}}</el-button>
+        <el-form-item label="商品名称">
+          <el-input v-model="mygoodsfilters.barcode" placeholder=""></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="价格">
+          <el-input v-model="mygoodsfilters.barcode" placeholder=""></el-input>
+        </el-form-item>
+        <el-form-item label="商品描述">
+          <el-input v-model="mygoodsfilters.barcode" placeholder=""></el-input>
+        </el-form-item>
+        <el-form-item style="float:right">
           <el-button type="primary" @click="checkin" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>
+        </el-form-item>
+        <el-form-item style="float:right">
+          <el-button type="primary" @click="searchCommodity">{{$t('message.query')}}</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -365,7 +388,7 @@ export default {
     checkin () {
       this.addbuttonLoading = true
       if (this.mygoodsfilters.barcode.toString() === '') {
-        this.$alert('搜索不能为空', '提示', {confirmButtonText: '确定'})
+        this.$alert('填写相关信息', '提示', {confirmButtonText: '确定'})
         this.addbuttonLoading = false
       } else {
         let para = {
@@ -678,6 +701,11 @@ export default {
     background: #f2f2f2;
     padding: 10px;
     margin: 10px 0px;
+  }
+  .toolbar3 {
+    text-align: left;
+    background: #f2f2f2;
+    padding: 10px 10px 0 10px;
   }
   .addinput{
     min-width: 0px;
