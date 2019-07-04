@@ -249,7 +249,7 @@ export default {
         if (res.code === 0) {
           this.$message({message: '上传成功', type: 'success'})
           this.addFormVisible = false
-          this.getOrderList(1)
+          this.getOrderListNew(1)
         } else {
           this.$message({message: '上传失败', type: 'fail'})
           this.addLoading = false
@@ -267,7 +267,7 @@ export default {
     handleCurrentChange (val) {
       this.page = val
       this.listLoading = true
-      this.getOrderList(this.page)
+      this.getOrderListNew(this.page)
     },
     // 请求销售记录
     getOrderList (page) {
@@ -328,7 +328,7 @@ export default {
   },
   // 生命周期初始函数
   mounted () {
-    this.getOrderList(this.page)
+    this.getOrderListNew(this.page)
   }
 }
 </script>
