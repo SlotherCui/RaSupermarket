@@ -34,7 +34,8 @@ export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`,
 //           commodity_piclink
 //           }]
 // 根据条码号分页获取商品 & 搜索自身商品库商品 新接口
-export const getMyGoodListPagenew = params => { return axios.get(`/Commodity/listnew`, { params: params }).then(res => res.data) } // OK
+export const getMyGoodListPagenew = params => { return axios.get(`/Commodity/list`, { params: params }).then(res => res.data) } // OK
+// export const getMyGoodListPagenew = params => { return axios.get(`/Commodity/listnew`, { params: params }).then(res => res.data) }
 // 请求方法 get /Commodity/listnew
 // 请求体  page 页号
 //         commodity_barcode

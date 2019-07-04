@@ -73,18 +73,18 @@
       </el-table-column>
       <el-table-column prop="commodity_description" :label="$t('message.commodity_description')" min-width=" 180" sortable>
       </el-table-column>
-      <el-table-column :label="$t('message.operation')"  width=" 150">
+      <el-table-column :label="$t('message.operation')"  width=" 200">
         <template scope="scope">
           <!--          编辑-->
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">{{$t('message.edit')}}</el-button>
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit">{{$t('message.edit')}}</el-button>
           <!--          删除-->
-          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">{{$t('message.delete')}}</el-button>
+          <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)" icon="el-icon-delete">{{$t('message.delete')}}</el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-col :span="24" class="toolbar2">
       <!--      批量删除-->
-      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">{{$t('message.batchDelete')}}</el-button>
+      <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" icon="el-icon-delete">{{$t('message.batchDelete')}}</el-button>
       <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
       </el-pagination>
     </el-col>
@@ -233,7 +233,7 @@
 </template>
 
 <script>
-import {getMyGoodListPage, editGoods, removeMyGoods, searchAddCommodity, addMyGoods, getMyGoodListPage2} from '../../../api/api'
+import {getMyGoodListPage, editGoods, removeMyGoods, searchAddCommodity, addMyGoods, getMyGoodListPagenew} from '../../../api/api'
 import axios from 'axios'
 export default {
   name: 'Find',
@@ -381,7 +381,7 @@ export default {
         commodity_description: this.mygoodsfilters.commodity_description
       }
       this.listLoading = true
-      getMyGoodListPage2(para).then((res) => {
+      getMyGoodListPagenew(para).then((res) => {
         this.total = res.data.total
         this.goodslist = res.data.commodity_list
         this.listLoading = false

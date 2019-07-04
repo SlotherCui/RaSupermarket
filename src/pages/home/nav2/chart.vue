@@ -2,13 +2,13 @@
   <section class="chart-container">
     <el-row>
       <el-col :span="12">
-        <div id="chartColumn" style="width:100%; height:400px;"></div>
+        <div id="chartColumn" style="width:100%; height:500px;"></div>
       </el-col>
       <!--<el-col :span="12">-->
         <!--<div id="chartBar" style="width:100%; height:400px;"></div>-->
       <!--</el-col>-->
       <el-col :span="12">
-        <div id="chartLine" style="width:100%; height:400px;"></div>
+        <div id="chartLine" style="width:100%; height:500px;"></div>
       </el-col>
       <!--<el-col :span="12">-->
         <!--<div id="chartPie" style="width:100%; height:400px;"></div>-->
@@ -31,7 +31,7 @@ export default {
       sales_volume: [0, 0, 0, 0, 0, 0, 0],
       chartColumn: null,
       // chartBar: null,
-      chartLine: null,
+      chartLine: null
       // chartPie: null
     }
   },
@@ -44,7 +44,15 @@ export default {
         tooltip: {},
         xAxis: {
           type: 'category',
-          data: this.commodity_name
+          data: this.commodity_name,
+          axisLabel: {
+            interval: 0,
+            rotate: -30
+            // formatter: function (value) {
+            //   var str = value.split('')
+            //   return str.join('\n')
+            // }
+          }
           // 商品名称
         },
         yAxis: {
