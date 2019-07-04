@@ -142,8 +142,6 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      value1: '',
-      value2: '',
       // 查询变量
       filters: {
         order_id: '',
@@ -282,9 +280,8 @@ export default {
     handleSearch () {
       this.listLoading = true
       console.log(this.filters)
-      console.log(this.filters.time)
-      console.log(this.filters.time[0])
-      console.log(this.filters.time[1])
+      console.log(this.filters.order_create_time_start)
+      console.log(this.filters.order_create_time_end)
       // var order_id = this.filters.order_id
       this.getOrderListNew(1)
     },
@@ -330,8 +327,8 @@ export default {
       let para = {
         page: page,
         order_id: this.filters.order_id,
-        order_create_time_start: this.filters.time[0],
-        order_create_time_end: this.filters.time[1],
+        order_create_time_start: this.filters.order_create_time_start,
+        order_create_time_end: this.filters.order_create_time_end,
         order_price_min: this.filters.price[0],
         order_price_max: this.filters.price[1]
       }
