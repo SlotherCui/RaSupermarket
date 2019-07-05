@@ -103,7 +103,7 @@
             <!--<div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>-->
           <!--</el-upload>-->
           <el-upload
-            action="http://10.26.58.60:8080/uploadCommodityImg"
+            action="/uploadCommodityImg"
             class="avatar-uploader"
             accept="image/jpeg,image/gif,image/png"
             :http-request="myUpload"

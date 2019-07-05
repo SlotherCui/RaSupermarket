@@ -9,7 +9,7 @@
         <!--上传地址action-->
         <!--action="http://10.26.58.60:8080/uploadUserImg"-->
         <el-upload
-        action="http://10.26.58.60:8080/uploadUserImg"
+        action="/uploadUserImg"
         uploadCommodityImg
           class="avatar-uploader"
           name="file"
@@ -128,7 +128,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      supermarket_piclink: '/static/Avator.jpg',
+      supermarket_piclink: '',
       // form: {
       //   name: '德玛西亚超市',
       //   tax: '110',
@@ -269,6 +269,12 @@ export default {
   mounted () {
     this.getInfo()
     // 加载头像
+    var user = sessionStorage.getItem('user')
+    console.log(user)
+    if (user) {
+      user = JSON.parse(user)
+      this.supermarket_piclink = user.supermarket_piclink
+    }
   }
 }
 </script>

@@ -97,7 +97,8 @@ export default {
     getData () {
       // console.log("fjdaskllfj")
       // console.log(this.$cookie.get('user_id'))
-      window.open('http://10.27.193.222:8080/Price/GetData?user_id=' + this.$cookie.get('user_id'))
+      // window.open('http://10.27.193.222:8080/Price/GetData?user_id=' + this.$cookie.get('user_id'))
+      window.open('/Price/GetData?user_id=' + this.$cookie.get('user_id'))
     },
     // 单个修改
     SingleChange (index, commodity_barcode) {

@@ -73,13 +73,13 @@
           <!--</el-form>-->
         <!--</template>-->
       <!--</el-table-column>-->
-      <el-table-column prop="goods_supplier_id" :label="$t('message.goods_supplier_id')" width="300" sortable>
+      <el-table-column prop="goods_supplier_id" :label="$t('message.goods_supplier_id')" width="180" sortable>
       </el-table-column>
-      <el-table-column prop="goods_supplier" :label="$t('message.goods_supplier')" width="300" sortable>
+      <el-table-column prop="goods_supplier" :label="$t('message.goods_supplier')" width="180" sortable>
       </el-table-column>
-      <el-table-column prop="supplier_contact" :label="$t('message.supplier_contact')" width="300" sortable>
+      <el-table-column prop="supplier_contact" :label="$t('message.supplier_contact')" width="180" sortable>
       </el-table-column>
-      <el-table-column prop="supplier_tel" :label="$t('message.supplier_tel')" width="300" sortable>
+      <el-table-column prop="supplier_tel" :label="$t('message.supplier_tel')" width="180" sortable>
       </el-table-column>
       <el-table-column prop="supplier_addr" :label="$t('message.supplier_addr')" width="300" sortable>
       </el-table-column>
@@ -203,275 +203,14 @@
 // import util from '../../../common/js/util'
 // // import NProgress from 'nprogress'
 // import { getGoodListPage } from '../../../api/api'
-
+import {suppliers} from '../../../mock/data/Supplier'
 export default {
   data () {
     return {
       filters: {
         goods_supplier: ''
       },
-      goods: [
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        },
-        {
-          goods_supplier_id: '123',
-          goods_supplier: '臭弟弟',
-          supplier_user_name: '弟弟臭',
-          supplier_company: '小寅公司',
-          supplier_addr: '天津',
-          supplier_tel: '111',
-          supplier_contact: '董安'
-        }],
+      goods: suppliers,
       total: 0,
       page: 1
       // listLoading: false,
@@ -572,13 +311,13 @@ export default {
       console.log(para)
       this.listLoading = true
       // NProgress.start();
-      getGoodListPage(para).then((res) => {
-        console.log(res)
-        this.total = res.data.total
-        this.goods = res.data.goods
-        this.listLoading = false
-        // NProgress.done();
-      })
+      // getGoodListPage(para).then((res) => {
+      //   console.log(res)
+      //   this.total = res.data.total
+      //   this.goods = res.data.goods
+      //   this.listLoading = false
+      //   // NProgress.done();
+      // })
     },
     // // 显示编辑界面
     // handleEdit: function (index, row) {
