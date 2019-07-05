@@ -10,6 +10,7 @@
           <el-date-picker
             v-model="filters.time"
             type="daterange"
+            range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期">
           </el-date-picker>
@@ -31,7 +32,7 @@
         <el-form-item>
           <el-input  v-model="filters.price[0]" placeholder="请输入价格" prefix-icon="el-icon-search" style="width: 160px"></el-input>
         </el-form-item>
-        <span >___</span>
+        <span>___</span>
         <el-form-item>
           <el-input v-model="filters.price[1]" placeholder="请输入价格" prefix-icon="el-icon-search"  style="width: 160px"></el-input>
         </el-form-item>
@@ -278,7 +279,6 @@ export default {
     handleSearch () {
       console.log('搜索')
       this.listLoading = true
-
       // console.log(this.filters)
       // console.log(this.filters.order_create_time_start)
       // console.log(this.filters.order_create_time_end)
@@ -333,9 +333,6 @@ export default {
         order_price_max: this.filters.price[1]
       }
       console.log('输入', para)
-
-      this.filters.price[1] = ''
-      this.filters.price[0] = ''
       requestOrderListnew(para).then((res) => {
         console.log('销售记录', res)
         if (res.code === 0) {
