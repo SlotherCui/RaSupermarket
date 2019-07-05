@@ -541,6 +541,7 @@ export default {
           if (res.code === 0) {
             this.$message({message: '增加成功', type: 'success'})
             this.$set(this.showbutton, this.addindex, false)
+            this.regetGoods()
           } else {
             this.$message({message: '增加失败' + res.code, type: 'fail'})
             this.$set(this.rollbutton, this.addindex, true)
