@@ -333,9 +333,6 @@ export default {
         order_price_max: this.filters.price[1]
       }
       console.log('输入', para)
-
-      this.filters.price[1] = ''
-      this.filters.price[0] = ''
       requestOrderListnew(para).then((res) => {
         console.log('销售记录', res)
         if (res.code === 0) {
