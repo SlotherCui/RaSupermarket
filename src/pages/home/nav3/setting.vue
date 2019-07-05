@@ -18,20 +18,20 @@
         </el-form>
       </el-row>
       <el-row>
-        <el-button type="text" @click="opinionVisible = true" style="font-size: large; padding-left: 5%;" icon="el-icon-info">意见反馈</el-button>
+        <el-button type="text" @click="opinionVisible = true" style="font-size: large; padding-left: 5%;" icon="el-icon-info">{{$t('message.feedback')}}</el-button>
       </el-row>
       <el-row>
-        <el-button type="text" @click="aboutus = true" style="font-size: large; padding-left: 5%;" icon="el-icon-question">关于我们</el-button>
+        <el-button type="text" @click="aboutus = true" style="font-size: large; padding-left: 5%;" icon="el-icon-question">{{$t('message.about')}}</el-button>
       </el-row>
     </el-col>
 
-    <el-dialog title="关于我们" :visible.sync="aboutus" width="30%" >
+    <el-dialog :title="$t('message.about')" :visible.sync="aboutus" width="30%" >
       <span>山东大学2016级实训项目</span>
       <span>成员：崔玉峰 辛越 张翰林</span>
       <span slot="footer" class="dialog-footer"><el-button type="primary" @click="aboutus = false">确定</el-button></span>
     </el-dialog>
 
-    <el-dialog title="意见反馈" :visible.sync="opinionVisible" width="30%">
+    <el-dialog :title="$t('message.feedback')" :visible.sync="opinionVisible" width="30%">
       <el-form :model="opinionForm" label-width="80px" ref="opinionForm" :visible.sync="opinionVisible" >
         <el-form-item label="您的意见">
         <el-input type="textarea" v-model="opinionForm.feedbcak" autocomplete="off" :autosize="{ minRows: 7, maxRows: 10}"></el-input>

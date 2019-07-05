@@ -30,21 +30,21 @@ const i18n = new VueI18n({
 })
 
 // 路由跳转之前
-router.beforeEach((to, from, next) => {
-  // NProgress.start();
-  // 跳转到登录页自动清除用户登录信息
-  if (to.path === '/login2') {
-    sessionStorage.removeItem('user')
-  }
-  // 如果用户登录信息存在则正常跳转，否则跳转到登录页
-  let user = JSON.parse(sessionStorage.getItem('user'))
-  console.log('user', user)
-  if (!user && to.path != '/login2') {
-    next({ path: '/login2' })
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   // NProgress.start();
+//   // 跳转到登录页自动清除用户登录信息
+//   if (to.path === '/login2') {
+//     sessionStorage.removeItem('user')
+//   }
+//   // 如果用户登录信息存在则正常跳转，否则跳转到登录页
+//   let user = JSON.parse(sessionStorage.getItem('user'))
+//   console.log('user', user)
+//   if (!user && to.path != '/login2') {
+//     next({ path: '/login2' })
+//   } else {
+//     next()
+//   }
+// })
 
 ElementLocale.i18n((key, value) => i18n.t(key, value))
 new Vue({
