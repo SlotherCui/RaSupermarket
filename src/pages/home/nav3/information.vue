@@ -37,7 +37,7 @@
       <!--action="https://jsonplaceholder.typicode.com/posts/"-->
 
     </el-form-item>
-    <el-form-item label="超市ID" label-width="150px">
+    <el-form-item :label="$t('message.UserID')" label-width="150px">
       <el-input v-model="form.UserName" disabled=true style="width: 300px"></el-input>
     </el-form-item>
     <el-form-item :label="$t('message.supermarket_name')" label-width="150px">

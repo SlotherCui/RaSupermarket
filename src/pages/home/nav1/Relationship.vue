@@ -4,7 +4,7 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.supermarket_id" placeholder='请输入超市编号' @input="change" @change="change"></el-input>
+          <el-input v-model="filters.supermarket_id" :placeholder="$t('message.please_input_sid_bar')" @input="change" @change="change"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSearch">{{$t('message.query')}}</el-button>
@@ -60,7 +60,7 @@
     <!--新增界面-->
     <el-dialog :title="$t('message.shop_change_relation')" v-model="addFormVisible" v-show="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
       <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :inline="true" v-model="addVisible" v-show="addVisible" :visible.sync="addVisible">
-        <el-form-item label="超市编号" prop="supermarket_id">
+        <el-form-item :label="$t('message.supermarket_id')" prop="supermarket_id">
           <el-input v-model="addForm.supermarket_id" auto-complete="off" style="width: 280px"></el-input>
         </el-form-item>
         <el-button type="primary" @click.native="addRelation" :loading="addLoading">{{$t('message.add')}}</el-button>
@@ -104,7 +104,7 @@ export default {
       addVisible: true,
       addFormRules: {
         supermarket_id: [
-          { required: true, message: '请输入超市编号', trigger: 'blur' }
+          { required: true, message: 'please_input_sid_bar', trigger: 'blur' }
         ]
       },
       OpenStauts: [{text: '关闭', color: 'success'}],

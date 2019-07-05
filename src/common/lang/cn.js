@@ -17,7 +17,13 @@ const cn = {
     'goods_model': '规格型号',
     'goods_price': '价格',
     'goods_describe': '商品描述',
-    'goods_supplier_id': '供应商编号',
+    'goods_supplier_id': '供应商编号:',
+    'goods_supplier': '供应商名字:',
+    'supplier_user_name': '用户名:',
+    'supplier_company': '供应商公司:',
+    'supplier_addr': '供应商地址:',
+    'supplier_tel': '供应商电话:',
+    'supplier_contact': '联系人:',
     // 更新
     'commodity_barcode': '条码号',
     'commodity_name': '商品名称',
@@ -67,6 +73,7 @@ const cn = {
     'supermarket_email': '超市邮箱',
     'supermarket_decription': '超市描述',
     'supermarket_state': '超市关联状态',
+    'UserID': '超市ID',
     // 操作
     'query': '查询',
     'add': '新增',
@@ -84,7 +91,8 @@ const cn = {
     'commit': '确认',
     // 其他占位符等...
     'please_input_bar': '请输入条码号',
-    'please_input_sid_bar': '请输入商家编号'
+    'please_input_sid_bar': '请输入商家编号',
+    'please_input_supplier_bar': '请输入供应商名称'
   },
   ...zhLocale
 }

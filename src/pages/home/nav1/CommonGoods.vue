@@ -5,7 +5,7 @@
     <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
       <el-form :inline="true" :model="filters">
         <el-form-item>
-          <el-input v-model="filters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>
+          <el-input v-model="filters.goods_supplier" :placeholder="$t('message.please_input_supplier_bar')"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-on:click="getGoods">{{$t('message.query')}}</el-button>
@@ -18,55 +18,70 @@
     </el-col>
 
     <!--列表-->
+    <!--goods: [-->
+    <!--{-->
+    <!--goods_supplier_id: '123',-->
+    <!--goods_supplier: '臭弟弟',-->
+    <!--supplier_user_name: '弟弟臭',-->
+    <!--supplier_company: '小寅公司',-->
+    <!--supplier_addr: '天津',-->
+    <!--supplier_tel: '111',-->
+    <!--supplier_contact: '董安'-->
+    <!--},-->
     <el-table :data="goods"  style="width: 100%;" >
-      <el-table-column type="expand" width="50">
+      <el-table-column type="expand" width="55">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item :label="$t('message.commodity_piclink')" >
-                <img src="/static/good.jpg" width="100px"/>
-            </el-form-item>
-            <el-form-item :label="$t('message.commodity_barcode')" >
-              <span>{{ goods.commodity_barcode }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.commodity_name')" >
-              <span>{{ goods.commodity_name }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.commodity_price')">
-              <span>{{ goods.commodity_price }}</span>
-              <span>元</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.goods_brand')" >
-              <span>{{ goods.goods_brand }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.goods_supplier_id')" >
-              <span>{{ goods.commodity_producer }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.goods_model')">
-              <span>{{ goods.commodity_specification }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.goods_producer')" >
-              <span>{{ goods.commodity_producer }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.goods_update_time')">
-              <span>{{ goods.commodity_barcode }}</span>
-            </el-form-item>
-            <el-form-item :label="$t('message.goods_describe')" >
-              <span>{{ goods.commodity_description }}</span>
-            </el-form-item>
-          </el-form>
+          <el-row>
+            <el-col :span="9">
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_supplier_id')}}</span><span>{{props.row.goods_supplier_id}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.goods_supplier')}}</span><span>{{props.row.goods_supplier}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.supplier_user_name')}}</span><span>{{props.row.supplier_user_name}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.supplier_company')}}</span><span>{{props.row.supplier_company}}</span></div>
+            </el-col>
+            <el-col :span="9">
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.supplier_addr')}}</span><span>{{props.row.supplier_addr}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.supplier_tel')}}</span><span>{{props.row.supplier_tel}}</span></div>
+              <div style="line-height: 25px"><span class="goodsItem">{{$t('message.supplier_contact')}}</span><span>{{props.row.supplier_contact}}</span></div>
+            </el-col>
+          </el-row>
         </template>
       </el-table-column>
-      <el-table-column prop="commodity_barcode" :label="$t('message.goods_barcode')" width="120" sortable>
+      <!--<el-table-column type="expand" width="80">-->
+        <!--<template slot-scope="props">-->
+          <!--<el-form label-position="left" inline class="demo-table-expand" >-->
+            <!--<el-form-item :label="$t('message.goods_supplier_id')" prop="goods_supplier_id">-->
+              <!--<span>{{ goods.goods_supplier_id }}</span>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item :label="$t('message.goods_supplier')">-->
+              <!--<span>{{ goods.goods_supplier }}</span>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item :label="$t('message.supplier_user_name')">-->
+              <!--<span>{{ goods.supplier_user_name }}</span>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item :label="$t('message.supplier_company')" >-->
+              <!--<span>{{ goods.supplier_company }}</span>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item :label="$t('message.supplier_addr')" >-->
+              <!--<span>{{ goods.supplier_addr }}</span>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item :label="$t('message.supplier_tel')">-->
+              <!--<span>{{ goods.supplier_tel }}</span>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item :label="$t('message.supplier_contact')" >-->
+              <!--<span>{{ goods.supplier_contact }}</span>-->
+            <!--</el-form-item>-->
+          <!--</el-form>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <el-table-column prop="goods_supplier_id" :label="$t('message.goods_supplier_id')" width="300" sortable>
       </el-table-column>
-      <el-table-column prop="commodity_producer" :label="$t('message.goods_supplier_id')" width="130" sortable>
+      <el-table-column prop="goods_supplier" :label="$t('message.goods_supplier')" width="300" sortable>
       </el-table-column>
-      <el-table-column prop="commodity_name" :label="$t('message.goods_name')" width="150"  sortable>
+      <el-table-column prop="supplier_contact" :label="$t('message.supplier_contact')" width="300" sortable>
       </el-table-column>
-      <el-table-column prop="commodity_specification" :label="$t('message.goods_model')" width="100"  sortable>
+      <el-table-column prop="supplier_tel" :label="$t('message.supplier_tel')" width="300" sortable>
       </el-table-column>
-      <el-table-column prop="commodity_current_price" :label="$t('message.goods_price')" width="80" sortable>
-      </el-table-column>
-      <el-table-column prop="commodity_description" :label="$t('message.goods_describe')" min_width="200" sortable>
+      <el-table-column prop="supplier_addr" :label="$t('message.supplier_addr')" width="300" sortable>
       </el-table-column>
       <!--  <el-table-column :label="$t('message.operation')" width="250">
           <template slot-scope="scope">
@@ -185,101 +200,361 @@
   }
 </style>
 <script>
-import util from '../../../common/js/util'
-// import NProgress from 'nprogress'
-import { getGoodListPage } from '../../../api/api'
+// import util from '../../../common/js/util'
+// // import NProgress from 'nprogress'
+// import { getGoodListPage } from '../../../api/api'
 
 export default {
   data () {
     return {
-      imageUrl: '/static/good.jpg',
       filters: {
-        barcode: ''
+        goods_supplier: ''
       },
-      goods: [],
+      goods: [
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        },
+        {
+          goods_supplier_id: '123',
+          goods_supplier: '臭弟弟',
+          supplier_user_name: '弟弟臭',
+          supplier_company: '小寅公司',
+          supplier_addr: '天津',
+          supplier_tel: '111',
+          supplier_contact: '董安'
+        }],
       total: 0,
-      page: 1,
-      listLoading: false,
-      sels: [], // 列表选中列
-      editFormVisible: false, // 编辑界面是否显示
-      editLoading: false,
-      editFormRules: {
-        name: [
-          { required: true, message: '输入商品名称', trigger: 'blur' }
-        ],
-        price: [
-          { required: true, message: '输入价格', trigger: 'blur' }
-        ],
-        barcode: [
-          { required: true, message: '输入条形码', trigger: 'blur' }
-        ],
-        img: [
-          { required: true, message: '上传图片', trigger: 'blur' }
-        ],
-        brand: [
-          { required: true, message: '输入商标', trigger: 'blur' }
-        ],
-        producer: [
-          { required: true, message: '输入生产厂家', trigger: 'blur' }
-        ],
-        desc: [
-          { required: true, message: '商品描述', trigger: 'blur' }
-        ],
-        supplier: [
-          { required: true, message: '供应商', trigger: 'blur' }
-        ]
-      },
-      // 编辑界面数据
-      editForm: {
-        barcode: 0,
-        name: '',
-        price: 0,
-        desc: '',
-        brand: '',
-        prodecer: '',
-        img: '/static/good.jpg',
-        gys: ''
-      },
-
-      addFormVisible: false, // 新增界面是否显示
-      addLoading: false,
-      addFormRules: {
-        name: [
-          { required: true, message: '输入商品名称', trigger: 'blur' }
-        ],
-        price: [
-          { required: true, message: '输入价格', trigger: 'blur' }
-        ],
-        barcode: [
-          { required: true, message: '输入条形码', trigger: 'blur' }
-        ],
-        img: [
-          { required: true, message: '上传图片', trigger: 'blur' }
-        ],
-        brand: [
-          { required: true, message: '输入商标', trigger: 'blur' }
-        ],
-        producer: [
-          { required: true, message: '输入生产厂家', trigger: 'blur' }
-        ],
-        desc: [
-          { required: true, message: '商品描述', trigger: 'blur' }
-        ],
-        supplier: [
-          { required: true, message: '供应商', trigger: 'blur' }
-        ]
-      },
-      // 新增界面数据
-      addForm: {
-        barcode: '',
-        name: '',
-        price: '',
-        desc: '',
-        brand: '',
-        prodecer: '',
-        img: '',
-        gys: ''
-      }
+      page: 1
+      // listLoading: false,
+      // sels: [] // 列表选中列
+      // editFormVisible: false, // 编辑界面是否显示
+      // editLoading: false,
+      // editFormRules: {
+      //   name: [
+      //     { required: true, message: '输入商品名称', trigger: 'blur' }
+      //   ],
+      //   price: [
+      //     { required: true, message: '输入价格', trigger: 'blur' }
+      //   ],
+      //   barcode: [
+      //     { required: true, message: '输入条形码', trigger: 'blur' }
+      //   ],
+      //   img: [
+      //     { required: true, message: '上传图片', trigger: 'blur' }
+      //   ],
+      //   brand: [
+      //     { required: true, message: '输入商标', trigger: 'blur' }
+      //   ],
+      //   producer: [
+      //     { required: true, message: '输入生产厂家', trigger: 'blur' }
+      //   ],
+      //   desc: [
+      //     { required: true, message: '商品描述', trigger: 'blur' }
+      //   ],
+      //   supplier: [
+      //     { required: true, message: '供应商', trigger: 'blur' }
+      //   ]
+      // },
+      // // 编辑界面数据
+      // editForm: {
+      //   barcode: 0,
+      //   name: '',
+      //   price: 0,
+      //   desc: '',
+      //   brand: '',
+      //   prodecer: '',
+      //   img: '/static/good.jpg',
+      //   gys: ''
+      // },
+      //
+      // addFormVisible: false, // 新增界面是否显示
+      // addLoading: false,
+      // addFormRules: {
+      //   name: [
+      //     { required: true, message: '输入商品名称', trigger: 'blur' }
+      //   ],
+      //   price: [
+      //     { required: true, message: '输入价格', trigger: 'blur' }
+      //   ],
+      //   barcode: [
+      //     { required: true, message: '输入条形码', trigger: 'blur' }
+      //   ],
+      //   img: [
+      //     { required: true, message: '上传图片', trigger: 'blur' }
+      //   ],
+      //   brand: [
+      //     { required: true, message: '输入商标', trigger: 'blur' }
+      //   ],
+      //   producer: [
+      //     { required: true, message: '输入生产厂家', trigger: 'blur' }
+      //   ],
+      //   desc: [
+      //     { required: true, message: '商品描述', trigger: 'blur' }
+      //   ],
+      //   supplier: [
+      //     { required: true, message: '供应商', trigger: 'blur' }
+      //   ]
+      // },
+      // // 新增界面数据
+      // addForm: {
+      //   barcode: '',
+      //   name: '',
+      //   price: '',
+      //   desc: '',
+      //   brand: '',
+      //   prodecer: '',
+      //   img: '',
+      //   gys: ''
+      // }
 
     }
   },
@@ -305,78 +580,78 @@ export default {
         // NProgress.done();
       })
     },
-    // 显示编辑界面
-    handleEdit: function (index, row) {
-      this.editFormVisible = true
-      this.editForm = Object.assign({}, row)
-    },
-    // 显示新增界面
-    handleAdd: function () {
-      this.addFormVisible = true
-    },
-    // 编辑
-    editSubmit: function () {
-      this.$refs.editForm.validate((valid) => {
-        if (valid) {
-          this.$confirm('确认提交吗？', '提示', {}).then(() => {
-            this.editLoading = true
-            // NProgress.start();
-            let para = Object.assign({}, this.editForm)
-            para.date = (!para.date || para.date === '') ? '' : util.formatDate.format(new Date(para.date), 'yyyy-MM-dd')
-            editGood(para).then((res) => {
-              this.editLoading = false
-              // NProgress.done();
-              this.$message({
-                message: '提交成功',
-                type: 'success'
-              })
-              this.$refs['editForm'].resetFields()
-              this.editFormVisible = false
-              this.getGoods()
-            })
-          })
-        }
-      })
-    },
-    // 新增
-    addSubmit: function () {
-      this.$refs.addForm.validate((valid) => {
-        if (valid) {
-          this.$confirm('确认提交吗？', '提示', {}).then(() => {
-            this.addLoading = true
-            // NProgress.start();
-            let para = Object.assign({}, this.addForm)
-            para.date = (!para.date || para.date === '') ? '' : util.formatDate.format(new Date(para.date), 'yyyy-MM-dd')
-            addGood(para).then((res) => {
-              this.addLoading = false
-              // NProgress.done();
-              this.$message({
-                message: '提交成功',
-                type: 'success'
-              })
-              this.$refs['addForm'].resetFields()
-              this.addFormVisible = false
-              this.getGoods()
-            })
-          })
-        }
-      })
-    },
+    // // 显示编辑界面
+    // handleEdit: function (index, row) {
+    //   this.editFormVisible = true
+    //   this.editForm = Object.assign({}, row)
+    // },
+    // // 显示新增界面
+    // handleAdd: function () {
+    //   this.addFormVisible = true
+    // },
+    // // 编辑
+    // editSubmit: function () {
+    //   this.$refs.editForm.validate((valid) => {
+    //     if (valid) {
+    //       this.$confirm('确认提交吗？', '提示', {}).then(() => {
+    //         this.editLoading = true
+    //         // NProgress.start();
+    //         let para = Object.assign({}, this.editForm)
+    //         para.date = (!para.date || para.date === '') ? '' : util.formatDate.format(new Date(para.date), 'yyyy-MM-dd')
+    //         editGood(para).then((res) => {
+    //           this.editLoading = false
+    //           // NProgress.done();
+    //           this.$message({
+    //             message: '提交成功',
+    //             type: 'success'
+    //           })
+    //           this.$refs['editForm'].resetFields()
+    //           this.editFormVisible = false
+    //           this.getGoods()
+    //         })
+    //       })
+    //     }
+    //   })
+    // },
+    // // 新增
+    // addSubmit: function () {
+    //   this.$refs.addForm.validate((valid) => {
+    //     if (valid) {
+    //       this.$confirm('确认提交吗？', '提示', {}).then(() => {
+    //         this.addLoading = true
+    //         // NProgress.start();
+    //         let para = Object.assign({}, this.addForm)
+    //         para.date = (!para.date || para.date === '') ? '' : util.formatDate.format(new Date(para.date), 'yyyy-MM-dd')
+    //         addGood(para).then((res) => {
+    //           this.addLoading = false
+    //           // NProgress.done();
+    //           this.$message({
+    //             message: '提交成功',
+    //             type: 'success'
+    //           })
+    //           this.$refs['addForm'].resetFields()
+    //           this.addFormVisible = false
+    //           this.getGoods()
+    //         })
+    //       })
+    //     }
+    //   })
+    // },
     selsChange: function (sels) {
       this.sels = sels
-    },
-    onBeforeUpload (file) {
-      const isIMAGE = file.type === 'image/jpeg' || 'image/gif' || 'image/png'
-      const isLt1M = file.size / 1024 / 1024 < 1
-
-      if (!isIMAGE) {
-        this.$message.error('上传文件只能是图片格式!')
-      }
-      if (!isLt1M) {
-        this.$message.error('上传文件大小不能超过 1MB!')
-      }
-      return isIMAGE && isLt1M
     }
+    // onBeforeUpload (file) {
+    //   const isIMAGE = file.type === 'image/jpeg' || 'image/gif' || 'image/png'
+    //   const isLt1M = file.size / 1024 / 1024 < 1
+    //
+    //   if (!isIMAGE) {
+    //     this.$message.error('上传文件只能是图片格式!')
+    //   }
+    //   if (!isLt1M) {
+    //     this.$message.error('上传文件大小不能超过 1MB!')
+    //   }
+    //   return isIMAGE && isLt1M
+    // }
   },
   mounted () {
     this.getGoods()
@@ -390,4 +665,10 @@ export default {
     padding: 10px;
     margin: 10px 0px
     height 70px
+  .goodsItem {
+    display:-moz-inline-box;
+    display:inline-block;
+    min-width: 80px;
+    color: #99a9bf;
+  }
 </style>

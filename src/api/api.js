@@ -124,14 +124,15 @@ export const editGoods = params => { return axios.post(`/Commodity/edit`, params
 // 获取供应商商品列表
 
 export const getGoodListPage = params => { return axios.get(`/CommonGoods/listpage`, { params: params }).then(res => res.data) }
-// 请求方法 post /Commodity/edit
+// 请求方法 post /CommonGoods/listpage
 // 请求体
-//         commodity_barcode
+//         goods_supplier
 //         page
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
 //      data
+
 // *********************************************登录页面相关接口
 // 登录接口
 export const requestLogin = params => {
