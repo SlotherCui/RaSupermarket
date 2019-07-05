@@ -1,16 +1,9 @@
 import axios from 'axios'
 import qs from 'qs'
 // axios.defaults.baseURL = '/api'
+// 请求配置
 axios.defaults.baseURL = '/'
 axios.defaults.withCredentials = true
-// axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.headers['Content-Type'] = 'application/json'
-
-// export const removeGood = params => { return axios.get(`/CommonGoods/remove`, { params: params }) }
-// export const batchRemoveGood = params => { return axios.get(`/CommonGoods/batchremove`, { params: params }) }
-// export const editGood = params => { return axios.get(`/CommonGoods/edit`, { params: params }) }
-// export const addGood = params => { return axios.get(`/CommonGoods/add`, { params: params }) }
-// export const getInfo = params => { return axios.get(`/information`, { params: params }) }商家信息接口
 
 // *************************  我的商品维护相关接口
 // 根据条码号分页获取商品 & 搜索自身商品库商品

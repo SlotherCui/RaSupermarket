@@ -72,6 +72,7 @@ export default {
     upFeedBack () {
       let para = {feedback: this.opinionForm.feedbcak}
       console.log('输入', para)
+      // 调用接口执行网络请求上传意见
       postFeedBack(para).then((res) => {
         console.log('输出', res)
         if (res.code === 0) {
