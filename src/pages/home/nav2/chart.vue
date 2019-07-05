@@ -1,6 +1,6 @@
 <template>
   <section class="chart-container">
-    <el-row>
+    <el-row style="margin-top: 8%">
       <el-col :span="12">
         <div id="chartColumn" style="width:100%; height:400px;"></div>
       </el-col>
@@ -173,7 +173,7 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: [this.getDay(-7), this.getDay(-6), this.getDay(-5), this.getDay(-4), this.getDay(-3), this.getDay(-2), this.getDay(-1)]
+          data: [this.getDay(-6), this.getDay(-5), this.getDay(-4), this.getDay(-3), this.getDay(-2), this.getDay(-1), this.getDay(0)]
         },
         yAxis: {
           type: 'value'
@@ -203,7 +203,7 @@ export default {
       requestLineChart(para).then((res) => {
         console.log('drawLineChart', res)
         if (res.code === 0) {
-          this.sales_volume = res.data.sales_volume
+          this.sales_volume = res.data.sales_volume.reverse()
           this.chartLine.setOption({
             series: [
               {

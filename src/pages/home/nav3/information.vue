@@ -37,6 +37,9 @@
       <!--action="https://jsonplaceholder.typicode.com/posts/"-->
 
     </el-form-item>
+    <el-form-item label="超市ID" label-width="150px">
+      <el-input v-model="form.UserName" disabled=true style="width: 300px"></el-input>
+    </el-form-item>
     <el-form-item :label="$t('message.supermarket_name')" label-width="150px">
       <el-input v-model="form.supermarket_name" :disabled="inputDisabled" style="width: 300px"></el-input>
     </el-form-item>
@@ -137,6 +140,7 @@ export default {
       //   desc: '卖各种极品装备：无尽之刃、饮血剑、提莫的狗头'
       // },
       form: {
+        UserName: '',
         supermarket_name: '',
         supermarket_tax: '',
         supermarket_tel: '',
@@ -200,6 +204,7 @@ export default {
       requestInformation(para).then((res) => {
         if (res.code === 0) {
           this.form = res.data
+          this.form.UserName = this.$cookie.get('user_id')
         }
         // NProgress.done();
       })
@@ -264,11 +269,6 @@ export default {
   mounted () {
     this.getInfo()
     // 加载头像
-    // var user = sessionStorage.getItem('user')
-    // if (user) {
-    //   user = JSON.parse(user)
-    //   this.supermarket_piclink = user.headpic
-    // }
   }
 }
 </script>

@@ -10,6 +10,7 @@
           <el-date-picker
             v-model="filters.time"
             type="daterange"
+            range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期">
           </el-date-picker>
@@ -30,11 +31,12 @@
         <!--</el-form-item>-->
         <el-form-item>
           <el-input  v-model="filters.price[0]" placeholder="请输入价格" prefix-icon="el-icon-search" style="width: 160px"></el-input>
-        </el-form-item>
-        <span >___</span>
-        <el-form-item>
+          <span>至</span>
           <el-input v-model="filters.price[1]" placeholder="请输入价格" prefix-icon="el-icon-search"  style="width: 160px"></el-input>
         </el-form-item>
+        <!---->
+        <!--<el-form-item>-->
+        <!--</el-form-item>-->
         <el-form-item>
           <el-button type="primary" v-on:click="handleSearch">{{$t('message.query')}}</el-button>
         </el-form-item>
@@ -144,7 +146,7 @@ export default {
       // 查询变量
       filters: {
         order_id: '',
-        time: [],
+        time: ['', ''],
         price: ['', '']
       },
       sells: [],
@@ -278,7 +280,6 @@ export default {
     handleSearch () {
       console.log('搜索')
       this.listLoading = true
-
       // console.log(this.filters)
       // console.log(this.filters.order_create_time_start)
       // console.log(this.filters.order_create_time_end)
@@ -316,21 +317,23 @@ export default {
     },
     // 请求销售记录升级版
     getOrderListNew (page) {
-      console.log('输入here')
       this.listLoading = true
-      if (this.filters.price[0] === '') {
-        this.filters.price[0] = 0
+      var min = this.filters.price[0]
+      if (min === '') {
+        min = 0
       }
-      if (this.filters.price[1] === '') {
-        this.filters.price[1] = 999999
+      var max = this.filters.price[1]
+      if (max === '') {
+        max = 999999
       }
+      console.log(this.filters.time[0])
       let para = {
         page: page,
         order_id: this.filters.order_id,
         order_create_time_start: util.formatDate.format(this.filters.time[0], 'yyyy-MM-dd'),
         order_create_time_end: util.formatDate.format(this.filters.time[1], 'yyyy-MM-dd'),
-        order_price_min: this.filters.price[0],
-        order_price_max: this.filters.price[1]
+        order_price_min: min,
+        order_price_max: max
       }
       console.log('输入', para)
       requestOrderListnew(para).then((res) => {

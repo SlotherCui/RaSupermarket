@@ -23,7 +23,7 @@ export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`,
 //      codeInfo 错误信息
 //      data
 //           total
-//            [{
+//           commodity_list[{
 //           commodity_barcode
 //           commodity_name
 //           commodity_specification
@@ -34,24 +34,25 @@ export const getMyGoodListPage = params => { return axios.get(`/Commodity/list`,
 //           commodity_piclink
 //           }]
 // 根据条码号分页获取商品 & 搜索自身商品库商品 新接口
-export const getMyGoodListPagenew = params => { return axios.get(`/Commodity/list`, { params: params }).then(res => res.data) } // OK
+export const getMyGoodListPagenew = params => { return axios.get(`/Commodity/listnew`, { params: params }).then(res => res.data) } // OK
 // export const getMyGoodListPagenew = params => { return axios.get(`/Commodity/listnew`, { params: params }).then(res => res.data) }
 // 请求方法 get /Commodity/listnew
 // 请求体  page 页号
 //         commodity_barcode
 //         commodity_name
-//         current_price
+//         commodity_current_price_min
+//         commodity_current_price_max
 //         commodity_description
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
 //      data
 //           total
-//            [{
+//           commodity_list[{
 //           commodity_barcode
 //           commodity_name
 //           commodity_specification
-//           commodity_price
+//           commodity_current_price
 //           commodity_description
 //           commodity_brand
 //           commodity_producer
