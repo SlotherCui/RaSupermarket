@@ -24,10 +24,9 @@
           <el-input v-model="mygoodsfilters.commodity_name" prefix-icon="el-icon-goods" placeholder="商品名称" ></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="mygoodsfilters.commodity_current_price_min" prefix-icon="el-icon-price-tag" placeholder="最低价格"></el-input>
-        </el-form-item>
-        <el-form-item label="">
-          <el-input v-model="mygoodsfilters.commodity_current_price_max" prefix-icon="el-icon-price-tag" placeholder="最高价格"></el-input>
+          <el-input v-model="mygoodsfilters.commodity_current_price_min" prefix-icon="el-icon-price-tag" placeholder="最低价格" style="width: 160px"></el-input>
+          <span>至</span>
+          <el-input v-model="mygoodsfilters.commodity_current_price_max" prefix-icon="el-icon-price-tag" placeholder="最高价格" style="width: 160px"></el-input>
         </el-form-item>
         <el-form-item label="">
           <el-input v-model="mygoodsfilters.commodity_description" prefix-icon="el-icon-edit-outline" placeholder="商品描述"></el-input>
@@ -88,7 +87,7 @@
     <el-col :span="24" class="toolbar2">
       <!--      批量删除-->
       <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0" icon="el-icon-delete">{{$t('message.batchDelete')}}</el-button>
-      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+      <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" :current-page="page" style="float:right;">
       </el-pagination>
     </el-col>
     <!--编辑界面-->
@@ -354,14 +353,30 @@ export default {
       this.$refs[formName].resetFields()
     },
     // ********************************************************   获取商品表
-    // 获取第几个页面 条码固定0
+    // 获取第几个页面 条码固定
     regetGoods () {
+      // let para = {
+      //   page: this.page,
+      //   commodity_barcode: ''
+      // }
+      var min = this.mygoodsfilters.commodity_current_price_min
+      if (min === '') {
+        min = '0'
+      }
+      var max = this.mygoodsfilters.commodity_current_price_max
+      if (max === '') {
+        max = '9999999'
+      }
       let para = {
         page: this.page,
-        commodity_barcode: ''
+        commodity_barcode: this.mygoodsfilters.barcode,
+        commodity_name: this.mygoodsfilters.commodity_name,
+        commodity_current_price_min: min,
+        commodity_current_price_max: max,
+        commodity_description: this.mygoodsfilters.commodity_description
       }
       this.listLoading = true
-      getMyGoodListPage(para).then((res) => {
+      getMyGoodListPagenew(para).then((res) => {
         console.log(res)
         this.total = res.data.total
         this.goodslist = res.data.commodity_list
@@ -377,6 +392,7 @@ export default {
     // ***** toolbar   搜 索   +   新 增
     // 搜索
     searchCommodity () {
+      this.page = 1
       var min = this.mygoodsfilters.commodity_current_price_min
       if (min === '') {
         min = '0'
@@ -386,7 +402,7 @@ export default {
         max = '9999999'
       }
       let para = {
-        page: 1,
+        page: this.page,
         commodity_barcode: this.mygoodsfilters.barcode,
         commodity_name: this.mygoodsfilters.commodity_name,
         commodity_current_price_min: min,

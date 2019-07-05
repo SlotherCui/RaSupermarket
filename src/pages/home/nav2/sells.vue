@@ -317,7 +317,6 @@ export default {
     },
     // 请求销售记录升级版
     getOrderListNew (page) {
-      console.log('输入here')
       this.listLoading = true
       var min = this.filters.price[0]
       if (min === '') {
