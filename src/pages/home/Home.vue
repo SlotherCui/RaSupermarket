@@ -97,8 +97,8 @@ export default {
       collapsed: false,
       open_list: ['1', '2'], // 初始打开导航条
       // 用户名 用户头像ID
-      UserName: '测试人员',
-      UserAvatar: '/static/Avator.jpg'
+      UserName: '',
+      UserAvatar: ''
     }
   },
   methods: {
