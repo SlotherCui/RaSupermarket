@@ -24,7 +24,10 @@
           <el-input v-model="mygoodsfilters.commodity_name" prefix-icon="el-icon-goods" placeholder="商品名称" ></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="mygoodsfilters.current_price" prefix-icon="el-icon-price-tag" placeholder="价格"></el-input>
+          <el-input v-model="mygoodsfilters.commodity_current_price_min" prefix-icon="el-icon-price-tag" placeholder="最低价格"></el-input>
+        </el-form-item>
+        <el-form-item label="">
+          <el-input v-model="mygoodsfilters.commodity_current_price_max" prefix-icon="el-icon-price-tag" placeholder="最高价格"></el-input>
         </el-form-item>
         <el-form-item label="">
           <el-input v-model="mygoodsfilters.commodity_description" prefix-icon="el-icon-edit-outline" placeholder="商品描述"></el-input>
@@ -242,7 +245,8 @@ export default {
       mygoodsfilters: {
         barcode: '',
         commodity_name: '',
-        current_price: '',
+        commodity_current_price_min: '',
+        commodity_current_price_max: '',
         commodity_description: ''
       },
       sels: [],
@@ -377,9 +381,11 @@ export default {
         page: 1,
         commodity_barcode: this.mygoodsfilters.barcode,
         commodity_name: this.mygoodsfilters.commodity_name,
-        current_price: this.mygoodsfilters.current_price,
+        commodity_current_price_min: this.mygoodsfilters.commodity_current_price_min,
+        commodity_current_price_max: this.mygoodsfilters.commodity_current_price_max,
         commodity_description: this.mygoodsfilters.commodity_description
       }
+      console.log(para)
       this.listLoading = true
       getMyGoodListPagenew(para).then((res) => {
         this.total = res.data.total
