@@ -318,19 +318,21 @@ export default {
     getOrderListNew (page) {
       console.log('输入here')
       this.listLoading = true
-      if (this.filters.price[0] === '') {
-        this.filters.price[0] = 0
+      var min = this.filters.price[0]
+      if (min === '') {
+        min = 0
       }
-      if (this.filters.price[1] === '') {
-        this.filters.price[1] = 999999
+      var max = this.filters.price[1]
+      if (max === '') {
+        max = 999999
       }
       let para = {
         page: page,
         order_id: this.filters.order_id,
         order_create_time_start: util.formatDate.format(this.filters.time[0], 'yyyy-MM-dd'),
         order_create_time_end: util.formatDate.format(this.filters.time[1], 'yyyy-MM-dd'),
-        order_price_min: this.filters.price[0],
-        order_price_max: this.filters.price[1]
+        order_price_min: min,
+        order_price_max: max
       }
       console.log('输入', para)
       requestOrderListnew(para).then((res) => {

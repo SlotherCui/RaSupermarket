@@ -203,7 +203,7 @@ export default {
       requestLineChart(para).then((res) => {
         console.log('drawLineChart', res)
         if (res.code === 0) {
-          this.sales_volume = res.data.sales_volume
+          this.sales_volume = res.data.sales_volume.reverse()
           this.chartLine.setOption({
             series: [
               {
