@@ -31,11 +31,12 @@
         <!--</el-form-item>-->
         <el-form-item>
           <el-input  v-model="filters.price[0]" placeholder="请输入价格" prefix-icon="el-icon-search" style="width: 160px"></el-input>
-        </el-form-item>
-        <span>___</span>
-        <el-form-item>
+          <span>至</span>
           <el-input v-model="filters.price[1]" placeholder="请输入价格" prefix-icon="el-icon-search"  style="width: 160px"></el-input>
         </el-form-item>
+        <!---->
+        <!--<el-form-item>-->
+        <!--</el-form-item>-->
         <el-form-item>
           <el-button type="primary" v-on:click="handleSearch">{{$t('message.query')}}</el-button>
         </el-form-item>
@@ -145,7 +146,7 @@ export default {
       // 查询变量
       filters: {
         order_id: '',
-        time: [],
+        time: ['', ''],
         price: ['', '']
       },
       sells: [],
@@ -326,6 +327,7 @@ export default {
       if (max === '') {
         max = 999999
       }
+      console.log(this.filters.time[0])
       let para = {
         page: page,
         order_id: this.filters.order_id,
