@@ -377,17 +377,26 @@ export default {
     // ***** toolbar   搜 索   +   新 增
     // 搜索
     searchCommodity () {
+      var min = this.mygoodsfilters.commodity_current_price_min
+      if (min === '') {
+        min = '0'
+      }
+      var max = this.mygoodsfilters.commodity_current_price_max
+      if (max === '') {
+        max = '9999999'
+      }
       let para = {
         page: 1,
         commodity_barcode: this.mygoodsfilters.barcode,
         commodity_name: this.mygoodsfilters.commodity_name,
-        commodity_current_price_min: this.mygoodsfilters.commodity_current_price_min,
-        commodity_current_price_max: this.mygoodsfilters.commodity_current_price_max,
+        commodity_current_price_min: min,
+        commodity_current_price_max: max,
         commodity_description: this.mygoodsfilters.commodity_description
       }
-      console.log(para)
+      console.log('searchCommodity', para)
       this.listLoading = true
       getMyGoodListPagenew(para).then((res) => {
+        console.log('getMyGoodListPagenew', res)
         this.total = res.data.total
         this.goodslist = res.data.commodity_list
         this.listLoading = false
