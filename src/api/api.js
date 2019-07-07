@@ -2,8 +2,8 @@ import axios from 'axios'
 import qs from 'qs'
 // axios.defaults.baseURL = '/api'
 // 请求配置
-axios.defaults.baseURL = '/'
-axios.defaults.withCredentials = true
+axios.defaults.baseURL = '/' // 基URL
+axios.defaults.withCredentials = true // 启用cookies
 
 // *************************  我的商品维护相关接口
 // 根据条码号分页获取商品 & 搜索自身商品库商品
@@ -240,7 +240,7 @@ export const requestPriceChangeList = params => { // ok
 }
 // 请求方法 get /Price/PriceChangeList
 // 请求体  page 页号
-//         commodity_barcode  销售记录
+//         commodity_barcode  商品条码号
 // 返回结果
 //      code     错误码
 //      codeInfo 错误信息
