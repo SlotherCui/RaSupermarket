@@ -4,7 +4,7 @@
     <el-form-item :label="$t('message.supermarket_img')" label-width="150px" prop="img">
       <el-form-item label="" prop="name">
         <!--<template slot-scope="scope" >-->
-          <!--<img src="/static/good.jpg" width="100px"/>-->
+        <!--<img src="/static/good.jpg" width="100px"/>-->
         <!--</template>-->
         <!--上传地址action-->
         <!--action="http://10.26.58.60:8080/uploadUserImg"-->
