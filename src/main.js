@@ -39,7 +39,7 @@ router.beforeEach((to, from, next) => {
   // 如果用户登录信息存在则正常跳转，否则跳转到登录页
   let user = JSON.parse(sessionStorage.getItem('user'))
   console.log('user', user)
-  if (!user && to.path != '/login2') {
+  if (!user && to.path !== '/login2') {
     next({ path: '/login2' })
   } else {
     next()
