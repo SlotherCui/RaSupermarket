@@ -9,11 +9,12 @@
     <div style="z-index: 11;width: 99%;text-align: right">
       <el-dropdown trigger="click" @command="selectlang">
                 <span class="el-dropdown-link">
-                  <i class="el-icon-setting avatar-uploader-icon">语言</i>
+                  <i class="el-icon-setting avatar-uploader-icon">{{$t('message.lang')}}</i>
                 </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="cn">中文</el-dropdown-item>
           <el-dropdown-item command="en">English</el-dropdown-item>
+          <el-dropdown-item command="es">Español</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -21,19 +22,19 @@
     <div class="Loginbox" @mouseenter="show=!show" @mouseleave="show=!show">
       <el-form ref="form" :model="form" :rules="rules"  class="demo-ruleForm login-container">
         <el-row>
-            <h2>用户登录</h2>
+            <h2>{{$t('message.userlogin')}}</h2>
         </el-row>
         <el-form-item prop="UserName">
-          <el-input class="input" auto-complete="off" placeholder="用户名" prefix-icon="el-icon-user" v-model="form.UserName" clearable></el-input>
+          <el-input class="input" auto-complete="off" :placeholder="$t('message.username')" prefix-icon="el-icon-user" v-model="form.UserName" clearable></el-input>
         </el-form-item>
         <el-form-item prop="Password">
-          <el-input class="input" auto-complete="off" placeholder="密码" prefix-icon="el-icon-key" v-model="form.Password" @keyup.enter.native="Logincheck" show-password ></el-input>
+          <el-input class="input" auto-complete="off" :placeholder="$t('message.password')" prefix-icon="el-icon-key" v-model="form.Password" @keyup.enter.native="Logincheck" show-password ></el-input>
         </el-form-item>
         <el-form-item class="remeber">
-          <el-checkbox label="记住密码" v-model="form.Remember"></el-checkbox>
+          <el-checkbox :label="$t('message.remeber')" v-model="form.Remember"></el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" plain @click="Logincheck" class="LonginButton" :loading="loading">登录</el-button>
+          <el-button type="primary" plain @click="Logincheck" class="LonginButton" :loading="loading">{{$t('message.login')}}</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -115,8 +116,8 @@ export default {
     selectlang (command) {
       var lang = command
       this.$i18n.locale = lang
-      this.$alert('这是一段内容', lang, {
-      })
+      // this.$alert('这是一段内容', lang, {
+      // })
     }
   }
 

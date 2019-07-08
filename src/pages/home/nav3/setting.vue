@@ -8,6 +8,7 @@
             <el-select v-model="formInline.lang">
               <el-option label="中文" value="cn"></el-option>
               <el-option label="English" value="en"></el-option>
+              <el-option label="Español" value="es"></el-option>
             </el-select>
             <!--实例 $t必须有-->
             <!--<p>{{$t('message.lang')}}</p>-->
