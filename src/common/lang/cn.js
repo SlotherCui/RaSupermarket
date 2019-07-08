@@ -130,7 +130,16 @@ const cn = {
     'about': '关于我们',
     'feedback': '意见反馈',
     'adding_goods': '添加商品',
-    'adding_price': '添加价格'
+    'adding_price': '添加价格',
+    'delete_confirm': '确认删除该商品吗?',
+    'delete_success': '删除成功',
+    'delete_fail': '删除失败',
+    'upload_succcess': '上传成功',
+    'upload_fail': '上传失败',
+    'barcode_must_13': '条码必须为13位数字',
+    'image_must': '上传文件只能是图片格式!',
+    'onemb_must': '上传文件大小不能超过 1MB!',
+    'upload_confirm': '确认提交吗？',
   },
   ...zhLocale
 }
