@@ -2,6 +2,11 @@ import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 const cn = {
   message: {
     'lang': '语言',
+    'userlogin': '用户登录',
+    'username': '用户名',
+    'password': '密码',
+    'remeber': '记住密码',
+    'login': '登录',
     // 导航栏选项
     'other_setting': '其他设置',
     'shop_information': '商户信息管理',
@@ -19,6 +24,9 @@ const cn = {
     'goods_describe': '商品描述',
     'goods_supplier_id': '供应商编号:',
     'goods_supplier': '供应商名字:',
+    'to': '至',
+    'min_price': '最低价',
+    'max_price': '最高价',
     'supplier_user_name': '用户名:',
     'supplier_company': '供应商公司:',
     'supplier_addr': '供应商地址:',
@@ -77,6 +85,8 @@ const cn = {
     // 操作
     'query': '查询',
     'add': '新增',
+    'add1': '添加',
+    'add2': '新建',
     'operation': '操作',
     'open': '开启',
     'edit': '编辑',
@@ -89,12 +99,23 @@ const cn = {
     'apply': '应用',
     'cancel': '取消',
     'commit': '确认',
+    'prompt': '提示',
     // 其他占位符等...
     'please_input_bar': '请输入条码号',
     'please_input_sid_bar': '请输入商家编号',
     'please_input_supplier_bar': '请输入供应商名称',
+    'please_input_newprice': '请输入新价格',
+    'please_input_number': '请输入数字',
+    'no_add_one': '暂无在售信息，可以添加一条',
+    'file_fail': '文件上传失败',
+    'file_success': '文件上传成功！',
+    'has_in': '商品已在商品库',
+    'add_success': '增加成功',
+    'add_fail': '增加失败',
     'about': '关于我们',
-    'feedback': '意见反馈'
+    'feedback': '意见反馈',
+    'adding_goods': '添加商品',
+    'adding_price': '添加价格'
   },
   ...zhLocale
 }

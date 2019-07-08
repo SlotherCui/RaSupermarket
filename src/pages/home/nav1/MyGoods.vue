@@ -18,18 +18,18 @@
     <el-col :span="24" class="toolbar">
       <el-form :inline="true" :model="mygoodsfilters">
         <el-form-item label="">
-          <el-input v-model="mygoodsfilters.barcode" prefix-icon="el-icon-c-scale-to-original" placeholder="条码号"></el-input>
+          <el-input v-model="mygoodsfilters.barcode" prefix-icon="el-icon-c-scale-to-original" :placeholder="$t('message.goods_barcode')"></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="mygoodsfilters.commodity_name" prefix-icon="el-icon-goods" placeholder="商品名称" ></el-input>
+          <el-input v-model="mygoodsfilters.commodity_name" prefix-icon="el-icon-goods" :placeholder="$t('message.goods_name')" ></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="mygoodsfilters.commodity_current_price_min" prefix-icon="el-icon-price-tag" placeholder="最低价格" style="width: 160px"></el-input>
-          <span>至</span>
-          <el-input v-model="mygoodsfilters.commodity_current_price_max" prefix-icon="el-icon-price-tag" placeholder="最高价格" style="width: 160px"></el-input>
+          <el-input v-model="mygoodsfilters.commodity_current_price_min" prefix-icon="el-icon-price-tag" :placeholder="$t('message.min_price')" style="width: 160px"></el-input>
+          <span>{{$t('message.to')}}</span>
+          <el-input v-model="mygoodsfilters.commodity_current_price_max" prefix-icon="el-icon-price-tag" :placeholder="$t('message.max_price')" style="width: 160px"></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-input v-model="mygoodsfilters.commodity_description" prefix-icon="el-icon-edit-outline" placeholder="商品描述"></el-input>
+          <el-input v-model="mygoodsfilters.commodity_description" prefix-icon="el-icon-edit-outline" :placeholder="$t('message.goods_describe')"></el-input>
         </el-form-item>
         <el-form-item style="float:right">
           <el-button type="primary" @click="checkin" :loading="addbuttonLoading" icon="el-icon-plus">{{$t('message.add')}}</el-button>
@@ -136,26 +136,26 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="editFormVisible = false" :loading="editLoading">取消</el-button>
+        <el-button @click.native="editFormVisible = false" :loading="editLoading">{{$t('message.cancel')}}</el-button>
         <el-button type="primary" @click.native="editSubmit" :loading="addLoading" :disabled="!editSubmitAble">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
       <!--        添加商品表-->
-    <el-dialog width="50%" title="选择添加商品" :visible.sync="hascommodity" :before-close="addFormClose">
+    <el-dialog width="50%" :title="$t('message.adding_goods')" :visible.sync="hascommodity" :before-close="addFormClose">
       <el-table :data="commoditytoadd" max-height="300">
-        <el-table-column property="commodity_barcode" label="条码号" width="150"></el-table-column>
-        <el-table-column property="commodity_name" label="名称" width="150"></el-table-column>
-        <el-table-column property="commodity_specification" label="规格" width="100"></el-table-column>
-        <el-table-column property="supplier_min_price" label="参考价" width="100"></el-table-column>
-        <el-table-column property="suggest_price" label="建议价"></el-table-column>
+        <el-table-column property="commodity_barcode" :label="$t('message.goods_barcode')" width="150"></el-table-column>
+        <el-table-column property="commodity_name" :label="$t('message.goods_name')" width="150"></el-table-column>
+        <el-table-column property="commodity_specification" :label="$t('message.goods_model')" width="100"></el-table-column>
+        <el-table-column property="supplier_min_price" :label="$t('message.supplier_min_price')" width="100"></el-table-column>
+        <el-table-column property="suggest_price" :label="$t('message.suggest_price')"></el-table-column>
         <el-table-column :label="$t('message.operation')"  width=" 100">
           <template scope="scope">
 <!--                      添加-->
-            <el-button  size="mini" v-show="showbutton[scope.$index]" :loading="!rollbutton[scope.$index]" @click="doaddcommodity(scope.$index, scope.row)">添加</el-button>
+            <el-button  size="mini" v-show="showbutton[scope.$index]" :loading="!rollbutton[scope.$index]" @click="doaddcommodity(scope.$index, scope.row)">{{$t('message.add1')}}</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-dialog width="35%" title="添加您的价格" :visible.sync="addprice" append-to-body :before-close="canceladd">
+      <el-dialog width="35%" :title="$t('message.adding_price')" :visible.sync="addprice" append-to-body :before-close="canceladd">
           <!--商品基本信息-->
           <el-row>
             <el-col :span="6">
@@ -171,25 +171,25 @@
           <div style="margin-top: 15px;">
             <el-tag class="my_tag" type="info">{{$t('message.supplier_min_price')}} {{addpriceform.supplier_min_price}}</el-tag>
             <el-tag class="my_tag" type="info">{{$t('message.suggest_price')}} {{addpriceform.suggest_price}}</el-tag>
-            <el-input style="margin-top: 15px" v-model="addpriceform.new_price" placeholder="请输入新价格"></el-input>
+            <el-input style="margin-top: 15px" v-model="addpriceform.new_price" :placeholder="$t('message.please_input_newprice')"></el-input>
           </div>
           <el-row style="margin-top: 20px; text-align: right">
-            <el-button size="small" @click.native='canceladd'>取消</el-button>
-            <el-button type="primary" size="small" :loading="changeLoading" v-on:click="addPrice"> 确认修改</el-button>
+            <el-button size="small" @click.native='canceladd'>{{$t('message.cancel')}}</el-button>
+            <el-button type="primary" size="small" :loading="changeLoading" v-on:click="addPrice">{{$t('message.commit')}}</el-button>
           </el-row>
       </el-dialog>
     </el-dialog>
 <!--   内层   提示创建商品-->
     <el-dialog width="35%" title="提示" :visible.sync="hasnotcommodity">
-      <span>暂无在售信息，可以添加一条</span>
+      <span>{{$t('message.no_add_one')}}</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="hasnotcommodity = false">取 消</el-button>
-        <el-button type="primary" @click="tocreate">确 定</el-button>
+        <el-button @click="hasnotcommodity = false">{{$t('message.cancel')}}</el-button>
+        <el-button type="primary" @click="tocreate">{{$t('message.commit')}}</el-button>
       </span>
     </el-dialog>
 <!--      内层新建产品表单-->
-    <el-dialog width="40%" title="新建" :visible.sync="createcommodity" :before-close="createCommodityCancle">
-      <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="createcommodityForm" :visible.sync="createcommodity" >
+    <el-dialog width="40%" :title="$t('message.add2')" :visible.sync="createcommodity" :before-close="createCommodityCancle">
+      <el-form :model="createcommodityForm" label-width="80px" ref="createcommodityForm" :visible.sync="createcommodity" >
 <!--        <el-form-item :label="$t('message.commodity_piclink')" prop="img">-->
 <!--          <el-upload-->
 <!--            action=""-->
@@ -225,7 +225,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="createCommodityCancle">取消</el-button>
+        <el-button @click.native="createCommodityCancle">{{$t('message.cancel')}}</el-button>
         <el-button type="primary" @click.native="createCommoditySubmit" :loading="addLoading">{{$t('message.confirm')}}</el-button>
       </div>
     </el-dialog>
@@ -289,28 +289,7 @@ export default {
         commodity_producer: '',
         commodity_description: ''
       },
-      createcommodityFormRules: {
-        commodity_barcode: [
-          { required: true, message: '请输入商品条码号', trigger: 'blur' }
-        ]
-      },
-      addForm1Rules: {
-        commodity_barcode: [
-          { required: true, message: '请输入商品条码号', trigger: 'blur' }
-        ]
-      },
       // 编辑相关变量
-      editFormRules: {
-        goods: [
-          { required: true, message: '输入商品名称', trigger: 'blur' }
-        ],
-        price: [
-          { required: true, message: '输入价格', trigger: 'blur' }
-        ],
-        barcode: [
-          { required: true, message: '输入条码', trigger: 'blur' }
-        ]
-      },
       editPic: null,
       // 五种编辑选项
       editAbles: [false, false, false, false, false],
@@ -334,17 +313,19 @@ export default {
       axios.defaults.withCredentials = true
       axios.post(content.action, form).then(res => {
         if (res.data.code !== 0) {
-          content.onError('文件上传失败, code:' + res.data.code)
+          // 文件上传失败
+          content.onError(this.$t('message.file_fail') + 'code:' + res.data.code)
         } else {
-          content.onSuccess('文件上传成功！')
+          // 文件上传成功
+          content.onSuccess(this.$t('message.file_success'))
         }
       }).catch(error => {
         if (error.response) {
-          content.onError('文件上传失败,' + error.response.data)
+          content.onError(this.$t('message.file_fail') + error.response.data)
         } else if (error.request) {
-          content.onError('文件上传失败，服务器端无响应')
+          content.onError(this.$t('message.file_fail'))
         } else {
-          content.onError('文件上传失败，请求封装失败')
+          content.onError(this.$t('message.file_fail'))
         }
       })
     },
@@ -436,12 +417,13 @@ export default {
     //   // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
     //   // } else {
     //   //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
-    //   // }
+    //   // } 'please_input_bar'
     // },
     checkin () {
       this.addbuttonLoading = true
       if (this.mygoodsfilters.barcode === '') {
-        this.$alert('填写条码号', '提示', {confirmButtonText: '确定'})
+        // 输入条码
+        this.$alert(this.$t('message.please_input_bar'), this.$t('message.prompt'), { confirmButtonText: this.$t('message.commit') })
         this.addbuttonLoading = false
       } else {
         let para = {
@@ -453,7 +435,7 @@ export default {
           for (let i = 0; i < checklist.length; i++) {
             if (checklist[i].commodity_barcode === this.mygoodsfilters.barcode) {
               console.log('here', checklist[i].commodity_barcode === this.mygoodsfilters.barcode)
-              this.$alert('商品已在商品库', '提示', {confirmButtonText: '确定'})
+              this.$alert(this.$t('message.has_in'), this.$t('message.prompt'), {confirmButtonText: this.$t('message.commit')})
               this.addbuttonLoading = false
               return
             }
@@ -539,18 +521,18 @@ export default {
         addMyGoods(para).then((res) => {
           console.log('addprice', res)
           if (res.code === 0) {
-            this.$message({message: '增加成功', type: 'success'})
+            this.$message({message: this.$t('message.file_success'), type: 'success'})
             this.$set(this.showbutton, this.addindex, false)
             this.regetGoods()
           } else {
-            this.$message({message: '增加失败' + res.code, type: 'fail'})
+            this.$message({message: this.$t('message.file_fail') + res.code, type: 'fail'})
             this.$set(this.rollbutton, this.addindex, true)
           }
           this.changeLoading = false
           this.addprice = false
         })
       } else {
-        this.$alert('请输入数字', '提示', {confirmButtonText: '确定'})
+        this.$alert(this.$t('message.please_input_number'), this.$t('message.prompt'), {confirmButtonText: this.$t('message.commit')})
         this.changeLoading = false
       }
     },
@@ -565,7 +547,7 @@ export default {
       this.sels = sels
     },
     doRemove (para) {
-      this.$confirm('确认删除该商品吗?', '提示', {
+      this.$confirm('确认删除该商品吗?', this.$t('message.prompt'), {
         type: 'warning'
       }).then(() => {
         this.listLoading = true

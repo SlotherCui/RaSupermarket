@@ -10,6 +10,8 @@ import VueAxios from 'vue-axios'
 import VueI18n from 'vue-i18n'
 import messages from './common/lang'
 import ElementLocale from 'element-ui/lib/locale'
+// import animate from 'animate.css'
+
 var VueCookie = require('vue-cookie')
 Vue.use(VueCookie)
 // import Mock from './mock'
@@ -18,6 +20,8 @@ Vue.config.productionTip = false
 Vue.use(ElementUI) // UI模块
 Vue.use(VueAxios, axios) // 网络请求模块
 Vue.use(VueI18n) // 语言切换模块
+// Vue.use(animate) // 动画模块
+
 /* eslint-disable no-new */
 Vue.config.productionTip = false
 const i18n = new VueI18n({
@@ -39,7 +43,7 @@ const i18n = new VueI18n({
 //   // 如果用户登录信息存在则正常跳转，否则跳转到登录页
 //   let user = JSON.parse(sessionStorage.getItem('user'))
 //   console.log('user', user)
-//   if (!user && to.path != '/login2') {
+//   if (!user && to.path !== '/login2') {
 //     next({ path: '/login2' })
 //   } else {
 //     next()
