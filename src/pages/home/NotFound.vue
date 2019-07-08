@@ -1,5 +1,9 @@
 <template>
-  <div class="NotFound">404 page not found</div>
+  <div class="NotFound">404 page not found
+  <div>
+      <img src="/static/logoWeb.png" width="100px"/>
+  </div>
+  </div>
 </template>
 
 <script>
