@@ -67,23 +67,23 @@
     <el-form-item>
       <el-button @click.native.prevent type="primary" v-show="editVisible" :visible.sync="editVisible" @click="edit">{{$t('message.edit')}}</el-button>
       <el-button @click.native.prevent type="success" v-show="setvisible" :visible.sync="setvisible" @click="Save">{{$t('message.confirm')}}</el-button>
-      <el-button @click.native.prevent v-show="setvisible" :visible.sync="setvisible" @click="quit">取消</el-button>
+      <el-button @click.native.prevent v-show="setvisible" :visible.sync="setvisible" @click="quit">{{$t('message.cancel')}}</el-button>
       <el-button type="danger" @click="PasswdChangeForm">{{$t('message.change_password')}}</el-button>
     </el-form-item>
   </el-form>
 <!--修改密码界面-->
-<el-dialog title="$t('message.change_password')" v-show="changepasswdFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="changepasswdFormVisible">
+<el-dialog :title="$t('message.change_password')" v-show="changepasswdFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="changepasswdFormVisible">
   <el-form :model="changepasswdForm" labelWidth="80px" label-position="left">
-    <el-form-item label="$t('message.old_password')">
-      <el-input type="password" v-model="changepasswdForm.oldpasswd" placeholder="$t('message.please_old_password')"></el-input>
+    <el-form-item :label="$t('message.old_password')">
+      <el-input type="password" v-model="changepasswdForm.oldpasswd" :placeholder="$t('message.please_old_password')"></el-input>
     </el-form-item>
-    <el-form-item v-if="visible" label="$t('message.new_password')">
-      <el-input type="password" v-model="changepasswdForm.newpasswd" placeholder="$t('message.please_new_password')">
+    <el-form-item v-if="visible" :label="$t('message.new_password')">
+      <el-input type="password" v-model="changepasswdForm.newpasswd" :placeholder="$t('message.please_new_password')">
         <i slot="suffix" title="显示密码" @click="changePass('show')" style="cursor:pointer;"
            class="el-input__icon iconfont icon-xianshi"></i>
       </el-input>
     </el-form-item>
-    <el-form-item v-else label="$t('message.new_password')">
+    <el-form-item v-else :label="$t('message.new_password')">
       <el-input type="text" v-model="changepasswdForm.newpasswd" placeholder="$t('message.please_new_password')">
         <i slot="suffix" title="隐藏密码" @click="changePass('hide')" style="cursor:pointer;"
            class="el-input__icon iconfont icon-yincang"></i>

@@ -4,13 +4,13 @@
       <el-col :span="24" class="toolbar" >
         <el-form :inline="true" :model="filters">
           <el-form-item>
-            <el-input v-model="filters.commodity_barcode" placeholder="请输入商品条码"></el-input>
+            <el-input v-model="filters.commodity_barcode" :placeholder="$t('message.please_input_bar')"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-on:click="getGoods" icon="el-icon-search">查询</el-button>
+            <el-button type="primary" v-on:click="getGoods" icon="el-icon-search">{{$t('message.query')}}</el-button>
           </el-form-item>
           <el-form-item style="float: right">
-              <el-button type="primary" v-on:click="getData" icon="el-icon-download"> 下载</el-button>
+              <el-button type="primary" v-on:click="getData" icon="el-icon-download"> {{$t('message.down_load')}}</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -39,16 +39,19 @@
           <el-tag class="my_tag" type="suss">{{$t('message.commodity_price_before')}} {{carditem.commodity_current_price}}</el-tag>
           <el-tag class="my_tag" type="info">{{$t('message.suggest_price')}} {{carditem.suggest_price}}</el-tag>
           <el-tag class="my_tag" type="info">{{$t('message.supplier_min_price')}} {{carditem.supplier_min_price}}</el-tag>
-          <el-input style="margin-top: 15px" v-model="new_price[index*3+cardindex]" placeholder="请输入新价格"></el-input>
+          <el-input style="margin-top: 15px" v-model="new_price[index*3+cardindex]" :placeholder="$t('message.please_input_newprice')"></el-input>
         </div>
         <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
         <!--<div style="line-height: 25px"><span class="goodsItem">建议价</span><span>14元</span></div>-->
         <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
         <!--三种改价操作-->
         <el-row style="margin-top: 20px; text-align: right">
-          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="SingleChange(index*3+cardindex, carditem.commodity_barcode)"> 确认修改</el-button>
-          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="GroupChange(index*3+cardindex,carditem.commodity_barcode)">组改价</el-button>
-          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="RelationChange(index*3+cardindex,carditem.commodity_barcode)">联动改价</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="SingleChange(index*3+cardindex, carditem.commodity_barcode)"> {{
+            this.$t('message.confirm')}}</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="GroupChange(index*3+cardindex,carditem.commodity_barcode)">
+            {{this.$t('message.team_price_change')}}</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="RelationChange(index*3+cardindex,carditem.commodity_barcode)">
+            {{this.$t('message.relation_price_change')}}</el-button>
         </el-row>
       </el-card>
       </el-col>
@@ -89,7 +92,7 @@ export default {
         console.log('here')
         console.log(this.GoodsListTest)
         if (this.GoodsListTest.length === 0) {
-          this.$message({message: '此商品不在售'})
+          this.$message({message: this.$t('message.not_sell')})
         }
         this.listLoading = false
       })
@@ -107,10 +110,10 @@ export default {
       let para = {commodity_barcode: commodity_barcode, new_price: this.new_price[index]}
       requestSingleChange(para).then((res) => {
         if (res.code === 0) {
-          this.$message({message: '修改成功', type: 'success'})
+          this.$message({message: this.$t('message.change_success'), type: 'success'})
           this.getGoods()
         } else {
-          this.$message({message: '修改失败' + res.code, type: 'fail'})
+          this.$message({message: this.$t('message.change_fail') + res.code, type: 'fail'})
         }
         this.changeLoading = false
       })
@@ -122,10 +125,10 @@ export default {
       let para = {commodity_barcode: commodity_barcode, new_price: this.new_price[index]}
       requestGroupChange(para).then((res) => {
         if (res.code === 0) {
-          this.$message({message: '修改成功', type: 'success'})
+          this.$message({message: this.$t('message.change_success'), type: 'success'})
           this.getGoods()
         } else {
-          this.$message({message: '修改失败' + res.code, type: 'fail'})
+          this.$message({message: this.$t('message.change_fail') + res.code, type: 'fail'})
         }
         this.changeLoading = false
       })
@@ -139,10 +142,10 @@ export default {
       requestRelationChange(para).then((res) => {
         console.log(res)
         if (res.code === 0) {
-          this.$message({message: '修改成功', type: 'success'})
+          this.$message({message: this.$t('message.change_success'), type: 'success'})
           this.getGoods()
         } else {
-          this.$message({message: '修改失败' + res.code, type: 'fail'})
+          this.$message({message: this.$t('message.change_fail') + res.code, type: 'fail'})
         }
         this.changeLoading = false
       })

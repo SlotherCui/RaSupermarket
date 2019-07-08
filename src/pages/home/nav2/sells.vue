@@ -4,15 +4,15 @@
     <el-col :span="24" class="toolbar">
       <el-form :inline="true" :model="filters" style="display: flex">
         <el-form-item>
-          <el-input v-model="filters.order_id" placeholder="请输入销售号" prefix-icon="el-icon-search"></el-input>
+          <el-input v-model="filters.order_id" :placeholder="$t('message.please_input_sales_number')" prefix-icon="el-icon-search"></el-input>
         </el-form-item>
         <el-form-item>
           <el-date-picker
             v-model="filters.time"
             type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
+            :range-separator="$t('message.to')"
+            :start-placeholder="$t('message.start_time')"
+            :end-placeholder="$t('message.end_time')">
           </el-date-picker>
         </el-form-item>
         <!--<el-form-item>-->
@@ -30,9 +30,9 @@
           <!--</el-date-picker>-->
         <!--</el-form-item>-->
         <el-form-item>
-          <el-input  v-model="filters.price[0]" placeholder="请输入价格" prefix-icon="el-icon-search" style="width: 160px"></el-input>
-          <span>至</span>
-          <el-input v-model="filters.price[1]" placeholder="请输入价格" prefix-icon="el-icon-search"  style="width: 160px"></el-input>
+          <el-input  v-model="filters.price[0]" :placeholder="$t('message.min_price')" prefix-icon="el-icon-search" style="width: 160px"></el-input>
+          <span>{{$t('message.to')}}</span>
+          <el-input v-model="filters.price[1]" :placeholder="$t('message.max_price')" prefix-icon="el-icon-search"  style="width: 160px"></el-input>
         </el-form-item>
         <!---->
         <!--<el-form-item>-->
@@ -101,7 +101,7 @@
       </el-pagination>
     </el-col>
     <!--新增界面-->
-    <el-dialog title="新增" v-model="addFormVisible" v-show="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
+    <el-dialog :title="$t('message.add')" v-model="addFormVisible" v-show="addFormVisible" :close-on-click-modal="false" :visible.sync="addFormVisible">
         <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm" :visible.sync="addFormVisible" :inline="true" >
           <!--输入商品条码-->
           <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode" >
@@ -111,7 +111,7 @@
           <el-form-item :label="$t('message.commodity_each_count')" >
             <el-input-number v-model="addForm.commodity_each_count" :min="1" :max="200"></el-input-number>
           </el-form-item>
-            <el-button type="primary" @click.native="addGood" :loading="addLoading">增加</el-button>
+            <el-button type="primary" @click.native="addGood" :loading="addLoading">{{$t('message.add1')}}</el-button>
         </el-form>
       <!--新增商品列表-->
         <el-table :data="addGoodsList"  style="width: 100%;" >
@@ -123,8 +123,8 @@
             </el-table-column>
         </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+        <el-button @click.native="addFormVisible = false">{{$t('message.cancel')}}</el-button>
+        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">{{$t('message.submit')}}</el-button>
       </div>
     </el-dialog>
   </section>
@@ -160,7 +160,7 @@ export default {
       addLoading: false,
       addFormRules: {
         commodity_barcode: [
-          { required: true, message: '请输入商品条码', trigger: 'blur' }
+          { required: true, message: this.$t('message.please_input_bar'), trigger: 'blur' }
         ]
       },
       // 新增界面数据
@@ -250,9 +250,9 @@ export default {
           this.addForm.commodity_barcode = ''
           this.addForm.commodity_each_count = 1
         } else if (res.code === 200) {
-          this.$message({message: '该商品不在售', type: 'fail'})
+          this.$message({message: this.$t('message.not_sell'), type: 'fail'})
         } else {
-          this.$message({message: '未知错误', type: 'fail'})
+          this.$message({message: this.$t('message.err'), type: 'fail'})
         }
         // 关闭加载
         this.addLoading = false
@@ -267,11 +267,11 @@ export default {
       console.log(para)
       postOrder(para).then((res) => {
         if (res.code === 0) {
-          this.$message({message: '上传成功', type: 'success'})
+          this.$message({message: this.$t('message.file_success'), type: 'success'})
           this.addFormVisible = false
           this.getOrderListNew(1)
         } else {
-          this.$message({message: '上传失败', type: 'fail'})
+          this.$message({message: this.$t('message.file_fail'), type: 'fail'})
           this.addLoading = false
         }
       })

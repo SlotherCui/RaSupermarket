@@ -15,9 +15,9 @@
               <img :src="UserAvatar" />
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>我的消息</el-dropdown-item>
-              <el-dropdown-item>设置</el-dropdown-item>
-              <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+              <el-dropdown-item>{{$t('message.my_message')}}</el-dropdown-item>
+              <el-dropdown-item>{{$t('message.setting')}}</el-dropdown-item>
+              <el-dropdown-item divided @click.native="logout">{{$t('message.exit')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -109,7 +109,7 @@ export default {
     },
     logout () {
       var _this = this
-      this.$confirm('确认退出吗?', '提示', {
+      this.$confirm(this.$t('message.exit_confirm'), this.$t('message.prompt'), {
         // type: 'warning'
       }).then(() => {
         requestLogin().then(data => {})

@@ -27,20 +27,19 @@
     </el-col>
 
     <el-dialog :title="$t('message.about')" :visible.sync="aboutus" width="30%" >
-      <span>山东大学2016级实训项目</span>
-      <span>成员：崔玉峰 辛越 张翰林</span>
-      <span slot="footer" class="dialog-footer"><el-button type="primary" @click="aboutus = false">确定</el-button></span>
+      <span>山东大学2016级实训项目 超1</span>
+      <span slot="footer" class="dialog-footer"><el-button type="primary" @click="aboutus = false">{{$t('message.commit')}}</el-button></span>
     </el-dialog>
 
     <el-dialog :title="$t('message.feedback')" :visible.sync="opinionVisible" width="30%">
       <el-form :model="opinionForm" label-width="80px" ref="opinionForm" :visible.sync="opinionVisible" >
-        <el-form-item label="您的意见">
+        <el-form-item :label="$t('message.suggestion')">
         <el-input type="textarea" v-model="opinionForm.feedbcak" autocomplete="off" :autosize="{ minRows: 7, maxRows: 10}"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click.native="opinionForm.opinion=''; opinionVisible = false;  ">取 消</el-button>
-        <el-button type="primary" @click.native="upFeedBack">确 定</el-button>
+        <el-button @click.native="opinionForm.opinion=''; opinionVisible = false;  ">{{$t('message.cancel')}}</el-button>
+        <el-button type="primary" @click.native="upFeedBack">{{$t('message.commit')}}</el-button>
       </span>
     </el-dialog>
   </section>
@@ -65,9 +64,12 @@ export default {
   methods: {
     onSubmit () {
       var lang = this.formInline.lang
+      if (lang === '中文') {
+        lang = 'cn'
+      }
       this.$i18n.locale = lang
-      this.$alert(this.$t('message.lang'), lang, {
-      })
+      // this.$alert(this.$t('message.lang'), lang, {
+      // })
     },
     // 意见反馈上传接口
     upFeedBack () {
@@ -77,11 +79,11 @@ export default {
       postFeedBack(para).then((res) => {
         console.log('输出', res)
         if (res.code === 0) {
-          this.$message({message: '上传成功', type: 'success'})
+          this.$message({message: this.$t('message.upload_succcess'), type: 'success'})
           this.opinionVisible = false
           this.this.opinionForm.feedbcak = ''
         } else {
-          this.$message({message: '上传失败' + res.codeInfo, type: 'fail'})
+          this.$message({message: this.$t('message.upload_fail') + res.codeInfo, type: 'fail'})
         }
       })
     }
