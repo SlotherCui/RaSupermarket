@@ -58,7 +58,9 @@ const en = {
     'team_price_change': '组改价',
     'relation_price_change': '联动改价',
     // 其他占位符等...
-    'please_input_bar': '请输入条码号'
+    'please_input_bar': '请输入条码号',
+    'about': 'About Us',
+    'feedback': 'Feed Back'
   },
   ...enLocale
 }

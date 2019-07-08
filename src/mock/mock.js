@@ -175,7 +175,7 @@ export default {
     mock.onGet('/Sell/OrderList').reply(config => {
       // 获取请求体
       let {page, order_id} = config.params
-      //
+      // 查询
       let mockOrders = _Orders.filter(commodity => {
         if (order_id && commodity.order_id.indexOf(order_id) === -1) return false
         return true
@@ -184,6 +184,7 @@ export default {
       let total = mockOrders.length
       // 商品查询结果分页
       mockOrders = mockOrders.filter((u, index) => index < 20 * page && index >= 20 * (page - 1))
+      // 根据api定义的返回格式将数据返回  （模拟加载时间1s）
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {

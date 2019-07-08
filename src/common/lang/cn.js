@@ -92,7 +92,9 @@ const cn = {
     // 其他占位符等...
     'please_input_bar': '请输入条码号',
     'please_input_sid_bar': '请输入商家编号',
-    'please_input_supplier_bar': '请输入供应商名称'
+    'please_input_supplier_bar': '请输入供应商名称',
+    'about': '关于我们',
+    'feedback': '意见反馈'
   },
   ...zhLocale
 }

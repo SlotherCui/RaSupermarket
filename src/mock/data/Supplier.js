@@ -1,6 +1,7 @@
 import Mock from 'mockjs'
+// 供应商数据
 const suppliers = []
-
+// 模拟生成20条供应商数据
 for (let i = 0; i < 20; i++) {
   suppliers.push(Mock.mock({
     goods_supplier_id: Mock.Random.integer(1000000000000, 99999999999999).toString(),
