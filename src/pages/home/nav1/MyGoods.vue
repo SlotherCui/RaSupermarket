@@ -547,7 +547,7 @@ export default {
       this.sels = sels
     },
     doRemove (para) {
-      this.$confirm('确认删除该商品吗?', this.$t('message.prompt'), {
+      this.$confirm(this.$t('message.delete_confirm'), this.$t('message.prompt'), {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
@@ -558,12 +558,12 @@ export default {
           this.listLoading = false
           if (res.code === 0) {
             this.$message({
-              message: '删除成功',
+              message: this.$t('message.delete_success'),
               type: 'success'
             })
           } else {
             this.$message({
-              message: '删除失败',
+              message: this.$t('message.delete_fail'),
               type: 'fail'
             })
           }
@@ -603,17 +603,17 @@ export default {
         addMyGoods(para).then((res) => {
           console.log(res)
           if (res.code === 0) {
-            this.$message({message: '上传成功', type: 'success'})
+            this.$message({message: this.$t('message.upload_success'), type: 'success'})
             this.addLoading = false
             this.clearValidate('createcommodityForm')
             this.createcommodity = false
           } else {
-            this.$message({message: '上传失败', type: 'fail'})
+            this.$message({message: this.$t('message.upload_fail'), type: 'fail'})
             this.addLoading = false
           }
         })
       } else {
-        this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'}).then(() => {
+        this.$alert(this.$t('message.barcode_must_13'), this.$t('message.prompt'), {confirmButtonText: this.$t('message.commit')}).then(() => {
           this.addLoading = false
         }
         )
@@ -673,17 +673,17 @@ export default {
       this.editSubmitAble = this.editAbles[0] || this.editAbles[1] || this.editAbles[2] || this.editAbles[3] || this.editAbles[4]
     },
     uploadSuccess () {
-      this.$message({message: '上传成功', type: 'success'})
+      this.$message({message: this.$t('message.upload_succcess'), type: 'success'})
     },
     onBeforeUpload (file) {
       const isIMAGE = file.type === 'image/jpeg' || 'image/gif' || 'image/png'
       const isLt1M = file.size / 1024 / 1024 < 1
 
       if (!isIMAGE) {
-        this.$message.error('上传文件只能是图片格式!')
+        this.$message.error(this.$t('message.image_must'))
       }
       if (!isLt1M) {
-        this.$message.error('上传文件大小不能超过 1MB!')
+        this.$message.error(this.$t('message.onemb_must'))
       }
       return isIMAGE && isLt1M
     },
@@ -691,7 +691,7 @@ export default {
     editSubmit () {
       // this.$refs.editForm1.validate((valid) => {
       //   if (valid) {
-      this.$confirm('确认提交吗？', '提示', {}).then(() => {
+      this.$confirm(this.$t('message.upload_confirm'), this.$t('message.prompt'), {}).then(() => {
         this.editLoading = true
         // NProgress.start();
         let para = Object.assign({}, this.editForm)
@@ -702,12 +702,12 @@ export default {
           if (res.code === 0) {
             this.editLoading = false
             this.editFormVisible = false
-            this.$message({message: '提交成功', type: 'success'})
+            this.$message({message: this.$t('message.upload_succcess'), type: 'success'})
             this.$refs['editForm'].resetFields()
             this.regetGoods()
           } else {
             this.editLoading = false
-            this.$message({message: '提交失败', type: 'fail'})
+            this.$message({message: this.$t('message.upload_fail'), type: 'fail'})
           }
 
           // NProgress.done();
