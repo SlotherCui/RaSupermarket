@@ -104,10 +104,10 @@ export default {
       addVisible: true,
       addFormRules: {
         supermarket_id: [
-          { required: true, message: 'please_input_sid_bar', trigger: 'blur' }
+          { required: true, message: this.$t('message.please_input_sid_bar'), trigger: 'blur' }
         ]
       },
-      OpenStauts: [{text: '关闭', color: 'success'}],
+      OpenStauts: [{text: this.$t('message.close'), color: 'success'}],
       // 新增界面数据
       addForm: {
         supermarket_id: ''
@@ -124,7 +124,7 @@ export default {
     addRelation () {
       // 获取超市名称
       if (this.addForm.supermarket_id === '') {
-        this.$message({message: '超市编号不能为空', type: 'fail'})
+        this.$message({message: this.$t('message.please_input_sid_bar'), type: 'fail'})
       } else {
         let para = {supermarket_id: this.addForm.supermarket_id}
         this.addLoading = true
@@ -133,7 +133,7 @@ export default {
           console.log(res)
           if (res.code === 0) {
             if (res.data === null) {
-              this.$message({message: '没有该商家，或已经添加关联关系', type: 'fail'})
+              this.$message({message: this.$t('message.no_sup'), type: 'fail'})
               this.addLoading = false
               this.addForm.supermarket_id = ''
             } else {
@@ -162,14 +162,14 @@ export default {
         console.log('输出')
         console.log(res)
         if (res.code === 0) {
-          this.$message({message: '上传成功', type: 'success'})
+          this.$message({message: this.$t('message.file_success'), type: 'success'})
           this.addFormVisible = false
           this.addLoading = false
           this.getRelationList(1)
           this.addlist = null
           this.addForm.supermarket_id = ''
         } else {
-          this.$message({message: '上传失败', type: 'fail'})
+          this.$message({message: this.$t('message.file_fail'), type: 'fail'})
           this.addLoading = false
           this.addlist = null
           this.addForm.supermarket_id = ''
@@ -208,7 +208,7 @@ export default {
     batchRemove () {
       console.log('sel', this.sels)
       var id = this.sels.map(item => item.supermarket_id_authority)
-      this.$confirm('确认删除选中商户吗？', '提示', {
+      this.$confirm(this.$t('message.delete_confirm'), this.$t('message.prompt'), {
         type: 'warning'
       }).then(() => {
         this.listLoading = true
@@ -220,7 +220,7 @@ export default {
           this.listLoading = false
           // NProgress.done();
           this.$message({
-            message: '删除成功',
+            message: this.$t('message.delete_success'),
             type: 'success'
           })
           this.getRelationList(1)
@@ -239,12 +239,12 @@ export default {
         if (res.code === 0) {
           // 按钮转换关闭开启
           this.$message({
-            message: '关系切换成功',
+            message: this.$t('message.change_state_success'),
             type: 'success'
           })
         } else {
           this.$message({
-            message: '关系切换失败',
+            message: this.$t('message.change_state_fail'),
             type: 'fail'
           })
         }

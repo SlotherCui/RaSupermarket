@@ -68,31 +68,31 @@
       <el-button @click.native.prevent type="primary" v-show="editVisible" :visible.sync="editVisible" @click="edit">{{$t('message.edit')}}</el-button>
       <el-button @click.native.prevent type="success" v-show="setvisible" :visible.sync="setvisible" @click="Save">{{$t('message.confirm')}}</el-button>
       <el-button @click.native.prevent v-show="setvisible" :visible.sync="setvisible" @click="quit">取消</el-button>
-      <el-button type="danger" @click="PasswdChangeForm">修改密码</el-button>
+      <el-button type="danger" @click="PasswdChangeForm">{{$t('message.change_password')}}</el-button>
     </el-form-item>
   </el-form>
 <!--修改密码界面-->
-<el-dialog title="修改密码" v-show="changepasswdFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="changepasswdFormVisible">
+<el-dialog title="$t('message.change_password')" v-show="changepasswdFormVisible" :close-on-click-modal="false" width="30%"  :visible.sync="changepasswdFormVisible">
   <el-form :model="changepasswdForm" labelWidth="80px" label-position="left">
-    <el-form-item label="旧密码">
-      <el-input type="password" v-model="changepasswdForm.oldpasswd" placeholder="请输入旧密码"></el-input>
+    <el-form-item label="$t('message.old_password')">
+      <el-input type="password" v-model="changepasswdForm.oldpasswd" placeholder="$t('message.please_old_password')"></el-input>
     </el-form-item>
-    <el-form-item v-if="visible" label="新密码">
-      <el-input type="password" v-model="changepasswdForm.newpasswd" placeholder="请输入新密码">
+    <el-form-item v-if="visible" label="$t('message.new_password')">
+      <el-input type="password" v-model="changepasswdForm.newpasswd" placeholder="$t('message.please_new_password')">
         <i slot="suffix" title="显示密码" @click="changePass('show')" style="cursor:pointer;"
            class="el-input__icon iconfont icon-xianshi"></i>
       </el-input>
     </el-form-item>
-    <el-form-item v-else label="新密码">
-      <el-input type="text" v-model="changepasswdForm.newpasswd" placeholder="请输入新密码">
+    <el-form-item v-else label="$t('message.new_password')">
+      <el-input type="text" v-model="changepasswdForm.newpasswd" placeholder="$t('message.please_new_password')">
         <i slot="suffix" title="隐藏密码" @click="changePass('hide')" style="cursor:pointer;"
            class="el-input__icon iconfont icon-yincang"></i>
       </el-input>
     </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
-    <el-button @click.native="changepasswdFormVisible = false">取消</el-button>
-    <el-button type="primary" @click.native="PasswdChange" :loading="changepasswdLoading">提交</el-button>
+    <el-button @click.native="changepasswdFormVisible = false">{{$t('message.cancel')}}</el-button>
+    <el-button type="primary" @click.native="PasswdChange" :loading="changepasswdLoading">{{$t('message.commit')}}</el-button>
   </div>
 </el-dialog>
   </section>
@@ -154,10 +154,10 @@ export default {
       changepasswdLoading: false,
       changepasswdFormRules: {
         oldpasswd: [
-          {required: true, message: '输入旧密码', trigger: 'blur'}
+          {required: true, message: this.$t('message.please_old_password'), trigger: 'blur'}
         ],
         newpasswd: [
-          {required: true, message: '输入新密码', trigger: 'blur'}
+          {required: true, message: this.$t('message.please_new_password'), trigger: 'blur'}
         ]
       },
       // 密码显示
@@ -183,17 +183,17 @@ export default {
       axios.defaults.withCredentials = true
       axios.post(content.action, form).then(res => {
         if (res.data.code !== 0) {
-          content.onError('文件上传失败, code:' + res.data.code)
+          content.onError(this.$t('message.file_fail'))
         } else {
-          content.onSuccess('文件上传成功！')
+          content.onSuccess(this.$t('message.file_success'))
         }
       }).catch(error => {
         if (error.response) {
-          content.onError('文件上传失败,' + error.response.data)
+          content.onError(this.$t('message.file_fail'))
         } else if (error.request) {
-          content.onError('文件上传失败，服务器端无响应')
+          content.onError(this.$t('message.upload_fail_server'))
         } else {
-          content.onError('文件上传失败，请求封装失败')
+          content.onError(this.$t('message.upload_fail_request'))
         }
       })
     },
@@ -222,9 +222,9 @@ export default {
         console.log('输出')
         console.log(res)
         if (res.code === 0) {
-          this.$message({message: '保存成功', type: 'success'})
+          this.$message({message: this.$t('message.save_success'), type: 'success'})
         } else {
-          this.$message({message: '保存失败', type: 'fail'})
+          this.$message({message: this.$t('message.save_fail'), type: 'fail'})
         }
         this.getInfo()
         // NProgress.done();
@@ -236,9 +236,9 @@ export default {
       postPassword(this.changepasswdForm).then((res) => {
         console.log('返回', res)
         if (res.code === 0) {
-          this.$message({message: '修改成功', type: 'success'})
+          this.$message({message: this.$t('message.save_success'), type: 'success'})
         } else {
-          this.$message({message: '修改失败', type: 'fail'})
+          this.$message({message: this.$t('message.save_success'), type: 'fail'})
         }
         this.changepasswdFormVisible = false
         // NProgress.done();
