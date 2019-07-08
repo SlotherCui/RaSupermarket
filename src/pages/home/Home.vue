@@ -78,6 +78,7 @@
           </el-col>
           <el-col :span="24" class="content-wrapper">
             <transition name="fade" mode="out-in">
+            <!--<transition class="animated slideInLeft-enter slideInRight-leave">-->
               <router-view></router-view>
             </transition>
           </el-col>
