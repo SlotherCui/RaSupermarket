@@ -132,7 +132,7 @@ const en = {
     'adding_goods': 'Add commodity',
     'adding_price': 'Add price',
     'delete_fail': 'Delete failed',
-    'upload_succcess': 'Upload successful',
+    'upload_success': 'Upload successful',
     'upload_fail': 'Upload failed',
     'barcode_must_13': 'The barcode must be 13 digits',
     'image_must': 'Upload file can only be image format!',

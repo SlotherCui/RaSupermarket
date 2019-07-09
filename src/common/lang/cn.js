@@ -132,7 +132,7 @@ const cn = {
     'adding_goods': '添加商品',
     'adding_price': '添加价格',
     'delete_fail': '删除失败',
-    'upload_succcess': '上传成功',
+    'upload_success': '上传成功',
     'upload_fail': '上传失败',
     'barcode_must_13': '条码必须为13位数字',
     'image_must': '上传文件只能是图片格式!',
