@@ -79,7 +79,7 @@ export default {
       postFeedBack(para).then((res) => {
         console.log('输出', res)
         if (res.code === 0) {
-          this.$message({message: this.$t('message.upload_succcess'), type: 'success'})
+          this.$message({message: this.$t('message.upload_success'), type: 'success'})
           this.opinionVisible = false
           this.this.opinionForm.feedbcak = ''
         } else {

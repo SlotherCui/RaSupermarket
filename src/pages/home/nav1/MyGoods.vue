@@ -676,7 +676,7 @@ export default {
       this.editSubmitAble = this.editAbles[0] || this.editAbles[1] || this.editAbles[2] || this.editAbles[3] || this.editAbles[4]
     },
     uploadSuccess () {
-      this.$message({message: this.$t('message.upload_succcess'), type: 'success'})
+      this.$message({message: this.$t('message.upload_success'), type: 'success'})
     },
     onBeforeUpload (file) {
       const isIMAGE = file.type === 'image/jpeg' || 'image/gif' || 'image/png'
@@ -705,7 +705,7 @@ export default {
           if (res.code === 0) {
             this.editLoading = false
             this.editFormVisible = false
-            this.$message({message: this.$t('message.upload_succcess'), type: 'success'})
+            this.$message({message: this.$t('message.upload_success'), type: 'success'})
             this.$refs['editForm'].resetFields()
             this.regetGoods()
           } else {
