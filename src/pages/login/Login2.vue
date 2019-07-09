@@ -98,10 +98,10 @@ export default {
       // var Params = {username: 'admin', password: '123'}
       requestLogin(Params).then(data => {
         this.logining = false
-        console.log(data)
-
         if (data.code === 0) {
           var user = data.data
+          user.supermarket_piclink = user.supermarket_piclink + '?v=' + Date.parse(new Date())
+          console.log('logindata', user)
           sessionStorage.setItem('user', JSON.stringify(user))
           this.$router.push({path: '/Mygoods'})
         } else if (data.code === 100) {

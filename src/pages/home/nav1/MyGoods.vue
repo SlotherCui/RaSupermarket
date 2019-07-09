@@ -107,7 +107,7 @@
             class="avatar-uploader"
             accept="image/jpeg,image/gif,image/png"
             :http-request="myUpload"
-            :data="editForm.commodity_barcod"
+            :data="editForm.commodity_barcode"
             :show-file-list="false"
             :on-success="uploadSuccess"
             :disabled="editPic"
@@ -309,7 +309,8 @@ export default {
     myUpload (content) {
       var form = new FormData()
       form.append('file', content.file)
-      form.append('barcode', this.createcommodityForm.commodity_barcode)
+      form.append('barcode', this.editForm.commodity_barcode)
+      console.log('商品图片上传', form)
       axios.defaults.withCredentials = true
       axios.post(content.action, form).then(res => {
         if (res.data.code !== 0) {
@@ -336,6 +337,7 @@ export default {
     // ********************************************************   获取商品表
     // 获取第几个页面 条码固定
     regetGoods () {
+      this.goodslist = []
       // let para = {
       //   page: this.page,
       //   commodity_barcode: ''
@@ -357,8 +359,9 @@ export default {
         commodity_description: this.mygoodsfilters.commodity_description
       }
       this.listLoading = true
+      console.log(para)
       getMyGoodListPagenew(para).then((res) => {
-        console.log(res)
+        console.log('reget', res)
         this.total = res.data.total
         this.goodslist = res.data.commodity_list
         this.listLoading = false

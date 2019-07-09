@@ -17,7 +17,7 @@
           :show-file-list="false"
           :on-success="uploadSuccess"
           :before-upload="onBeforeUpload">
-          <img v-if="supermarket_piclink" :src="supermarket_piclink" class="avatar">
+          <img id="touxiang" v-if="supermarket_piclink" :src="supermarket_piclink" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -180,20 +180,34 @@ export default {
       var form = new FormData()
       form.append('file', content.file)
       // form.append('barcode', 'zycCB')
+      console.log('img', form)
       axios.defaults.withCredentials = true
       axios.post(content.action, form).then(res => {
         if (res.data.code !== 0) {
-          content.onError(this.$t('message.file_fail'))
+          this.$message({message: this.$t('message.file_fail'), type: 'fail'})
         } else {
-          content.onSuccess(this.$t('message.file_success'))
+          this.$message({message: this.$t('message.file_success'), type: 'success'})
+          var user = sessionStorage.getItem('user')
+          if (user) {
+            user = JSON.parse(user)
+            user.supermarket_piclink = user.supermarket_piclink + '?v=' + Date.parse(new Date())
+          }
+          sessionStorage.setItem('user', JSON.stringify(user))
+          this.supermarket_piclink = user.supermarket_piclink
+          // check
+          var user1 = sessionStorage.getItem('user')
+          if (user1) {
+            user1 = JSON.parse(user1)
+            console.log('重新设置图片', user1)
+          }
         }
       }).catch(error => {
         if (error.response) {
-          content.onError(this.$t('message.file_fail'))
+          this.$message({message: this.$t('message.file_fail'), type: 'fail'})
         } else if (error.request) {
-          content.onError(this.$t('message.upload_fail_server'))
+          this.$message({message: this.$t('message.upload_fail_server'), type: 'fail'})
         } else {
-          content.onError(this.$t('message.upload_fail_request'))
+          this.$message({message: this.$t('message.upload_fail_request'), type: 'fail'})
         }
       })
     },
@@ -273,6 +287,7 @@ export default {
     console.log(user)
     if (user) {
       user = JSON.parse(user)
+      console.log('img1', user.supermarket_piclink)
       this.supermarket_piclink = user.supermarket_piclink
     }
   }
