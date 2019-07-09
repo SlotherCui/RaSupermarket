@@ -52,15 +52,18 @@
             {{$t('message.team_price_change')}}</el-button>
           <el-button type="primary" size="small" :loading="changeLoading" v-on:click="RelationChange(index*3+cardindex,carditem.commodity_barcode)">
             {{$t('message.relation_price_change')}}</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="SingleChange(index*3+cardindex, carditem.commodity_barcode)">{{$t('message.confirm')}}</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="GroupChange(index*3+cardindex,carditem.commodity_barcode)">{{$t('message.team_price_change')}}</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="RelationChange(index*3+cardindex,carditem.commodity_barcode)">{{$t('message.relation_price_change')}}</el-button>
         </el-row>
       </el-card>
       </el-col>
     </el-row>
   </section>
-</template>
+</template>s
 
 <script>
-import {requestPriceChangeList, requestSingleChange, requestGroupChange, requestRelationChange, requestData} from '../../../api/api'
+import {requestPriceChangeList, requestSingleChange, requestGroupChange, requestRelationChange} from '../../../api/api'
 export default {
   name: 'SellsManager',
   data () {
