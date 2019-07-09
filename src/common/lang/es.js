@@ -122,6 +122,7 @@ const es = {
     'change_state_success': 'Switch success',
     'change_state_fail': 'Falló el cambio',
     'delete_confirm': '¿Está seguro de eliminar el negocio seleccionado?',
+    'delete_confirm1': '¿Confirma borrar el producto seleccionado?',
     'has_in': 'El elemento ya está en la biblioteca del producto',
     'add_success': 'Agregar éxito',
     'add_fail': 'Agregar fallo',

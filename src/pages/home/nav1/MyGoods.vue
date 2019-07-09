@@ -550,7 +550,7 @@ export default {
       this.sels = sels
     },
     doRemove (para) {
-      this.$confirm(this.$t('message.delete_confirm'), this.$t('message.prompt'), {
+      this.$confirm(this.$t('message.delete_confirm1'), this.$t('message.prompt'), {
         type: 'warning'
       }).then(() => {
         this.listLoading = true

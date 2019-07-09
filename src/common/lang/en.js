@@ -122,6 +122,7 @@ const en = {
     'change_state_success': 'Switch successfully',
     'change_state_fail': 'Switch failed',
     'delete_confirm': 'Confirm delete the selected business?',
+    'delete_confirm1': 'Confirm delete the selected item?',
     'has_in': 'The product is already in the product library',
     'add_success': 'Add success',
     'add_fail': 'Add fail',
