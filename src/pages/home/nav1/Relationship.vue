@@ -155,26 +155,31 @@ export default {
     addSubmit () {
       // this.$alert(this.addGoodsList, 'fsdhkjaf')
       this.addLoading = true
-      let para = {supermarket_id: this.addlist[0].supermarket_id}
-      console.log('输入')
-      console.log(para)
-      postRelation(para).then((res) => {
-        console.log('输出')
-        console.log(res)
-        if (res.code === 0) {
-          this.$message({message: this.$t('message.file_success'), type: 'success'})
-          this.addFormVisible = false
-          this.addLoading = false
-          this.getRelationList(1)
-          this.addlist = null
-          this.addForm.supermarket_id = ''
-        } else {
-          this.$message({message: this.$t('message.file_fail'), type: 'fail'})
-          this.addLoading = false
-          this.addlist = null
-          this.addForm.supermarket_id = ''
-        }
-      })
+      if (this.addForm.supermarket_id === '') {
+        this.$message({message: this.$t('message.upload_fail'), type: 'fail'})
+        this.addLoading = false
+      } else {
+        let para = {supermarket_id: this.addlist[0].supermarket_id}
+        console.log('输入')
+        console.log(para)
+        postRelation(para).then((res) => {
+          console.log('输出')
+          console.log(res)
+          if (res.code === 0) {
+            this.$message({message: this.$t('message.file_success'), type: 'success'})
+            this.addFormVisible = false
+            this.addLoading = false
+            this.getRelationList(1)
+            this.addlist = null
+            this.addForm.supermarket_id = ''
+          } else {
+            this.$message({message: this.$t('message.file_fail'), type: 'fail'})
+            this.addLoading = false
+            this.addlist = null
+            this.addForm.supermarket_id = ''
+          }
+        })
+      }
     },
     // 取消按钮点击后
     clearAddForm () {
