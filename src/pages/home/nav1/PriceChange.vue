@@ -46,12 +46,12 @@
         <!--<div style="line-height: 25px"><span class="goodsItem">原价格</span><span>14元</span></div>-->
         <!--三种改价操作-->
         <el-row style="margin-top: 20px; text-align: right">
-          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="SingleChange(index*3+cardindex, carditem.commodity_barcode)"> {{
-            this.$t('message.confirm')}}</el-button>
+          <el-button type="primary" size="small" :loading="changeLoading" v-on:click="SingleChange(index*3+cardindex, carditem.commodity_barcode)">
+            {{$t('message.confirm')}}</el-button>
           <el-button type="primary" size="small" :loading="changeLoading" v-on:click="GroupChange(index*3+cardindex,carditem.commodity_barcode)">
-            {{this.$t('message.team_price_change')}}</el-button>
+            {{$t('message.team_price_change')}}</el-button>
           <el-button type="primary" size="small" :loading="changeLoading" v-on:click="RelationChange(index*3+cardindex,carditem.commodity_barcode)">
-            {{this.$t('message.relation_price_change')}}</el-button>
+            {{$t('message.relation_price_change')}}</el-button>
         </el-row>
       </el-card>
       </el-col>
