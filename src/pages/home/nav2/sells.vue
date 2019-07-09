@@ -373,7 +373,7 @@ export default {
   }
   .toolbar {
     text-align: left;
-    background: #f2f2f2;
+    background: #f2f2f2
     padding: 10px 10px 0 10px;
     margin: 10px 0px
   }

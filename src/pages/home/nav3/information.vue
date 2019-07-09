@@ -190,7 +190,7 @@ export default {
           var user = sessionStorage.getItem('user')
           if (user) {
             user = JSON.parse(user)
-            user.supermarket_piclink = user.supermarket_piclink + '?v=' + Date.parse(new Date())
+            user.supermarket_piclink = user.supermarket_piclink.split('?v=')[0] + '?v=' + Date.parse(new Date())
           }
           sessionStorage.setItem('user', JSON.stringify(user))
           this.supermarket_piclink = user.supermarket_piclink
