@@ -124,7 +124,6 @@
 </style>
 <script>
 import {requestInformation, postInformation, postPassword} from '../../../api/api'
-import Home from '@/pages/home/Home'
 import axios from 'axios'
 export default {
   data () {
@@ -195,8 +194,6 @@ export default {
           }
           sessionStorage.setItem('user', JSON.stringify(user))
           this.supermarket_piclink = user.supermarket_piclink
-          Home.data.UserAvatar = user.supermarket_piclink
-          // check
           var user1 = sessionStorage.getItem('user')
           if (user1) {
             user1 = JSON.parse(user1)
