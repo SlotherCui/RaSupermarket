@@ -250,8 +250,10 @@ export default {
         console.log('返回', res)
         if (res.code === 0) {
           this.$message({message: this.$t('message.save_success'), type: 'success'})
+        } else if (res.code === 211) {
+          this.$message({message: this.$t('message.save_fail_errorpasswd'), type: 'fail'})
         } else {
-          this.$message({message: this.$t('message.save_success'), type: 'fail'})
+          this.$message({message: this.$t('message.save_fail'), type: 'fail'})
         }
         this.changepasswdFormVisible = false
         // NProgress.done();

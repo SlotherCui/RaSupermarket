@@ -127,6 +127,7 @@ const es = {
     'add_fail': 'Agregar fallo',
     'save_success': 'Guardar con éxito',
     'save_fail': 'Guardar fallido',
+    'save_fail_errorpasswd': 'Guardar fallido',
     'about': 'Sobre nosotros',
     'feedback': 'Feedback',
     'adding_goods': 'Agregar elemento',
