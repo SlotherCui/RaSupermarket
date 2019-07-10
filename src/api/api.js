@@ -99,7 +99,9 @@ export const addMyGoods = params => { return axios.post(`/Commodity/add`, params
 //
 
 // 编辑商品
-export const editGoods = params => { return axios.post(`/Commodity/edit`, params).then(res => res.data) } // OK
+export const editGoods = params => {
+  return axios.post(`/Commodity/edit`, params).then(res => res.data)
+} // OK
 // 请求方法 post /Commodity/edit
 // 请求体
 //         commodity_barcode
