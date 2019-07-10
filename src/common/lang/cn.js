@@ -122,6 +122,7 @@ const cn = {
     'change_state_success': '切换成功',
     'change_state_fail': '切换失败',
     'delete_confirm': '确认删除选中商户吗?',
+    'delete_confirm1': '确认删除选中商品吗?',
     'has_in': '商品已在商品库',
     'add_success': '增加成功',
     'add_fail': '增加失败',
