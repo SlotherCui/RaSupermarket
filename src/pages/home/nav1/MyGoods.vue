@@ -1,20 +1,6 @@
 <template>
   <section>
     <!--工具条-->
-<!--    <el-col :span="24" class="toolbar" >-->
-<!--      <el-form :inline="true" :model="mygoodsfilters">-->
-<!--        <el-form-item>-->
-<!--          <el-input v-model="mygoodsfilters.barcode" :placeholder="$t('message.please_input_bar')"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item>-->
-<!--          <el-button type="primary" @click="searchCommodity">{{$t('message.query')}}</el-button>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item>-->
-<!--          <el-button type="primary" @click="checkin" :loading="addbuttonLoading">{{$t('message.add')}}</el-button>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--    </el-col>-->
-    <!--工具条-->
     <el-col :span="24" class="toolbar">
       <el-form :inline="true" :model="mygoodsfilters">
         <el-form-item label="">
@@ -94,14 +80,6 @@
     <el-dialog :title="$t('message.edit')"  :close-on-click-modal="false" width="30%" :visible.sync="editFormVisible">
       <el-form :model="createcommodityForm" label-width="80px" :rules="createcommodityFormRules" ref="editForm" :visible.sync="editFormVisible" >
         <el-form-item :label="$t('message.commodity_piclink')" prop="img">
-          <!--<el-upload-->
-            <!--v-if="!editPic"-->
-            <!--accept="image/jpeg,image/gif,image/png"-->
-            <!--multiple-->
-            <!--:limit="3">-->
-            <!--<el-button size="small" type="primary">点击上传</el-button>-->
-            <!--<div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>-->
-          <!--</el-upload>-->
           <el-upload
             action="/uploadCommodityImg"
             class="avatar-uploader"
@@ -190,18 +168,6 @@
 <!--      内层新建产品表单-->
     <el-dialog width="40%" :title="$t('message.add2')" :visible.sync="createcommodity" :before-close="createCommodityCancle">
       <el-form :model="createcommodityForm" label-width="80px" ref="createcommodityForm" :visible.sync="createcommodity" >
-<!--        <el-form-item :label="$t('message.commodity_piclink')" prop="img">-->
-<!--          <el-upload-->
-<!--            action=""-->
-<!--            class="avatar-uploader"-->
-<!--            :show-file-list="false"-->
-<!--            accept="image/jpeg,image/gif,image/png"-->
-<!--            multiple-->
-<!--            :limit="3">-->
-<!--            <el-button size="small" type="primary">点击上传</el-button>-->
-<!--            <div slot="tip" class="el-upload__tip">支持JPG、GIF、PNG格式</div>-->
-<!--          </el-upload>-->
-<!--        </el-form-item>-->
         <el-form-item :label="$t('message.commodity_barcode')" prop="commodity_barcode">
           <el-input v-model="createcommodityForm.commodity_barcode" autocomplete="off" class="addinput" size="small" disabled="true"></el-input>
         </el-form-item>
@@ -406,22 +372,6 @@ export default {
       //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
       // }
     },
-    // searchCommodity () {
-    //   let para = {
-    //     page: 1,
-    //     commodity_barcode: this.mygoodsfilters.barcode
-    //   }
-    //   this.listLoading = true
-    //   getMyGoodListPage(para).then((res) => {
-    //     this.total = res.data.total
-    //     this.goodslist = res.data.commodity_list
-    //     this.listLoading = false
-    //   })
-    //   // if (/^[0-9]+$/.test(searchstring) && searchstring.length === 13) {
-    //   // } else {
-    //   //   this.$alert('条码必须为13位数字', '提示', {confirmButtonText: '确定'})
-    //   // } 'please_input_bar'
-    // },
     checkin () {
       this.addbuttonLoading = true
       if (this.mygoodsfilters.barcode === '') {
@@ -447,30 +397,6 @@ export default {
         })
       }
     },
-    // checkin () {
-    //   this.addbuttonLoading = true
-    //   if (this.mygoodsfilters.barcode.toString() === '') {
-    //     this.$alert('填写相关信息', '提示', {confirmButtonText: '确定'})
-    //     this.addbuttonLoading = false
-    //   } else {
-    //     let para = {
-    //       page: 1,
-    //       commodity_barcode: this.mygoodsfilters.barcode.toString()
-    //     }
-    //     getMyGoodListPage(para).then((res) => {
-    //       const checklist = res.data.commodity_list
-    //       for (let i = 0; i < checklist.length; i++) {
-    //         if (checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString()) {
-    //           console.log('here', checklist[i].commodity_barcode === this.mygoodsfilters.barcode.toString())
-    //           this.$alert('商品已在商品库', '提示', {confirmButtonText: '确定'})
-    //           this.addbuttonLoading = false
-    //           return
-    //         }
-    //       }
-    //       this.addGoods()
-    //     })
-    //   }
-    // },
     // 添加商品，有没有，有-> 列表，没有-> 提示新增
     addGoods () {
       let para = { commodity_barcode: this.mygoodsfilters.barcode }
@@ -628,29 +554,6 @@ export default {
       this.createcommodity = false
     },
     // ************************************************************ 编 辑 + 新 建
-    // 提交新增商品
-    // addSubmit () {
-    //   this.$refs.addForm1.validate((valid) => {
-    //     if (valid) {
-    //       this.$confirm('确认提交吗？', '提示', {}).then(() => {
-    //         this.addLoading = true
-    //         // NProgress.start();
-    //         let para = Object.assign({}, this.addForm1)
-    //         addMyGoods(para).then((res) => {
-    //           this.addLoading = false
-    //           // NProgress.done();
-    //           this.$message({
-    //             message: '提交成功',
-    //             type: 'success'
-    //           })
-    //           this.$refs['addForm1'].resetFields()
-    //           this.addFormVisible = false
-    //           this.regetGoods()
-    //         })
-    //       })
-    //     }
-    //   })
-    // },
     // *************************************************************编辑
     // 编辑界面
     handleEdit (index, row) {

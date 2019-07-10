@@ -11,7 +11,6 @@ import VueI18n from 'vue-i18n'
 import messages from './common/lang'
 import ElementLocale from 'element-ui/lib/locale'
 // import animate from 'animate.css'
-
 var VueCookie = require('vue-cookie')
 Vue.use(VueCookie)
 // import Mock from './mock'

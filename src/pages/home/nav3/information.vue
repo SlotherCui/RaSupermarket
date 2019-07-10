@@ -1,6 +1,6 @@
 <template>
   <section>
-  <el-form ref="form" :model="form"  label-width="80px"  style="margin:20px;width:60%;min-width:600px;">
+  <el-form ref="form" :model="form"  label-width="80px"  style="margin:20px; margin-left:30%; width:60%;min-width:600px;">
     <el-form-item :label="$t('message.supermarket_img')" label-width="150px" prop="img">
       <el-form-item label="" prop="name">
         <!--<template slot-scope="scope" >-->
@@ -194,11 +194,6 @@ export default {
           }
           sessionStorage.setItem('user', JSON.stringify(user))
           this.supermarket_piclink = user.supermarket_piclink
-          var user1 = sessionStorage.getItem('user')
-          if (user1) {
-            user1 = JSON.parse(user1)
-            console.log('重新设置图片', Home.data.UserAvatar)
-          }
         }
       }).catch(error => {
         if (error.response) {
