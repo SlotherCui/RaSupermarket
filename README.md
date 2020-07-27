@@ -40,4 +40,4 @@ npm run build --report
 
 现提供完整山东大学软件学院项目实训课程  直销超市网络供应商平台项目的完整设计与开发文档。其中包括主要项目主要功能设计，功能实现和测试。还包括项目的后端代码和Android端代码展示。仅供学习和参考，请勿直接上交老师。
 
-[设计开发总结](https://github.com/SlotherCui/RaSupermarket/设计开发总结.pdf)
+[设计开发总结](https://github.com/SlotherCui/RaSupermarket/blob/master/设计开发总结.pdf)
