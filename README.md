@@ -19,8 +19,9 @@ npm run build --report
 ```
 仅供学习和参考
 <!--For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).-->
-
 ## 项目包结构
+运行和理解本文前端代码需要有一定的Vue框架的基础，以及一定的前端开发能力，建议先学习和了解了Vue框架和Vue-cli之后再来项目的查看和学习，并可以配合相应的设计与开发文档进行进一步学习和了解。
+
 ### 1. bulid和config 项目配置文件
 ### 2. node_modules 项目所需运行库
 ### 3. src 项目主要源代码文件夹
